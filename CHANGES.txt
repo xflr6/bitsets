@@ -1,0 +1,14 @@
+Bitsets Changelog
+=================
+
+Version 0.1.1
+-----------
+
+Fixed from_members() with string arguments.
+
+
+
+Version 0.1
+-----------
+
+First public release.
