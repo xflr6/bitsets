@@ -1,11 +1,25 @@
 Bitsets Changelog
 =================
 
+
+Version 0.1.2
+-------------
+
+Constructor always returns a new subclass (obsoleted cached argument).
+
+Bitset instances can no more get instance dicts (enforce empty __slots__).
+
+Full set of construction and conversion methods for bitset sequences.
+
+Remove sanity assertions from set methods.
+
+Improve documentation.
+
+
 Version 0.1.1
------------
+-------------
 
 Fixed from_members() with string arguments.
-
 
 
 Version 0.1

@@ -1,6 +1,6 @@
 # series.py - bitset sequences
 
-"""Ordered collections of BitSet instances."""
+"""Ordered collections of bitset instances."""
 
 from itertools import imap
 
@@ -11,11 +11,17 @@ __all__ = ['List', 'Tuple']
 
 
 class Series(object):
+    """Abstract bitset sequence."""
 
     __metaclass__ = meta.SeriesMeta
 
     __slots__ = ()
 
+    @classmethod
+    def from_members(cls, members):
+        """Series from iterable of member iterables."""
+        return cls.from_bitsets(imap(cls.BitSet.from_members, members))
+        
     @classmethod
     def from_bools(cls, bools):
         """Series from iterable of boolean evaluable iterables."""
@@ -26,8 +32,16 @@ class Series(object):
 
     from_bits = classmethod(__new__)
 
+    def members(self):
+        """Return the series as list of set member tuples."""
+        return [b.members() for b in self]
+
     def bools(self):
         """Return the series as list of boolean set membership sequences."""
+        return [b.bools() for b in self]
+
+    def bits(self):
+        """Return the series as list of binary set membership strings."""
         return [b.bools() for b in self]
 
     def __repr__(self):
@@ -36,10 +50,15 @@ class Series(object):
 
 
 class List(Series, list):
-    """Sequence of bitsets.
+    """Mutable bitset sequence.
 
-    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), Tuple, List)
+    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), List, Tuple)
     >>> IntsList = Ints.List
+    >>> issubclass(IntsList, list)
+    True
+
+    >>> IntsList.from_members([(1, 3), (1, 2)])
+    IntsList('101000', '110000')
 
     >>> IntsList.from_bools([(True, False, True), (True, True, False)])
     IntsList('101000', '110000')
@@ -53,9 +72,14 @@ class List(Series, list):
     >>> IntsList.from_bitsets([Ints.from_bits('100100')])
     IntsList('100100')
 
+    >>> IntsList('101000').members()
+    [(1, 3)]
+
     >>> IntsList('101000').bools()
     [(True, False, True, False, False, False)]
 
+    >>> IntsList('101000').bits()
+    [(True, False, True, False, False, False)]
     """
 
     __slots__ = ()
@@ -75,10 +99,15 @@ class List(Series, list):
 
 
 class Tuple(Series, tuple):
-    """Immutable sequence of bitsets.
+    """Immutable bitset sequence.
 
-    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), Tuple, List)
+    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), List, Tuple)
     >>> IntsTuple = Ints.Tuple
+    >>> issubclass(IntsTuple, tuple)
+    True
+
+    >>> IntsTuple.from_members([(1, 3), (1, 2)])
+    IntsTuple('101000', '110000')
 
     >>> IntsTuple.from_bools([(True, False, True), (True, True, False)])
     IntsTuple('101000', '110000')
@@ -92,7 +121,13 @@ class Tuple(Series, tuple):
     >>> IntsTuple.from_bitsets([Ints.from_bits('100100')])
     IntsTuple('100100')
 
+    >>> IntsTuple('101000').members()
+    [(1, 3)]
+
     >>> IntsTuple('101000').bools()
+    [(True, False, True, False, False, False)]
+
+    >>> IntsTuple('101000').bits()
     [(True, False, True, False, False, False)]
     """
 

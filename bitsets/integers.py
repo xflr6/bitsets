@@ -1,5 +1,7 @@
 # integers.py - basic integer manipulations
 
+"""Bit manipulation for set rank/unrank."""
+
 __all__ = ['indexes', 'reinverted']
 
 

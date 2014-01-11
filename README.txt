@@ -120,7 +120,7 @@ Iterate over a bitset powerset in short lexicographic order:
 .. code:: python
 
     >>> for p in Pythons(['Palin', 'Idle']).powerset():
-            print p.members()
+    ...     print p.members()
     ()
     ('Idle',)
     ('Palin',)
@@ -160,14 +160,13 @@ frozenset-compatible methods:
 
 .. code:: python
 
+    >>> # is subset ?
     >>> Pythons(['Idle']) & Pythons(['Chapman', 'Idle']) == Pythons(['Idle'])
-    True  # subset
+    True
 
 
-Advanced usage
---------------
-
-Retrieve the **complement set** of a bitset:
+Extending frozenset you can also retrieve the **complement set**
+of a bitset:
 
 .. code:: python
 
@@ -178,16 +177,19 @@ Retrieve the **complement set** of a bitset:
     Pythons()
 
 
+Advanced usage
+--------------
+
 To use a **customized bitset**, extend a class from the bitsets.bases
 module and pass it to the **bitset** function.
 
 .. code:: python
 
-    >>> import bitsets.bases
+    >>> import bitsets
 
     >>> class Set(bitsets.bases.BitSet):
-            def issubset_proper(self, other):
-                return self != other and self & other == self
+    ...     def issubset_proper(self, other):
+    ...         return self & other == self != other
 
     >>> Ints = bitsets.bitset('Ints', tuple(range(1, 7)), base=Set)
 
@@ -198,11 +200,38 @@ module and pass it to the **bitset** function.
     True
 
 
-When activated, each bitset class comes with customizable **collection
+When activated, each bitset class comes with tailored **collection
 classes** (bitset list and bitset tuple) for its instances.
 
+.. code:: python
 
-Bitset classes and instances are **pickleable**:
+    >>> Letters = bitsets.bitset('Letters', 'abcdef', list=True)
+
+    >>> Letters.List.from_members(['a', 'bcd', 'ef'])
+    LettersList('100000', '011100', '000011')
+
+
+To use a **customized bitset collection class**, extend a class
+from the bitsets.series module and pass it to the **bitset** function
+
+.. code:: python
+
+    >>> class List(bitsets.series.List):
+    ...     def intersection(self):
+    ...         return self.BitSet.from_int(reduce(long.__and__, self))
+
+    >>> Nums = bitsets.bitset('Nums', (1, 2, 3), list=List)
+
+    >>> issubclass(Nums.List, List)
+    True
+
+    >>> numslist = Nums.List.from_members([(1, 2, 3), (1, 2), (2, 3)])
+
+    >>> numslist.intersection()
+    Nums([2])
+
+
+Bitset classes, collection classes and their instances are **pickleable**:
 
 .. code:: python
 
@@ -213,3 +242,21 @@ Bitset classes and instances are **pickleable**:
 
     >>> pickle.loads(pickle.dumps(Pythons()))
     Pythons()
+
+    >>> pickle.loads(pickle.dumps(Nums.List)) is Nums.List  # doctest: +SKIP
+    True
+
+    >>> pickle.loads(pickle.dumps(Nums.List()))  # doctest: +SKIP
+    NumsList()
+
+
+Further reading
+---------------
+
+- http://wiki.python.org/moin/BitManipulation
+
+- http://en.wikipedia.org/wiki/Bit_array
+- http://en.wikipedia.org/wiki/Bit_manipulation
+
+- http://en.wikipedia.org/wiki/Lexicographical_order
+- http://en.wikipedia.org/wiki/Colexicographical_order

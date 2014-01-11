@@ -4,12 +4,12 @@ from distutils.core import setup
 
 setup(
     name='bitsets',
-    version='0.1.1',
+    version='0.1.2',
     url='http://pypi.python.org/pypi/bitsets',
     license='MIT',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
-    description='Ordered subsets over a predefined domain.',
+    description='Ordered subsets over a predefined domain',
     long_description=open('README.txt').read(),
     packages=['bitsets'],
     classifiers=[

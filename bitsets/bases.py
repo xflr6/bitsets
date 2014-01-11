@@ -1,9 +1,8 @@
-# bases.py - integer bits representing subsets of totally orderd finite set
+# bases.py - bitset base classes
 
-"""Subsets of a totally ordered finite set as rank in colexicographical order."""
+"""Base classes for bitsets providing integer-like and set-like interface."""
 
 from itertools import imap, compress
-import collections
 
 import meta
 import integers
@@ -13,7 +12,7 @@ __all__ = ['MemberBits', 'BitSet']
 
 
 class MemberBits(long):
-    """Ordered collection of unique elements from a predefined domain.
+    """Subsets of a predefined domain as rank in colexicographical order.
 
     >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
 
@@ -30,14 +29,12 @@ class MemberBits(long):
 
     __metaclass__ = meta.MemberBitsMeta
 
-    __slots__ = ()
-
     _indexes = integers.indexes
     _reinverted = integers.reinverted
 
     @classmethod
     def from_members(cls, members=()):
-        """Create a set from an iterable of members or a comma/space separated string.
+        """Create a set from an iterable of members.
 
         >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
         >>> Ints.from_members([1, 5, 6])
@@ -106,8 +103,6 @@ class MemberBits(long):
         >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
         >>> [i.members() for i in list(Ints.supremum.powerset())[22:25]]
         [(1, 2, 3), (1, 2, 4), (1, 2, 5)]
-
-
         """
         if start is None:
             start = self.infimum
@@ -146,15 +141,15 @@ class MemberBits(long):
 
 
 class BitSet(MemberBits):
-    """
+    """Ordered container of unique elements from a predefined domain.
 
     >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
 
-    >>> Numbers.from_bits('110001')
-    Numbers([1, 2, 6])
-
     >>> Numbers([1, 2, 3])
     Numbers([1, 2, 3])
+
+    >>> Numbers.from_bits('110001')
+    Numbers([1, 2, 6])
     """
 
     __new__ = MemberBits.from_members.__func__
@@ -164,7 +159,6 @@ class BitSet(MemberBits):
         if not members:
             return '%s()' % (self.__class__.__name__)
         return '%s(%r)' % (self.__class__.__name__, members)
-
 
     __len__ = MemberBits.count.__func__
 
@@ -194,7 +188,6 @@ class BitSet(MemberBits):
         >>> assert Numbers([1]).issubset(Numbers([1, 2]))
         >>> assert not Numbers([1]).issubset(Numbers())
         """
-        assert isinstance(other, self.__class__)
         return self & other == self
 
     def issuperset(self, other):
@@ -204,7 +197,6 @@ class BitSet(MemberBits):
         >>> assert Numbers([1, 2]).issuperset(Numbers([1]))
         >>> assert not Numbers().issuperset(Numbers([1]))
         """
-        assert isinstance(other, self.__class__)
         return self | other == self
 
     def isdisjoint(self, other):
@@ -214,7 +206,6 @@ class BitSet(MemberBits):
         >>> assert Numbers([1, 2]).isdisjoint(Numbers([3, 4]))
         >>> assert not Numbers([1]).isdisjoint(Numbers([1]))
         """
-        assert isinstance(other, self.__class__)
         return not self & other
 
     def intersection(self, other):
@@ -224,7 +215,6 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).intersection(Numbers([2, 3]))
         Numbers([2])
         """
-        assert isinstance(other, self.__class__)
         return self.from_int(self & other)
 
     def union(self, other):
@@ -234,7 +224,6 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).union(Numbers([2, 3]))
         Numbers([1, 2, 3])
         """
-        assert isinstance(other, self.__class__)
         return self.from_int(self | other)
 
     def difference(self, other):
@@ -244,7 +233,6 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).difference(Numbers([2, 3]))
         Numbers([1])
         """
-        assert isinstance(other, self.__class__)
         return self.from_int(self & ~other)
 
     def symmetric_difference(self, other):
@@ -254,7 +242,6 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).symmetric_difference(Numbers([2, 3]))
         Numbers([1, 3])
         """
-        assert isinstance(other, self.__class__)
         return self.from_int(self ^ other)
 
     def complement(self):

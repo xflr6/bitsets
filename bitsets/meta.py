@@ -1,5 +1,7 @@
 # meta.py - dynamic class creation and unpickle reconstructors
 
+"""Dynamic bitset class creation and retrieval."""
+
 from itertools import izip
 import copy_reg
 
@@ -10,38 +12,44 @@ class MemberBitsMeta(type):
 
     __registry = {}
 
-    def subclass(self, name, members, list=None, tuple=None):
-        created, cls = self._get_subclass(name, members, None, list, tuple)
-        return cls
-
-    def _get_subclass(self, name, members, id, listcls, tuplecls):
-        if (name, members, id) in self.__registry:
-            return False, self.__registry[(name, members, id)]
-        elif id is not None:  # force create
-            return True, self._make_subclass(name, members, id, listcls, tuplecls)
-
-        # try first match
+    def subclass(self, name, members, listcls=None, tuplecls=None):
+        """Return first class with name and members or create (for doctests)."""
         matching = [cls for (cname, cmembers, cid), cls in self.__registry.iteritems()
             if cname == name and cmembers == members]
         if len(matching) == 1:
-            return False, matching[0]
+            return matching[0]
         elif matching:
             raise RuntimeError('Multiple classes matching %r' % matching)
-        return True, self._make_subclass(name, members, id, listcls, tuplecls)
+        return self._make_subclass(name, members, None, listcls, tuplecls)
 
-    def _make_subclass(self, name, members, id, listcls, tuplecls):
+    def _get_subclass(self, name, members, id, listcls, tuplecls):
+        """Return or create class with name, members, and id (for unpickling)."""
+        if not isinstance(id, (int, long)):
+            raise RuntimeError
+        if (name, members, id) in self.__registry:
+            # this enables roundtrip reprs
+            return self.__registry[(name, members, id)]
+        return self._make_subclass(name, members, id, listcls, tuplecls)
+
+    def _make_subclass(self, name, members, id=None, listcls=None, tuplecls=None):
         if hasattr(self, '_members'):
             raise RuntimeError('%r attempt _make_subclass' % self)
 
-        dct = {'__slots__': self.__slots__, '_members': members}
+        dct = {'_members': members}
         if id:
             dct['_id'] = id
         cls = type(name, (self,), dct)
         if listcls is not None:
+            assert listcls._series == 'List'
             setattr(cls, listcls._series, listcls._make_subclass(name, cls))
         if tuplecls is not None:
+            assert tuplecls._series == 'Tuple'
             setattr(cls, tuplecls._series, tuplecls._make_subclass(name, cls))
         return cls
+
+    def __new__(self, name, bases, dct):
+        dct['__slots__'] = ()
+        return super(MemberBitsMeta, self).__new__(self, name, bases, dct)
 
     def __init__(self, name, bases, dct):
         if not hasattr(self, '_members'):
@@ -76,13 +84,15 @@ class MemberBitsMeta(type):
             self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
 
 
+copy_reg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
+
+
 class SeriesMeta(type):
 
     def _make_subclass(self, name, cls):
         if hasattr(self, 'BitSet'):
             raise RuntimeError('%r attempt _make_subclass' % self)
 
-        assert self._series in ('List', 'Tuple')
         dct = {'BitSet': cls}
         if '__slots__' in self.__dict__:
             dct['__slots__'] = self.__slots__
@@ -109,16 +119,11 @@ class SeriesMeta(type):
             bs.Tuple.__base__ if hasattr(bs, 'Tuple') else None)
 
 
-copy_reg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
 copy_reg.pickle(SeriesMeta, SeriesMeta.__reduce__)
 
 
 def bitset(name, members, id, basecls, listcls, tuplecls):
-    if not isinstance(id, (int, long)):
-        raise RuntimeError
-
-    created, cls = basecls._get_subclass(name, members, id, listcls, tuplecls)
-    return cls
+    return basecls._get_subclass(name, members, id, listcls, tuplecls)
 
 
 def bitset_list(name, members, id, basecls, listcls, tuplecls):

@@ -1,5 +1,7 @@
 # combos - generate powersets
 
+"""Powerset generators based on combination of interers or sets."""
+
 import collections
 
 __all__ = ['shortlex', 'reverse_shortlex']
