@@ -3,9 +3,9 @@
 """Ordered subsets of a predetermined finite domain."""
 
 __title__ = 'bitsets'
-__version__ = '0.1.2'
+__version__ = '0.1.3'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
-__license__ = 'MIT, see LICENSE.txt'
+__license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2014 Sebastian Bank'
 
 import meta
@@ -28,7 +28,7 @@ def bitset(name, members, base=bases.BitSet, list=False, tuple=False):
     >>> Letters.Tuple  # doctest: +ELLIPSIS
     <class meta.bitset_tuple('Letters', 'abcdef', 0x..., BitSet, List, Tuple)>
 
-    >>> Letters.from_members('abf')
+    >>> Letters('fab')
     Letters(['a', 'b', 'f'])
     """
     list = {False: None, True: series.List}.get(list, list)

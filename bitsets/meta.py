@@ -14,8 +14,10 @@ class MemberBitsMeta(type):
 
     def subclass(self, name, members, listcls=None, tuplecls=None):
         """Return first class with name and members or create (for doctests)."""
-        matching = [cls for (cname, cmembers, cid), cls in self.__registry.iteritems()
+        matching = [cls for (cname, cmembers, cid), cls
+            in self.__registry.iteritems()
             if cname == name and cmembers == members]
+
         if len(matching) == 1:
             return matching[0]
         elif matching:
@@ -26,6 +28,7 @@ class MemberBitsMeta(type):
         """Return or create class with name, members, and id (for unpickling)."""
         if not isinstance(id, (int, long)):
             raise RuntimeError
+
         if (name, members, id) in self.__registry:
             # this enables roundtrip reprs
             return self.__registry[(name, members, id)]
@@ -58,8 +61,9 @@ class MemberBitsMeta(type):
         self._len = len(self._members)
         self._atoms = tuple(self.from_int(1 << i) for i in range(self._len))
         self._map = {i: s for i, s in izip(self._members, self._atoms)}
-        self.infimum = self.from_int(0)
-        self.supremum = self.from_int((1 << self._len) - 1)
+
+        self.infimum = self.from_int(0)  # all zeros
+        self.supremum = self.from_int((1 << self._len) - 1)  # all ones
 
         if not hasattr(self, '_id'):
             self._id = id(self)

@@ -1,6 +1,6 @@
 # combos - generate powersets
 
-"""Powerset generators based on combination of interers or sets."""
+"""Powerset generators based on combining integers or sets."""
 
 import collections
 
@@ -27,6 +27,7 @@ def shortlex(start, other, excludestart=False):
         while other:
             first, other = other[0], other[1:]
             result = current | first
+
             yield result
 
             if other:
@@ -54,6 +55,7 @@ def reverse_shortlex(end, other, excludeend=False):
         while other:
             first, other = other[0], other[1:]
             result = current & first
+
             yield result
 
             if other:

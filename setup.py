@@ -4,14 +4,15 @@ from distutils.core import setup
 
 setup(
     name='bitsets',
-    version='0.1.2',
-    url='http://pypi.python.org/pypi/bitsets',
-    license='MIT',
+    version='0.1.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
-    long_description=open('README.txt').read(),
+    keywords='ordered set finite bit array',
+    license='MIT',
+    url='http://github.com/xflr6/bitsets',
     packages=['bitsets'],
+    long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 3 - Alpha',
         'Environment :: Console',

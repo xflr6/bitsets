@@ -165,7 +165,7 @@ frozenset-compatible methods:
     True
 
 
-Extending frozenset you can also retrieve the **complement set**
+Different from frozenset, you can also retrieve the **complement set**
 of a bitset:
 
 .. code:: python
@@ -187,13 +187,13 @@ module and pass it to the **bitset** function.
 
     >>> import bitsets
 
-    >>> class Set(bitsets.bases.BitSet):
+    >>> class ProperSet(bitsets.bases.BitSet):
     ...     def issubset_proper(self, other):
     ...         return self & other == self != other
 
-    >>> Ints = bitsets.bitset('Ints', tuple(range(1, 7)), base=Set)
+    >>> Ints = bitsets.bitset('Ints', tuple(range(1, 7)), base=ProperSet)
 
-    >>> issubclass(Ints, Set)
+    >>> issubclass(Ints, ProperSet)
     True
 
     >>> Ints([1]).issubset_proper(Ints([1, 2]))
@@ -216,19 +216,24 @@ from the bitsets.series module and pass it to the **bitset** function
 
 .. code:: python
 
-    >>> class List(bitsets.series.List):
+    >>> class ReduceList(bitsets.series.List):
     ...     def intersection(self):
     ...         return self.BitSet.from_int(reduce(long.__and__, self))
+    ...     def union(self):
+    ...         return self.BitSet.from_int(reduce(long.__or__, self))
 
-    >>> Nums = bitsets.bitset('Nums', (1, 2, 3), list=List)
+    >>> Nums = bitsets.bitset('Nums', (1, 2, 3), list=ReduceList)
 
-    >>> issubclass(Nums.List, List)
+    >>> issubclass(Nums.List, ReduceList)
     True
 
     >>> numslist = Nums.List.from_members([(1, 2, 3), (1, 2), (2, 3)])
 
     >>> numslist.intersection()
     Nums([2])
+
+    >>> numslist.union()
+    Nums([1, 2, 3])
 
 
 Bitset classes, collection classes and their instances are **pickleable**:
@@ -260,3 +265,10 @@ Further reading
 
 - http://en.wikipedia.org/wiki/Lexicographical_order
 - http://en.wikipedia.org/wiki/Colexicographical_order
+
+
+License
+-------
+
+Bitsets is distributed under the `MIT license
+<http://opensource.org/licenses/MIT>`_.

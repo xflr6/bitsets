@@ -163,7 +163,7 @@ class BitSet(MemberBits):
     __len__ = MemberBits.count.__func__
 
     def __iter__(self):
-        """
+        """Iterator over the set members.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> list(Numbers([1, 2, 3]))
@@ -172,17 +172,22 @@ class BitSet(MemberBits):
         return imap(self._members.__getitem__, self._indexes())
 
     def __contains__(self, member):
-        """
+        """Set membership.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> assert 1 in Numbers([1, 2]) and 2 not in Numbers([1])
         >>> assert 1 not in Numbers()
+
+        >>> -1 in Numbers()
+        Traceback (most recent call last):
+        ...
+        KeyError: -1
         """
-        return self and self._map[member] & self
+        return self._map[member] & self
         
 
     def issubset(self, other):
-        """
+        """Inverse set containment.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> assert Numbers([1]).issubset(Numbers([1, 2]))
@@ -191,7 +196,7 @@ class BitSet(MemberBits):
         return self & other == self
 
     def issuperset(self, other):
-        """
+        """Set containment.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> assert Numbers([1, 2]).issuperset(Numbers([1]))
@@ -200,7 +205,7 @@ class BitSet(MemberBits):
         return self | other == self
 
     def isdisjoint(self, other):
-        """
+        """Set disjointness.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> assert Numbers([1, 2]).isdisjoint(Numbers([3, 4]))
@@ -209,7 +214,7 @@ class BitSet(MemberBits):
         return not self & other
 
     def intersection(self, other):
-        """
+        """Set intersection.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> Numbers([1, 2]).intersection(Numbers([2, 3]))
@@ -218,7 +223,7 @@ class BitSet(MemberBits):
         return self.from_int(self & other)
 
     def union(self, other):
-        """
+        """Set union.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> Numbers([1, 2]).union(Numbers([2, 3]))
@@ -227,7 +232,7 @@ class BitSet(MemberBits):
         return self.from_int(self | other)
 
     def difference(self, other):
-        """
+        """Set difference.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> Numbers([1, 2]).difference(Numbers([2, 3]))
@@ -236,7 +241,7 @@ class BitSet(MemberBits):
         return self.from_int(self & ~other)
 
     def symmetric_difference(self, other):
-        """
+        """Symmetric set difference.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> Numbers([1, 2]).symmetric_difference(Numbers([2, 3]))
@@ -245,7 +250,7 @@ class BitSet(MemberBits):
         return self.from_int(self ^ other)
 
     def complement(self):
-        """
+        """Complement set.
 
         >>> Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))
         >>> Numbers([1, 2]).complement()

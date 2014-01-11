@@ -86,16 +86,16 @@ class List(Series, list):
 
     _series = 'List'
 
+    @classmethod
+    def from_bitsets(cls, bitsets):
+        self = list.__new__(cls, bitsets)
+        list.__init__(self, bitsets)
+        return self
+
     __new__ = list.__new__
 
     def __init__(self, *bits):
-        super(List, self).__init__(imap(self.BitSet.from_bits, bits))
-        
-    @classmethod
-    def from_bitsets(cls, bitsets):
-        self = cls.__new__(cls, bitsets)
-        super(List, self).__init__(bitsets)
-        return self
+        list.__init__(self, imap(self.BitSet.from_bits, bits))
 
 
 class Tuple(Series, tuple):

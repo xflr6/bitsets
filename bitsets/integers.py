@@ -1,6 +1,6 @@
 # integers.py - basic integer manipulations
 
-"""Bit manipulation for set rank/unrank."""
+"""Bit manipulation for set rank and unrank."""
 
 __all__ = ['indexes', 'reinverted']
 
@@ -26,14 +26,14 @@ def reinverted(n, r):
     [7, 11, 19, 35, 13, 21, 37, 25, 41, 49]
     """
     result = 0
-    r = 1 << r - 1
+    r = 1 << (r - 1)
     while n:
         if not n & 1:
             result |= r
         r >>= 1
         n >>= 1
     if r:
-        result |= (r << 1) -1
+        result |= (r << 1) - 1
     return result
 
 
