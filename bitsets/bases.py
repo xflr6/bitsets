@@ -193,6 +193,8 @@ class BitSet(MemberBits):
         >>> assert Numbers([1]).issubset(Numbers([1, 2]))
         >>> assert not Numbers([1]).issubset(Numbers())
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self & other == self
 
     def issuperset(self, other):
@@ -202,6 +204,8 @@ class BitSet(MemberBits):
         >>> assert Numbers([1, 2]).issuperset(Numbers([1]))
         >>> assert not Numbers().issuperset(Numbers([1]))
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self | other == self
 
     def isdisjoint(self, other):
@@ -211,6 +215,8 @@ class BitSet(MemberBits):
         >>> assert Numbers([1, 2]).isdisjoint(Numbers([3, 4]))
         >>> assert not Numbers([1]).isdisjoint(Numbers([1]))
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return not self & other
 
     def intersection(self, other):
@@ -220,6 +226,8 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).intersection(Numbers([2, 3]))
         Numbers([2])
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self.from_int(self & other)
 
     def union(self, other):
@@ -229,6 +237,8 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).union(Numbers([2, 3]))
         Numbers([1, 2, 3])
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self.from_int(self | other)
 
     def difference(self, other):
@@ -238,6 +248,8 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).difference(Numbers([2, 3]))
         Numbers([1])
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self.from_int(self & ~other)
 
     def symmetric_difference(self, other):
@@ -247,6 +259,8 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).symmetric_difference(Numbers([2, 3]))
         Numbers([1, 3])
         """
+        if not isinstance(other, self.__class__):
+            other = self.from_members(other)
         return self.from_int(self ^ other)
 
     def complement(self):

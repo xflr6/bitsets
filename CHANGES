@@ -2,6 +2,12 @@ Bitsets Changelog
 =================
 
 
+Version 0.1.4
+-------------
+
+Coerce other argument of frozenset-compatible methods to bitset.
+
+
 Version 0.1.3
 -------------
 

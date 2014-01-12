@@ -1,10 +1,13 @@
 # setup.py
 
-from distutils.core import setup
+try:
+    from setuptools import setup
+except ImportError:
+    from distutils.core import setup
 
 setup(
     name='bitsets',
-    version='0.1.3',
+    version='0.1.4',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
@@ -12,6 +15,7 @@ setup(
     license='MIT',
     url='http://github.com/xflr6/bitsets',
     packages=['bitsets'],
+    platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
         'Development Status :: 3 - Alpha',

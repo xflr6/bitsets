@@ -3,7 +3,7 @@
 """Ordered subsets of a predetermined finite domain."""
 
 __title__ = 'bitsets'
-__version__ = '0.1.3'
+__version__ = '0.1.4'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2014 Sebastian Bank'

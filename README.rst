@@ -12,10 +12,18 @@ in memory. Furthermore, they can be compared, intersected, etc.
 using normal **bitwise operations** of integers.
 
 
+Installation
+------------
+
+.. code:: bash
+
+    $ pip install bitsets
+
+
 Creation
 --------
 
-Use the **bitset** function to obtain a class representing ordered
+Use the ``bitset`` function to create a class representing ordered
 subsets from a fixed set of items (the domain):
 
 .. code:: python
@@ -24,11 +32,11 @@ subsets from a fixed set of items (the domain):
 
     >>> Pythons = bitset('Pythons', ('Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin'))
 
-The domain collection needs to be a hashable sequence (e.g. a tuple).
+The domain collection needs to be a hashable sequence (e.g. a ``tuple``).
 
-The resulting class is a integer (long) subclass, so its instances
+The resulting class is an integer (``long``) subclass, so its instances
 (being integers) are **immutable and hashable** and thus in many ways
-similar to pythons built-in frozenset.
+similar to pythons built-in ``frozenset``.
 
 .. code:: python
 
@@ -36,8 +44,8 @@ similar to pythons built-in frozenset.
    True
 
 
-The class provides access to the **minimal** and **maximal** sets
-from its domain:
+The class provides access to the **minimal** (``infimum``) and **maximal**
+(``supremum``) sets from its domain:
 
 .. code:: python
 
@@ -101,7 +109,8 @@ Sorting
 -------
 
 To facilitate sorting collections of bitsets, they have **key methods**
-for different sort orders (shortlex, longlex, shortcolex, longcolex):
+for different sort orders (``shortlex``, ``longlex``, ``shortcolex``,
+and ``longcolex``):
 
 .. code:: python
 
@@ -115,7 +124,7 @@ them in **colexicographical order**.
 Powersets
 ---------
 
-Iterate over a bitset powerset in short lexicographic order:
+Iterate over a bitsets' ``powerset`` in short lexicographic order:
 
 .. code:: python
 
@@ -127,13 +136,13 @@ Iterate over a bitset powerset in short lexicographic order:
     ('Idle', 'Palin')
 
 
-frozenset compatibility
------------------------
+``frozenset`` compatibility
+---------------------------
 
-For convenience, bitsets provide the same methods as **frozenset**
-(i.e. issubset, issuperset, isdisjoint, intersection, union,
-difference, symmetric_difference, __len__, __iter__, __nonzero__,
-and __contains__).
+For convenience, bitsets provide the same methods as ``frozenset``
+(i.e. ``issubset``, ``issuperset``, ``isdisjoint``, ``intersection``,
+``union``, ``difference``, ``symmetric_difference``, ``__len__``,
+``__iter__``, ``__nonzero__``, and ``__contains__``).
 
 .. code:: python
 
@@ -156,7 +165,7 @@ Note, however that all the **operators methods** retain their **integer semantic
 
 That is, because in tight loops it might be worth to use **bitwise
 expressions** for set comparisons/operation instead of the
-frozenset-compatible methods:
+``frozenset``-compatible methods:
 
 .. code:: python
 
@@ -165,7 +174,7 @@ frozenset-compatible methods:
     True
 
 
-Different from frozenset, you can also retrieve the **complement set**
+Differing from ``frozenset``, you can also retrieve the ``complement`` set
 of a bitset:
 
 .. code:: python
@@ -180,8 +189,8 @@ of a bitset:
 Advanced usage
 --------------
 
-To use a **customized bitset**, extend a class from the bitsets.bases
-module and pass it to the **bitset** function.
+To use a **customized bitset**, extend a class from the ``bitsets.bases``
+module and pass it to the ``bitset`` function.
 
 .. code:: python
 
@@ -212,7 +221,7 @@ classes** (bitset list and bitset tuple) for its instances.
 
 
 To use a **customized bitset collection class**, extend a class
-from the bitsets.series module and pass it to the **bitset** function
+from the ``bitsets.series`` module and pass it to the ``bitset`` function
 
 .. code:: python
 
