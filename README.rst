@@ -1,7 +1,7 @@
 Bitsets
 ========
 
-|PyPI version| |License|
+|PyPI version| |License| |Downloads|
 
 Bitsets are **ordered sets** which are subsets of a predefined
 **finite domain** of hashable items.
@@ -290,3 +290,6 @@ Bitsets is distributed under the `MIT license
 .. |License| image:: https://pypip.in/license/bitsets/badge.png
     :target: https://pypi.python.org/pypi/bitsets
     :alt: License
+.. |Downloads| image:: https://pypip.in/d/bitsets/badge.png
+    :target: https://pypi.python.org/pypi/bitsets
+    :alt: Downloads
