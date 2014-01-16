@@ -7,11 +7,11 @@ except ImportError:
 
 setup(
     name='bitsets',
-    version='0.1.4',
+    version='0.2',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
-    keywords='ordered set finite bit array',
+    keywords='ordered set finite bit string array map field',
     license='MIT',
     url='http://github.com/xflr6/bitsets',
     packages=['bitsets'],

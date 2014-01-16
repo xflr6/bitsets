@@ -6,12 +6,13 @@ Bitsets
 Bitsets are **ordered sets** which are subsets of a predefined
 **finite domain** of hashable items.
 
-They are implemented as python **integers** representing the rank
-of the set in colexicographical order (a.k.a bit strings,
-binary strings). Hence, they are very **space-efficient** e.g. if
-a large number of subsets from a collection needs to be present
-in memory. Furthermore, they can be compared, intersected, etc.
-using normal **bitwise operations** of integers.
+They are implemented as pure Python **integers** representing the
+rank of the set in colexicographical order (a.k.a bit strings,
+powers of two, binary strings). Hence, they can be very
+**space-efficient**, e.g. if a large number of subsets from a
+collection needs to be present in memory. Furthermore, they can be
+compared, intersected, etc. using normal **bitwise operations**
+of integers (``&, |, ^, ~``).
 
 
 Installation
@@ -46,6 +47,24 @@ similar to pythons built-in ``frozenset``.
    True
 
 
+The domain items are mapped to **powers of two** (their *rank* in
+colexicographical order):
+
+.. code:: python
+
+    >>> Pythons.from_int(0)
+    Pythons()
+
+    >>> [Pythons.from_int(1), Pythons.from_int(2), Pythons.from_int(4)]
+    [Pythons(['Chapman']), Pythons(['Cleese']), Pythons(['Gilliam'])]
+
+    >>> Pythons.from_int(2 ** 6 - 1)
+    Pythons(['Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin'])
+
+    >>> Pythons.from_int((1 << 0) + (1 << 5))
+    Pythons(['Chapman', 'Palin'])
+
+
 The class provides access to the **minimal** (``infimum``) and **maximal**
 (``supremum``) sets from its domain:
 
@@ -58,11 +77,12 @@ The class provides access to the **minimal** (``infimum``) and **maximal**
     Pythons(['Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin'])
 
 
+
 Basic usage
 -----------
 
 Bitsets can be created from members, bit strings, boolean sequences,
-and integers. Members always occur in the **definition order**:
+and integers:
 
 .. code:: python
 
@@ -78,6 +98,7 @@ and integers. Members always occur in the **definition order**:
     >>> Pythons.from_int(5)
     Pythons(['Chapman', 'Gilliam'])
 
+Members always occur in the **definition order**.
 
 Bitsets cannot contain items other than those from their domain:
 
@@ -157,7 +178,8 @@ For convenience, bitsets provide the same methods as ``frozenset``
     >>> Pythons(['Chapman', 'Idle']).intersection(Pythons(['Idle', 'Palin']))
     Pythons(['Idle'])
 
-Note, however that all the **operators methods** retain their **integer semantics**:
+Note, however that all the **operators methods** (``+, -, &, |`` etc.)
+retain their **integer semantics**:
 
 .. code:: python
 
@@ -165,8 +187,8 @@ Note, however that all the **operators methods** retain their **integer semantic
     1L
 
 
-That is, because in tight loops it might be worth to use **bitwise
-expressions** for set comparisons/operation instead of the
+In tight loops it might be worth to use **bitwise expressions**
+(``&, |, ^, ~``) for set comparisons/operation instead of the
 ``frozenset``-compatible methods:
 
 .. code:: python
@@ -175,6 +197,9 @@ expressions** for set comparisons/operation instead of the
     >>> Pythons(['Idle']) & Pythons(['Chapman', 'Idle']) == Pythons(['Idle'])
     True
 
+
+Added functionality
+-------------------
 
 Differing from ``frozenset``, you can also retrieve the ``complement`` set
 of a bitset:
@@ -188,6 +213,28 @@ of a bitset:
     Pythons()
 
 
+Test if a bitset is maximal (``supremum``):
+
+.. code:: python
+
+    >>> Pythons(['Idle']).all()
+    False
+
+    >>> Pythons(['Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin']).all()
+    True
+
+
+Test if a bitset is non-minimal (``infimum``), same as ``bool(bitset)``:
+
+.. code:: python
+
+    >>> Pythons(['Idle']).any()
+    True
+
+    >>> Pythons().any()
+    False
+
+	
 Advanced usage
 --------------
 
@@ -276,6 +323,14 @@ Further reading
 
 - http://en.wikipedia.org/wiki/Lexicographical_order
 - http://en.wikipedia.org/wiki/Colexicographical_order
+
+
+See also
+--------
+
+- http://pypi.python.org/pypi/bitarray
+- http://pypi.python.org/pypi/bitstring
+- http://pypi.python.org/pypi/BitVector
 
 
 License

@@ -72,7 +72,7 @@ class MemberBitsMeta(type):
 
     def __repr__(self):
         if not hasattr(self, '_members'):
-            return type.__repr__(self)
+            return super(MemberBitsMeta, self).__repr__()
 
         return '<class %s.bitset(%r, %r, %#x, %s, %s, %s)>' % (self.__module__,
             self.__name__, self._members, self._id, self.__base__.__name__,
