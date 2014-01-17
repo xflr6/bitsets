@@ -140,7 +140,7 @@ class MemberBits(long):
         return bin(self).count('1')
 
     def all(self):
-        """Return True when the set contains all domain items.
+        """Return True iff the set contains all domain items.
 
         >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
         >>> Ints('111111').all() and not Ints('001010').all()
@@ -149,7 +149,7 @@ class MemberBits(long):
         return self == self.supremum
 
     def any(self):
-        """Return True when the set contains at least one items.
+        """Return True iff the set contains at least one items.
 
         >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
         >>> Ints('100000').any() and not Ints('000000').any()

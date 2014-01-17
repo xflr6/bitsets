@@ -2,8 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.3
+-----------
+
+Added visualization.
+
+
 Version 0.2
--------------
+-----------
 
 Added all() and any() methods, improved __nonzero__.
 

@@ -234,6 +234,51 @@ Test if a bitset is non-minimal (``infimum``), same as ``bool(bitset)``:
     >>> Pythons().any()
     False
 
+
+Visualization
+-------------
+
+With the help of the `Graphviz <http://www.graphviz.org>`_ graph layout library
+and this `Python interface <http://pypi.python.org/pypi/graphviz>`_ (``pip install
+graphviz``), the ``bitsets.visualize`` module can create **hasse diagrams** of all
+bitsets from your domain:
+
+.. code:: python
+
+    >>> from bitsets import visualize
+    >>> Four = bitset('Four', (1, 2, 3, 4))
+
+    >>> dot = visualize.bitset(Four)
+
+    >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph Four {
+    edge [dir=none]
+    	b0 [label=0000]
+    		b1 -> b0
+    		b2 -> b0
+    ...
+
+.. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-bits.png
+
+
+Show members instead of bits:
+
+.. code:: python
+
+    >>> dot = visualize.bitset(Four, member_labels=True)
+
+    >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph Four {
+    edge [dir=none]
+    	b0 [label="{}"]
+    		b1 -> b0
+    		b2 -> b0
+    ...
+
+.. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-members.png
+
 	
 Advanced usage
 --------------
@@ -256,6 +301,9 @@ module and pass it to the ``bitset`` function.
 
     >>> Ints([1]).issubset_proper(Ints([1, 2]))
     True
+
+    >>> Ints([1, 2]).issubset_proper(Ints([1, 2]))
+    False
 
 
 When activated, each bitset class comes with tailored **collection

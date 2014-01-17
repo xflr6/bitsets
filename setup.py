@@ -7,7 +7,7 @@ except ImportError:
 
 setup(
     name='bitsets',
-    version='0.2',
+    version='0.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',

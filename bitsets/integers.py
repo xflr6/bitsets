@@ -2,7 +2,7 @@
 
 """Bit manipulation for set rank and unrank."""
 
-__all__ = ['indexes', 'reinverted']
+__all__ = ['indexes', 'reinverted', 'unrank']
 
 
 def indexes(n):

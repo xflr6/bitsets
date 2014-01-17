@@ -2,3 +2,5 @@
 MAINIFEST
 dist/
 *.egg-info/
+graphs/
+Thumbs.db
