@@ -1,2 +1,2 @@
-include README.rst LICENSE CHANGES run-tests.py
+include README.rst LICENSE CHANGES run-tests.py visualize-examples.py
 recursive-include docs *.png

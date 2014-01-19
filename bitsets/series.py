@@ -48,6 +48,12 @@ class Series(object):
         items = ', '.join('%r' % b.bits() for b in self)
         return '%s(%s)' % (self.__class__.__name__, items)
 
+    def reduce_and(self):
+        return self.BitSet.reduce_and(self)
+
+    def reduce_or(self):
+        return self.BitSet.reduce_or(self)
+
 
 class List(Series, list):
     """Mutable bitset sequence.
@@ -80,6 +86,12 @@ class List(Series, list):
 
     >>> IntsList('101000').bits()
     [(True, False, True, False, False, False)]
+
+    >>> IntsList('100100', '000100').reduce_and()
+    Ints([4])
+
+    >>> IntsList('100100', '000100').reduce_or()
+    Ints([1, 4])
     """
 
     __slots__ = ()
@@ -129,6 +141,12 @@ class Tuple(Series, tuple):
 
     >>> IntsTuple('101000').bits()
     [(True, False, True, False, False, False)]
+
+    >>> IntsTuple('100100', '000100').reduce_and()
+    Ints([4])
+
+    >>> IntsTuple('100100', '000100').reduce_or()
+    Ints([1, 4])
     """
 
     __slots__ = ()

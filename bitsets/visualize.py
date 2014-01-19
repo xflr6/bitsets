@@ -1,40 +1,48 @@
 # visualize.py
 
 from itertools import imap
-import operator
 
 import graphviz
 
 __all__ = ['bitset']
 
-DIRECTORY = 'graphs'
+MEMBER_LABEL = False
 
-MEMBER_LABELS = False
+
+name_getters = [lambda b: 'b%d' % b, lambda b: b.bits()]
 
 label_getters = {
-    False: operator.methodcaller('bits'),
+    False: lambda b: b.bits(),
     True: lambda b: '{%s}' % ','.join(imap(str, b.members())),
     None: lambda b: '',
 }
 
 
-def bitset(bs, member_labels=MEMBER_LABELS, directory=DIRECTORY,
-        save=False, compile=False, view=False):
-    dot = graphviz.Digraph(comment=bs, key=bs.__name__, directory=directory,
-        edge_attr={'dir':'none'})
+def bitset(bs, member_label=None, filename=None, directory=None, render=False, view=False):
+    if member_label is None:
+        member_label = MEMBER_LABEL
 
-    get_key = lambda b: 'b%d' % b
+    if filename is None:
+        filename = 'bs-%s-%s.gv' % (bs.__name__, 'members' if member_label else 'bits')
 
-    get_label = label_getters[member_labels]
-    
+    dot = graphviz.Digraph(
+        name=bs.__name__,
+        comment=repr(bs),
+        filename=filename,
+        directory=directory,
+        edge_attr=dict(dir='none')
+    )
+
+    node_name =name_getters[0] 
+
+    node_label = label_getters[member_label]
+
     for i in range(bs.supremum + 1):
         b = bs.from_int(i)
-        key = get_key(b)
-        dot.node(key, get_label(b))
-        for a in bs._atoms:
-            if not b & a:
-                dot.edge(get_key(b | a), key)
+        name = node_name(b)
+        dot.node(name, node_label(b))
+        dot.edges((node_name(b | a), name) for a in bs._atoms if not b & a)
 
-    if save or compile or view:
-        dot.save(compile=compile, view=view)
+    if render or view:
+        dot.render(view=view)
     return dot

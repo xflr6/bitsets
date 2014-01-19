@@ -238,21 +238,28 @@ Test if a bitset is non-minimal (``infimum``), same as ``bool(bitset)``:
 Visualization
 -------------
 
-With the help of the `Graphviz <http://www.graphviz.org>`_ graph layout library
-and this `Python interface <http://pypi.python.org/pypi/graphviz>`_ (``pip install
-graphviz``), the ``bitsets.visualize`` module can create **hasse diagrams** of all
-bitsets from your domain:
+With the help of the optional `Graphviz <http://www.graphviz.org>`_ graph layout
+library and this `Python interface <http://pypi.python.org/pypi/graphviz>`_, the ``bitsets.visualize`` module can create **hasse diagrams** of all bitsets from
+your domain:
+
+Download and install `Graphviz`. Then install the Python interface:
+
+.. code:: bash
+
+    $ pip install graphviz==0.2
+
+Make sure that the ``bin`` directory of Graphviz is on your system path.
 
 .. code:: python
 
     >>> from bitsets import visualize
-    >>> Four = bitset('Four', (1, 2, 3, 4))
+    >>> Four = bitset('four', (1, 2, 3, 4))
 
     >>> dot = visualize.bitset(Four)
 
     >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
-    digraph Four {
+    // <class bitsets.meta.bitset('four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph four {
     edge [dir=none]
     	b0 [label=0000]
     		b1 -> b0
@@ -266,11 +273,11 @@ Show members instead of bits:
 
 .. code:: python
 
-    >>> dot = visualize.bitset(Four, member_labels=True)
+    >>> dot = visualize.bitset(Four, member_label=True)
 
     >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
-    digraph Four {
+    // <class bitsets.meta.bitset('four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph four {
     edge [dir=none]
     	b0 [label="{}"]
     		b1 -> b0
@@ -278,6 +285,8 @@ Show members instead of bits:
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-members.png
+
+Remember that the graphs have ``2 ** domain_size`` nodes.
 
 	
 Advanced usage
@@ -341,6 +350,8 @@ from the ``bitsets.series`` module and pass it to the ``bitset`` function
     >>> numslist.union()
     Nums([1, 2, 3])
 
+Since version 0.4, this very functionality was added to the ``bitsets.series``
+classes as ``reduce_and`` and ``reduce_or`` methods.
 
 Bitset classes, collection classes and their instances are **pickleable**:
 

@@ -87,6 +87,18 @@ class MemberBitsMeta(type):
             self.List.__base__ if hasattr(self, 'List') else None,
             self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
 
+    def reduce_and(self, memberbits):
+        result = self.supremum
+        for m in memberbits:
+            result &= m
+        return self.from_int(result)
+
+    def reduce_or(self, memberbits):
+        result = self.infimum
+        for m in memberbits:
+            result |= m
+        return self.from_int(result)
+
 
 copy_reg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
 

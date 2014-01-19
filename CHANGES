@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.4
+-----------
+
+Add reduce_and, reduce_or on series and as class-only methods on all bitsets.
+
+Improved visualization using graphviz 0.2 with new api.
+
+
 Version 0.3
 -----------
 
