@@ -18,19 +18,20 @@ class Series(object):
     __slots__ = ()
 
     @classmethod
-    def from_members(cls, members):
+    def frommembers(cls, members):
         """Series from iterable of member iterables."""
-        return cls.from_bitsets(imap(cls.BitSet.from_members, members))
+        return cls.frombitsets(imap(cls.BitSet.frommembers, members))
         
     @classmethod
-    def from_bools(cls, bools):
+    def frombools(cls, bools):
         """Series from iterable of boolean evaluable iterables."""
-        return cls.from_bitsets(imap(cls.BitSet.from_bools, bools))
+        return cls.frombitsets(imap(cls.BitSet.frombools, bools))
 
-    def __new__(cls, *bits):
-        return cls.from_bitsets(imap(cls.BitSet.from_bits, bits))
+    @classmethod
+    def frombits(cls, *bits):
+        return cls.frombitsets(imap(cls.BitSet.frombits, bits))
 
-    from_bits = classmethod(__new__)
+    __new__ = frombits.__func__
 
     def members(self):
         """Return the series as list of set member tuples."""
@@ -49,9 +50,11 @@ class Series(object):
         return '%s(%s)' % (self.__class__.__name__, items)
 
     def reduce_and(self):
+        """Return the intersection of all series elements."""
         return self.BitSet.reduce_and(self)
 
     def reduce_or(self):
+        """Return the union of all series elements."""
         return self.BitSet.reduce_or(self)
 
 
@@ -63,19 +66,19 @@ class List(Series, list):
     >>> issubclass(IntsList, list)
     True
 
-    >>> IntsList.from_members([(1, 3), (1, 2)])
+    >>> IntsList.frommembers([(1, 3), (1, 2)])
     IntsList('101000', '110000')
 
-    >>> IntsList.from_bools([(True, False, True), (True, True, False)])
+    >>> IntsList.frombools([(True, False, True), (True, True, False)])
     IntsList('101000', '110000')
 
     >>> IntsList('100100', '000000')
     IntsList('100100', '000000')
 
-    >>> IntsList.from_bits('100100', '000000')
+    >>> IntsList.frombits('100100', '000000')
     IntsList('100100', '000000')
 
-    >>> IntsList.from_bitsets([Ints.from_bits('100100')])
+    >>> IntsList.frombitsets([Ints.frombits('100100')])
     IntsList('100100')
 
     >>> IntsList('101000').members()
@@ -99,7 +102,7 @@ class List(Series, list):
     _series = 'List'
 
     @classmethod
-    def from_bitsets(cls, bitsets):
+    def frombitsets(cls, bitsets):
         self = list.__new__(cls, bitsets)
         list.__init__(self, bitsets)
         return self
@@ -107,7 +110,7 @@ class List(Series, list):
     __new__ = list.__new__
 
     def __init__(self, *bits):
-        list.__init__(self, imap(self.BitSet.from_bits, bits))
+        list.__init__(self, imap(self.BitSet.frombits, bits))
 
 
 class Tuple(Series, tuple):
@@ -118,19 +121,19 @@ class Tuple(Series, tuple):
     >>> issubclass(IntsTuple, tuple)
     True
 
-    >>> IntsTuple.from_members([(1, 3), (1, 2)])
+    >>> IntsTuple.frommembers([(1, 3), (1, 2)])
     IntsTuple('101000', '110000')
 
-    >>> IntsTuple.from_bools([(True, False, True), (True, True, False)])
+    >>> IntsTuple.frombools([(True, False, True), (True, True, False)])
     IntsTuple('101000', '110000')
 
     >>> IntsTuple('100100', '000000')
     IntsTuple('100100', '000000')
 
-    >>> IntsTuple.from_bits('100100', '000000')
+    >>> IntsTuple.frombits('100100', '000000')
     IntsTuple('100100', '000000')
 
-    >>> IntsTuple.from_bitsets([Ints.from_bits('100100')])
+    >>> IntsTuple.frombitsets([Ints.frombits('100100')])
     IntsTuple('100100')
 
     >>> IntsTuple('101000').members()
@@ -153,7 +156,7 @@ class Tuple(Series, tuple):
 
     _series = 'Tuple'
 
-    from_bitsets = classmethod(tuple.__new__)
+    frombitsets = classmethod(tuple.__new__)
 
 
 def _test(verbose=False):

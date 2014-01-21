@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.5
+-----------
+
+Added atoms() and inatoms() method.
+
+Backwards incompatible: renamed from_spam methods to fromspam.
+
+
 Version 0.4
 -----------
 

@@ -1,4 +1,4 @@
-# visualize.py
+# visualize.py - create hasse diagrams
 
 from itertools import imap
 
@@ -19,6 +19,7 @@ label_getters = {
 
 
 def bitset(bs, member_label=None, filename=None, directory=None, render=False, view=False):
+    """Graphviz source for the Hasse diagram of the Boolean algebra over the bitset domain."""
     if member_label is None:
         member_label = MEMBER_LABEL
 
@@ -38,10 +39,10 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
     node_label = label_getters[member_label]
 
     for i in range(bs.supremum + 1):
-        b = bs.from_int(i)
+        b = bs.fromint(i)
         name = node_name(b)
         dot.node(name, node_label(b))
-        dot.edges((node_name(b | a), name) for a in bs._atoms if not b & a)
+        dot.edges((node_name(b | a), name) for a in b.inatoms())
 
     if render or view:
         dot.render(view=view)

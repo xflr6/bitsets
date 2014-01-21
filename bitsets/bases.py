@@ -2,7 +2,7 @@
 
 """Base classes for bitsets providing integer-like and set-like interface."""
 
-from itertools import imap, compress
+from itertools import imap, compress, ifilter, ifilterfalse
 
 import meta
 import integers
@@ -16,10 +16,10 @@ class MemberBits(long):
 
     >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
 
-    >>> Ints.from_int(42)
-    Ints('010101')
+    >>> Ints.fromint(49)
+    Ints('100011')
 
-    >>> Ints('100011').real == 49
+    >>> Ints('100011').int == 49
     True
 
     >>> [x.members() for x in
@@ -32,40 +32,43 @@ class MemberBits(long):
     _indexes = integers.indexes
     _reinverted = integers.reinverted
 
+    frombitset = fromint = classmethod(long.__new__)
+
     @classmethod
-    def from_members(cls, members=()):
+    def frommembers(cls, members=()):
         """Create a set from an iterable of members.
 
         >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
-        >>> Ints.from_members([1, 5, 6])
+        >>> Ints.frommembers([1, 5, 6])
         Ints('100011')
         """
-        return cls.from_int(sum(imap(cls._map.__getitem__, set(members))))
+        return cls.fromint(sum(imap(cls._map.__getitem__, set(members))))
 
     @classmethod
-    def from_bools(cls, bools=()):
+    def frombools(cls, bools=()):
         """Create a set from an iterable of boolean evaluable items.
 
         >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
-        >>> Ints.from_bools([True, '', None, 0, 'yes', 5])
+        >>> Ints.frombools([True, '', None, 0, 'yes', 5])
         Ints('100011')
         """
-        return cls.from_int(sum(compress(cls._atoms, bools)))
+        return cls.fromint(sum(compress(cls._atoms, bools)))
 
-    from_int = classmethod(long.__new__)
-
-    def __new__(cls, bits='0'):
-        """Create a set from a binary string.
+    @classmethod
+    def frombits(cls, bits='0'):
+        """Create a set from binary string.
 
         >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
-        >>> Ints('100011') == Ints.from_int(49)
-        True
+        >>> Ints.frombits('100011')
+        Ints('100011')
         """
         if len(bits) > cls._len:
             raise ValueError(bits)
-        return cls.from_int(bits[::-1], 2)
+        return cls.fromint(bits[::-1], 2)
 
-    from_bits = classmethod(__new__)
+    __new__ = frombits.__func__
+
+    int = long.real
 
     def members(self):
         """Return the set members tuple.
@@ -93,26 +96,44 @@ class MemberBits(long):
         '100011'
         """
         return '{0:0{1}b}'.format(self, self._len)[::-1]
-    
+
     def __repr__(self):
         return '%s(%r)' % (self.__class__.__name__, self.bits())
+
+    def atoms(self):
+        """Yield the singleton for every set member.
+
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
+        >>> list(Ints('100011').atoms())
+        [Ints('100000'), Ints('000010'), Ints('000001')]
+        """
+        return ifilter(self.__and__, self._atoms)
+
+    def inatoms(self):
+        """Yield the singleton for every non-member.
+
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
+        >>> list(Ints('100011').inatoms())
+        [Ints('010000'), Ints('001000'), Ints('000100')]
+        """
+        return ifilterfalse(self.__and__, self._atoms)
 
     def powerset(self, start=None, excludestart=False):
         """Yield combinations from start to self in short lexicographic order.
 
-        >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
         >>> [i.members() for i in list(Ints.supremum.powerset())[22:25]]
         [(1, 2, 3), (1, 2, 4), (1, 2, 5)]
         """
         if start is None:
             start = self.infimum
-            other = [a for a in self._atoms if self & a]
+            other = self.atoms()
         else:
             if self | start != self:
                 raise ValueError('%r is no subset of %r' % (start, self))
             other = self & ~start
-            other = [a for a in self._atoms if a & other]
-        return imap(self.from_int, combos.shortlex(start, other))
+            other = other.atoms()
+        return imap(self.frombitset, combos.shortlex(start, list(other)))
 
     def shortlex(self):
         """Return sort key for short lexicographical order."""
@@ -133,7 +154,7 @@ class MemberBits(long):
     def count(self):
         """Returns the number of items in the set (cardinality).
         
-        >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
         >>> Ints('100011').count()
         3
         """
@@ -142,7 +163,7 @@ class MemberBits(long):
     def all(self):
         """Return True iff the set contains all domain items.
 
-        >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
         >>> Ints('111111').all() and not Ints('001010').all()
         True
         """
@@ -151,7 +172,7 @@ class MemberBits(long):
     def any(self):
         """Return True iff the set contains at least one items.
 
-        >>> Ints = BitSet.subclass('Ints', tuple(range(1, 7)))
+        >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
         >>> Ints('100000').any() and not Ints('000000').any()
         True
         """
@@ -166,17 +187,16 @@ class BitSet(MemberBits):
     >>> Numbers([1, 2, 3])
     Numbers([1, 2, 3])
 
-    >>> Numbers.from_bits('110001')
+    >>> Numbers.frombits('110001')
     Numbers([1, 2, 6])
     """
 
-    __new__ = MemberBits.from_members.__func__
+    __new__ = MemberBits.frommembers.__func__
 
     def __repr__(self):
         members = map(self._members.__getitem__, self._indexes())
-        if not members:
-            return '%s()' % (self.__class__.__name__)
-        return '%s(%r)' % (self.__class__.__name__, members)
+        arg = '%r' % members if members else ''
+        return '%s(%s)' % (self.__class__.__name__, arg)
 
     __nonzero__ = MemberBits.any.__func__
 
@@ -205,7 +225,6 @@ class BitSet(MemberBits):
         """
         return self._map[member] & self
         
-
     def issubset(self, other):
         """Inverse set containment.
 
@@ -214,7 +233,7 @@ class BitSet(MemberBits):
         >>> assert not Numbers([1]).issubset(Numbers())
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
+            other = self.frommembers(other)
         return self & other == self
 
     def issuperset(self, other):
@@ -225,7 +244,7 @@ class BitSet(MemberBits):
         >>> assert not Numbers().issuperset(Numbers([1]))
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
+            other = self.frommembers(other)
         return self | other == self
 
     def isdisjoint(self, other):
@@ -236,7 +255,7 @@ class BitSet(MemberBits):
         >>> assert not Numbers([1]).isdisjoint(Numbers([1]))
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
+            other = self.frommembers(other)
         return not self & other
 
     def intersection(self, other):
@@ -247,8 +266,8 @@ class BitSet(MemberBits):
         Numbers([2])
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
-        return self.from_int(self & other)
+            other = self.frommembers(other)
+        return self.frombitset(self & other)
 
     def union(self, other):
         """Set union.
@@ -258,8 +277,8 @@ class BitSet(MemberBits):
         Numbers([1, 2, 3])
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
-        return self.from_int(self | other)
+            other = self.frommembers(other)
+        return self.frombitset(self | other)
 
     def difference(self, other):
         """Set difference.
@@ -269,8 +288,8 @@ class BitSet(MemberBits):
         Numbers([1])
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
-        return self.from_int(self & ~other)
+            other = self.frommembers(other)
+        return self.frombitset(self & ~other)
 
     def symmetric_difference(self, other):
         """Symmetric set difference.
@@ -280,8 +299,8 @@ class BitSet(MemberBits):
         Numbers([1, 3])
         """
         if not isinstance(other, self.__class__):
-            other = self.from_members(other)
-        return self.from_int(self ^ other)
+            other = self.frommembers(other)
+        return self.frombitset(self ^ other)
 
     def complement(self):
         """Complement set.
@@ -290,7 +309,7 @@ class BitSet(MemberBits):
         >>> Numbers([1, 2]).complement()
         Numbers([3, 4, 5, 6])
         """
-        return self.from_int(self ^ self.supremum)
+        return self.frombitset(self ^ self.supremum)
 
 
 def _test(verbose=False):

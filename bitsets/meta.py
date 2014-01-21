@@ -2,7 +2,7 @@
 
 """Dynamic bitset class creation and retrieval."""
 
-from itertools import izip
+from itertools import izip, ifilter, ifilterfalse
 import copy_reg
 
 __all__ = ['MemberBitsMeta', 'SeriesMeta']
@@ -51,7 +51,9 @@ class MemberBitsMeta(type):
         return cls
 
     def __new__(self, name, bases, dct):
-        dct['__slots__'] = ()
+        if not dct.get('__slots__'):
+            dct['__slots__'] = ()
+
         return super(MemberBitsMeta, self).__new__(self, name, bases, dct)
 
     def __init__(self, name, bases, dct):
@@ -59,11 +61,11 @@ class MemberBitsMeta(type):
             return
 
         self._len = len(self._members)
-        self._atoms = tuple(self.from_int(1 << i) for i in range(self._len))
+        self._atoms = tuple(self.fromint(1 << i) for i in range(self._len))
         self._map = {i: s for i, s in izip(self._members, self._atoms)}
 
-        self.infimum = self.from_int(0)  # all zeros
-        self.supremum = self.from_int((1 << self._len) - 1)  # all ones
+        self.infimum = self.fromint(0)  # all zeros
+        self.supremum = self.fromint((1 << self._len) - 1)  # all ones
 
         if not hasattr(self, '_id'):
             self._id = id(self)
@@ -87,17 +89,27 @@ class MemberBitsMeta(type):
             self.List.__base__ if hasattr(self, 'List') else None,
             self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
 
-    def reduce_and(self, memberbits):
-        result = self.supremum
-        for m in memberbits:
-            result &= m
-        return self.from_int(result)
+    def atomic(self, bitset):
+        """Member singleton generator."""
+        return ifilter(bitset.__and__, self._atoms)
 
-    def reduce_or(self, memberbits):
-        result = self.infimum
-        for m in memberbits:
-            result |= m
-        return self.from_int(result)
+    def inatomic(self, bitset):
+        """Complement singleton generator."""
+        return ifilterfalse(bitset.__and__, self._atoms)
+
+    def reduce_and(self, bitsets):
+        """Generalized intersection."""
+        inters = self.frombitset(self.supremum)
+        for b in bitsets:
+            inters &= b
+        return self.frombitset(inters)
+
+    def reduce_or(self, bitsets):
+        """Generalized union."""
+        union = self.frombitset(self.infimum)
+        for b in bitsets:
+            union |= b
+        return self.frombitset(union)
 
 
 copy_reg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)

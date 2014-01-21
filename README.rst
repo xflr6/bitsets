@@ -3,16 +3,15 @@ Bitsets
 
 |PyPI version| |License| |Downloads|
 
-Bitsets are **ordered sets** which are subsets of a predefined
-**finite domain** of hashable items.
+Bitsets are **ordered sets** which are subsets of a predefined **finite domain**
+of hashable items.
 
-They are implemented as pure Python **integers** representing the
-rank of the set in colexicographical order (a.k.a bit strings,
-powers of two, binary strings). Hence, they can be very
-**space-efficient**, e.g. if a large number of subsets from a
-collection needs to be present in memory. Furthermore, they can be
-compared, intersected, etc. using normal **bitwise operations**
-of integers (``&, |, ^, ~``).
+They are implemented as pure Python **integers** representing the rank of the
+set in colexicographical order (a.k.a bit strings, powers of two, binary
+strings). Hence, they can be very **space-efficient**, e.g. if a large number of
+subsets from a collection needs to be present in memory. Furthermore, they can
+be compared, intersected, etc. using normal **bitwise operations** of integers
+(``&, |, ^, ~``).
 
 
 Installation
@@ -26,8 +25,8 @@ Installation
 Creation
 --------
 
-Use the ``bitset`` function to create a class representing ordered
-subsets from a fixed set of items (the domain):
+Use the ``bitset`` function to create a class representing ordered subsets from
+a fixed set of items (the domain):
 
 .. code:: python
 
@@ -37,9 +36,9 @@ subsets from a fixed set of items (the domain):
 
 The domain collection needs to be a hashable sequence (e.g. a ``tuple``).
 
-The resulting class is an integer (``long``) subclass, so its instances
-(being integers) are **immutable and hashable** and thus in many ways
-similar to pythons built-in ``frozenset``.
+The resulting class is an integer (``long``) subclass, so its instances (being
+integers) are **immutable and hashable** and thus in many ways similar to
+pythons built-in ``frozenset``.
 
 .. code:: python
 
@@ -52,16 +51,16 @@ colexicographical order):
 
 .. code:: python
 
-    >>> Pythons.from_int(0)
+    >>> Pythons.fromint(0)
     Pythons()
 
-    >>> [Pythons.from_int(1), Pythons.from_int(2), Pythons.from_int(4)]
+    >>> [Pythons.fromint(1), Pythons.fromint(2), Pythons.fromint(4)]
     [Pythons(['Chapman']), Pythons(['Cleese']), Pythons(['Gilliam'])]
 
-    >>> Pythons.from_int(2 ** 6 - 1)
+    >>> Pythons.fromint(2 ** 6 - 1)
     Pythons(['Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin'])
 
-    >>> Pythons.from_int((1 << 0) + (1 << 5))
+    >>> Pythons.fromint((1 << 0) + (1 << 5))
     Pythons(['Chapman', 'Palin'])
 
 
@@ -81,21 +80,21 @@ The class provides access to the **minimal** (``infimum``) and **maximal**
 Basic usage
 -----------
 
-Bitsets can be created from members, bit strings, boolean sequences,
-and integers:
+Bitsets can be created from members, bit strings, boolean sequences, and
+integers:
 
 .. code:: python
 
     >>> Pythons(['Palin', 'Cleese'])
     Pythons(['Cleese', 'Palin'])
 
-    >>> Pythons.from_bits('101000')
+    >>> Pythons.frombits('101000')
     Pythons(['Chapman', 'Gilliam'])
 
-    >>> Pythons.from_bools([True, False, True, False, False, False])
+    >>> Pythons.frombools([True, False, True, False, False, False])
     Pythons(['Chapman', 'Gilliam'])
 
-    >>> Pythons.from_int(5)
+    >>> Pythons.fromint(5)
     Pythons(['Chapman', 'Gilliam'])
 
 Members always occur in the **definition order**.
@@ -110,8 +109,8 @@ Bitsets cannot contain items other than those from their domain:
     KeyError: 'Brian'
 
 
-Bitsets can be converted to members, bit strings, boolean sequences
-and integers:
+Bitsets can be converted to members, bit strings, boolean sequences and
+integers:
 
 .. code:: python
 
@@ -131,17 +130,17 @@ and integers:
 Sorting
 -------
 
-To facilitate sorting collections of bitsets, they have **key methods**
-for different sort orders (``shortlex``, ``longlex``, ``shortcolex``,
-and ``longcolex``):
+To facilitate sorting collections of bitsets, they have **key methods** for
+different sort orders (``shortlex``, ``longlex``, ``shortcolex``, and
+``longcolex``):
 
 .. code:: python
 
     >>> Pythons(['Idle']).shortlex() < Pythons(['Palin']).shortlex()
     True
 
-Sorting a collection of bitsets without using a keyfunction will order
-them in **colexicographical order**.
+Sorting a collection of bitsets without using a key function will order them in
+**colexicographical order**.
 
 
 Powersets
@@ -162,10 +161,10 @@ Iterate over a bitsets' ``powerset`` in short lexicographic order:
 ``frozenset`` compatibility
 ---------------------------
 
-For convenience, bitsets provide the same methods as ``frozenset``
-(i.e. ``issubset``, ``issuperset``, ``isdisjoint``, ``intersection``,
-``union``, ``difference``, ``symmetric_difference``, ``__len__``,
-``__iter__``, ``__nonzero__``, and ``__contains__``).
+For convenience, bitsets provide the same methods as ``frozenset`` (i.e.
+``issubset``, ``issuperset``, ``isdisjoint``, ``intersection``, ``union``,
+``difference``, ``symmetric_difference``, ``__len__``, ``__iter__``,
+``__nonzero__``, and ``__contains__``).
 
 .. code:: python
 
@@ -178,8 +177,8 @@ For convenience, bitsets provide the same methods as ``frozenset``
     >>> Pythons(['Chapman', 'Idle']).intersection(Pythons(['Idle', 'Palin']))
     Pythons(['Idle'])
 
-Note, however that all the **operators methods** (``+, -, &, |`` etc.)
-retain their **integer semantics**:
+Note, however that all the **operators methods** (``+, -, &, |`` etc.) retain
+their **integer semantics**:
 
 .. code:: python
 
@@ -187,9 +186,8 @@ retain their **integer semantics**:
     1L
 
 
-In tight loops it might be worth to use **bitwise expressions**
-(``&, |, ^, ~``) for set comparisons/operation instead of the
-``frozenset``-compatible methods:
+In tight loops it might be worth to use **bitwise expressions** (``&, |, ^, ~``)
+for set comparisons/operations instead of the ``frozenset``-compatible methods:
 
 .. code:: python
 
@@ -201,8 +199,8 @@ In tight loops it might be worth to use **bitwise expressions**
 Added functionality
 -------------------
 
-Differing from ``frozenset``, you can also retrieve the ``complement`` set
-of a bitset:
+Differing from ``frozenset``, you can also retrieve the ``complement`` set of a
+bitset:
 
 .. code:: python
 
@@ -238,11 +236,13 @@ Test if a bitset is non-minimal (``infimum``), same as ``bool(bitset)``:
 Visualization
 -------------
 
-With the help of the optional `Graphviz <http://www.graphviz.org>`_ graph layout
-library and this `Python interface <http://pypi.python.org/pypi/graphviz>`_, the ``bitsets.visualize`` module can create **hasse diagrams** of all bitsets from
-your domain:
+With the help of the optional Graphviz_ graph layout library and this `Python
+interface`__, the ``bitsets.visualize`` module can create **hasse diagrams** of
+all bitsets from your domain:
 
-Download and install `Graphviz`. Then install the Python interface:
+.. __: http://pypi.python.org/pypi/graphviz
+
+Download and install Graphviz_. Then install the Python interface:
 
 .. code:: bash
 
@@ -267,6 +267,7 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-bits.png
+    :align: center
 
 
 Show members instead of bits:
@@ -285,6 +286,7 @@ Show members instead of bits:
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-members.png
+    :align: center
 
 Remember that the graphs have ``2 ** domain_size`` nodes.
 
@@ -292,8 +294,8 @@ Remember that the graphs have ``2 ** domain_size`` nodes.
 Advanced usage
 --------------
 
-To use a **customized bitset**, extend a class from the ``bitsets.bases``
-module and pass it to the ``bitset`` function.
+To use a **customized bitset**, extend a class from the ``bitsets.bases`` module
+and pass it to the ``bitset`` function.
 
 .. code:: python
 
@@ -315,34 +317,34 @@ module and pass it to the ``bitset`` function.
     False
 
 
-When activated, each bitset class comes with tailored **collection
-classes** (bitset list and bitset tuple) for its instances.
+When activated, each bitset class comes with tailored **collection classes**
+(bitset list and bitset tuple) for its instances.
 
 .. code:: python
 
     >>> Letters = bitsets.bitset('Letters', 'abcdef', list=True)
 
-    >>> Letters.List.from_members(['a', 'bcd', 'ef'])
+    >>> Letters.List.frommembers(['a', 'bcd', 'ef'])
     LettersList('100000', '011100', '000011')
 
 
-To use a **customized bitset collection class**, extend a class
-from the ``bitsets.series`` module and pass it to the ``bitset`` function
+To use a **customized bitset collection class**, extend a class from the
+``bitsets.series`` module and pass it to the ``bitset`` function
 
 .. code:: python
 
     >>> class ReduceList(bitsets.series.List):
     ...     def intersection(self):
-    ...         return self.BitSet.from_int(reduce(long.__and__, self))
+    ...         return self.BitSet.fromint(reduce(long.__and__, self))
     ...     def union(self):
-    ...         return self.BitSet.from_int(reduce(long.__or__, self))
+    ...         return self.BitSet.fromint(reduce(long.__or__, self))
 
     >>> Nums = bitsets.bitset('Nums', (1, 2, 3), list=ReduceList)
 
     >>> issubclass(Nums.List, ReduceList)
     True
 
-    >>> numslist = Nums.List.from_members([(1, 2, 3), (1, 2), (2, 3)])
+    >>> numslist = Nums.List.frommembers([(1, 2, 3), (1, 2), (2, 3)])
 
     >>> numslist.intersection()
     Nums([2])
@@ -376,6 +378,7 @@ Further reading
 ---------------
 
 - http://wiki.python.org/moin/BitManipulation
+- http://wiki.python.org/moin/BitArrays
 
 - http://en.wikipedia.org/wiki/Bit_array
 - http://en.wikipedia.org/wiki/Bit_manipulation
@@ -387,16 +390,28 @@ Further reading
 See also
 --------
 
-- http://pypi.python.org/pypi/bitarray
-- http://pypi.python.org/pypi/bitstring
-- http://pypi.python.org/pypi/BitVector
+- bitarray_ |--| efficient boolean array implemented as C extension
+- bitstring_ |--| pure-Python bit string based on ``bytearray``
+- BitVector_ |--| pure-Python bit array based on unsigned short ``array``
 
 
 License
 -------
 
-Bitsets is distributed under the `MIT license
-<http://opensource.org/licenses/MIT>`_.
+Bitsets is distributed under the `MIT license`_.
+
+
+.. _Graphviz: http://www.graphviz.org
+
+.. _bitarray: http://pypi.python.org/pypi/bitarray
+.. _bitstring: http://pypi.python.org/pypi/bitstring
+.. _BitVector: http://pypi.python.org/pypi/BitVector
+
+.. _MIT license: http://opensource.org/licenses/MIT
+
+
+.. |--| unicode:: U+2013
+
 
 .. |PyPI version| image:: https://pypip.in/v/bitsets/badge.png
     :target: https://pypi.python.org/pypi/bitsets
