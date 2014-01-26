@@ -42,12 +42,17 @@ class MemberBitsMeta(type):
         if id:
             dct['_id'] = id
         cls = type(name, (self,), dct)
+
+        self.__registry[(cls.__name__, cls._members, cls._id)] = cls
+
         if listcls is not None:
             assert listcls._series == 'List'
             setattr(cls, listcls._series, listcls._make_subclass(name, cls))
+
         if tuplecls is not None:
             assert tuplecls._series == 'Tuple'
             setattr(cls, tuplecls._series, tuplecls._make_subclass(name, cls))
+
         return cls
 
     def __new__(self, name, bases, dct):
@@ -61,16 +66,15 @@ class MemberBitsMeta(type):
             return
 
         self._len = len(self._members)
+
         self._atoms = tuple(self.fromint(1 << i) for i in range(self._len))
-        self._map = {i: s for i, s in izip(self._members, self._atoms)}
+        self._map = {m: i for m, i in izip(self._members, self._atoms)}
 
         self.infimum = self.fromint(0)  # all zeros
         self.supremum = self.fromint((1 << self._len) - 1)  # all ones
 
         if not hasattr(self, '_id'):
             self._id = id(self)
-
-        self.__registry[(name, self._members, self._id)] = self
 
     def __repr__(self):
         if not hasattr(self, '_members'):

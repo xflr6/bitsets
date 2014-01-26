@@ -3,7 +3,7 @@
 """Ordered subsets of a predetermined finite domain."""
 
 __title__ = 'bitsets'
-__version__ = '0.5'
+__version__ = '0.5.1'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2014 Sebastian Bank'
@@ -38,7 +38,7 @@ def bitset(name, members, base=bases.BitSet, list=False, tuple=False):
     if len(members) < 2:
         raise ValueError('less than two bitset members: %r' % members)
 
-    if not issubclass(base, bases.MemberBits):
+    if not issubclass(base.__class__, meta.MemberBitsMeta):
         raise ValueError('bitset base does not subclass bitset.bases: %r' % base)
 
     list = {False: None, True: series.List}.get(list, list)

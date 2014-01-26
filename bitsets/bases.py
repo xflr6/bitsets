@@ -19,17 +19,21 @@ class MemberBits(long):
     >>> Ints.fromint(49)
     Ints('100011')
 
-    >>> Ints('100011').int == 49
-    True
+    >>> Ints('100011').int
+    49L
 
-    >>> [x.members() for x in
-    ... sorted(i for i in Ints.supremum.powerset() if i.count() == 3)[:3]]
-    [(1, 2, 3), (1, 2, 4), (1, 3, 4)]
+    >>> triples = sorted(i for i in Ints.supremum.powerset() if i.count() == 3)
+    >>> ['%d%d%d' % t.members() for t in triples]  # doctest: +NORMALIZE_WHITESPACE
+    ['123',
+     '124', '134', '234',
+     '125', '135', '235', '145', '245', '345',
+     '126', '136', '236', '146', '246', '346', '156', '256', '356', '456']
     """
 
     __metaclass__ = meta.MemberBitsMeta
 
     _indexes = integers.indexes
+
     _reinverted = integers.reinverted
 
     frombitset = fromint = classmethod(long.__new__)
@@ -122,8 +126,18 @@ class MemberBits(long):
         """Yield combinations from start to self in short lexicographic order.
 
         >>> Ints = MemberBits.subclass('Ints', tuple(range(1, 7)))
-        >>> [i.members() for i in list(Ints.supremum.powerset())[22:25]]
-        [(1, 2, 3), (1, 2, 4), (1, 2, 5)]
+        >>> triples = [i for i in Ints.supremum.powerset() if i.count() == 3]
+        >>> ['%d%d%d' % t.members() for t in triples] # doctest: +NORMALIZE_WHITESPACE
+        ['123', '124', '125', '126',
+                '134', '135', '136',
+                       '145', '146',
+                              '156',
+                '234', '235', '236',
+                       '245', '246',
+                              '256',
+                       '345', '346',
+                              '356',
+                              '456']
         """
         if start is None:
             start = self.infimum
@@ -145,11 +159,11 @@ class MemberBits(long):
 
     def shortcolex(self):
         """Return sort key for short colexicographical order."""
-        return bin(self).count('1'), self.real
+        return bin(self).count('1'), self.int
 
     def longcolex(self):
         """Return sort key for long colexicographical order."""
-        return -bin(self).count('1'), self.real
+        return -bin(self).count('1'), self.int
 
     def count(self):
         """Returns the number of items in the set (cardinality).
@@ -186,21 +200,18 @@ class BitSet(MemberBits):
 
     >>> Numbers([1, 2, 3])
     Numbers([1, 2, 3])
-
-    >>> Numbers.frombits('110001')
-    Numbers([1, 2, 6])
     """
 
     __new__ = MemberBits.frommembers.__func__
+
+    __len__ = MemberBits.count.__func__
+
+    __nonzero__ = MemberBits.any.__func__
 
     def __repr__(self):
         members = map(self._members.__getitem__, self._indexes())
         arg = '%r' % members if members else ''
         return '%s(%s)' % (self.__class__.__name__, arg)
-
-    __nonzero__ = MemberBits.any.__func__
-
-    __len__ = MemberBits.count.__func__
 
     def __iter__(self):
         """Iterator over the set members.
@@ -318,3 +329,4 @@ def _test(verbose=False):
 
 if __name__ == '__main__':
     _test()
+    Numbers = BitSet.subclass('Numbers', tuple(range(1, 7)))

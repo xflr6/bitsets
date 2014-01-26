@@ -393,6 +393,7 @@ See also
 - bitarray_ |--| efficient boolean array implemented as C extension
 - bitstring_ |--| pure-Python bit string based on ``bytearray``
 - BitVector_ |--| pure-Python bit array based on unsigned short ``array``
+- Bitsets_ |--| Cython interface to fast bitsets in Sage
 
 
 License
@@ -406,6 +407,7 @@ Bitsets is distributed under the `MIT license`_.
 .. _bitarray: http://pypi.python.org/pypi/bitarray
 .. _bitstring: http://pypi.python.org/pypi/bitstring
 .. _BitVector: http://pypi.python.org/pypi/BitVector
+.. _Bitsets: http://www.sagemath.org/doc/reference/misc/sage/misc/bitset.html
 
 .. _MIT license: http://opensource.org/licenses/MIT
 
