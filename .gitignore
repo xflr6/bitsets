@@ -2,5 +2,6 @@
 MAINIFEST
 dist/
 *.egg-info/
-bs-four-*
+bs-Four-*
 Thumbs.db
+.coverage

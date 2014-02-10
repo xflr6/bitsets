@@ -12,28 +12,6 @@ class MemberBitsMeta(type):
 
     __registry = {}
 
-    def subclass(self, name, members, listcls=None, tuplecls=None):
-        """Return first class with name and members or create (for doctests)."""
-        matching = [cls for (cname, cmembers, cid), cls
-            in self.__registry.iteritems()
-            if cname == name and cmembers == members]
-
-        if len(matching) == 1:
-            return matching[0]
-        elif matching:
-            raise RuntimeError('Multiple classes matching %r' % matching)
-        return self._make_subclass(name, members, None, listcls, tuplecls)
-
-    def _get_subclass(self, name, members, id, listcls, tuplecls):
-        """Return or create class with name, members, and id (for unpickling)."""
-        if not isinstance(id, (int, long)):
-            raise RuntimeError
-
-        if (name, members, id) in self.__registry:
-            # this enables roundtrip reprs
-            return self.__registry[(name, members, id)]
-        return self._make_subclass(name, members, id, listcls, tuplecls)
-
     def _make_subclass(self, name, members, id=None, listcls=None, tuplecls=None):
         if hasattr(self, '_members'):
             raise RuntimeError('%r attempt _make_subclass' % self)
@@ -41,24 +19,25 @@ class MemberBitsMeta(type):
         dct = {'_members': members}
         if id:
             dct['_id'] = id
+
         cls = type(name, (self,), dct)
 
         self.__registry[(cls.__name__, cls._members, cls._id)] = cls
 
         if listcls is not None:
+            listcls = listcls._make_subclass(name, cls)
             assert listcls._series == 'List'
-            setattr(cls, listcls._series, listcls._make_subclass(name, cls))
+            setattr(cls, listcls._series, listcls)
 
         if tuplecls is not None:
+            tuplecls = tuplecls._make_subclass(name, cls)
             assert tuplecls._series == 'Tuple'
-            setattr(cls, tuplecls._series, tuplecls._make_subclass(name, cls))
+            setattr(cls, tuplecls._series, tuplecls)
 
         return cls
 
     def __new__(self, name, bases, dct):
-        if not dct.get('__slots__'):
-            dct['__slots__'] = ()
-
+        dct.setdefault('__slots__', ())
         return super(MemberBitsMeta, self).__new__(self, name, bases, dct)
 
     def __init__(self, name, bases, dct):
@@ -92,6 +71,16 @@ class MemberBitsMeta(type):
         return bitset, (self.__name__, self._members, self._id, self.__base__,
             self.List.__base__ if hasattr(self, 'List') else None,
             self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
+
+    def _get_subclass(self, name, members, id, listcls, tuplecls):
+        """Return or create class with name, members, and id (for unpickling)."""
+        if not isinstance(id, (int, long)):
+            raise RuntimeError
+
+        if (name, members, id) in self.__registry:  # enable roundtrip reprs
+            return self.__registry[(name, members, id)]
+
+        return self._make_subclass(name, members, id, listcls, tuplecls)
 
     def atomic(self, bitset):
         """Member singleton generator."""

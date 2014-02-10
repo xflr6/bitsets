@@ -8,18 +8,17 @@ __all__ = ['bitset']
 
 MEMBER_LABEL = False
 
+NAME_GETTERS = [lambda b: 'b%d' % b, lambda b: b.bits()]
 
-name_getters = [lambda b: 'b%d' % b, lambda b: b.bits()]
-
-label_getters = {
+LABEL_GETTERS = {
+    None: lambda b: '',
     False: lambda b: b.bits(),
     True: lambda b: '{%s}' % ','.join(imap(str, b.members())),
-    None: lambda b: '',
 }
 
 
 def bitset(bs, member_label=None, filename=None, directory=None, render=False, view=False):
-    """Graphviz source for the Hasse diagram of the Boolean algebra over the bitset domain."""
+    """Graphviz source for the Hasse diagram of the domains' Boolean algebra."""
     if member_label is None:
         member_label = MEMBER_LABEL
 
@@ -34,15 +33,15 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
         edge_attr=dict(dir='none')
     )
 
-    node_name =name_getters[0] 
+    node_name = NAME_GETTERS[0] 
 
-    node_label = label_getters[member_label]
+    node_label = LABEL_GETTERS[member_label]
 
     for i in range(bs.supremum + 1):
         b = bs.fromint(i)
         name = node_name(b)
         dot.node(name, node_label(b))
-        dot.edges((node_name(b | a), name) for a in b.inatoms())
+        dot.edges((name, node_name(b & ~a)) for a in b.atoms(reverse=True))
 
     if render or view:
         dot.render(view=view)

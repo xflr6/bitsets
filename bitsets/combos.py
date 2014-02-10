@@ -60,11 +60,3 @@ def reverse_shortlex(end, other, excludeend=False):
 
             if other:
                 queue.append((result, other))
-
-
-def _test(verbose=False):
-    import doctest
-    doctest.testmod(verbose=verbose)
-
-if __name__ == '__main__':
-    _test()

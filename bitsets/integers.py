@@ -2,6 +2,8 @@
 
 """Bit manipulation for set rank and unrank."""
 
+import string
+
 __all__ = ['indexes', 'reinverted', 'unrank']
 
 
@@ -22,6 +24,9 @@ def indexes(n):
 def reinverted(n, r):
     """Integer with reversed and inverted bits of n assuming bit length r.
 
+    >>> reinverted(1, 6)
+    31
+
     >>> [reinverted(x, 6) for x in [7, 11, 13, 14, 19, 21, 22, 25, 26, 28]]
     [7, 11, 19, 35, 13, 21, 37, 25, 41, 49]
     """
@@ -37,20 +42,13 @@ def reinverted(n, r):
     return result
 
 
-def unrank(n, sequence='abcdefghijklmnopqrstuvwxyz'):
+def unrank(n, sequence=string.ascii_lowercase):
     """Unrank n from sequence in colexicographical order.
 
     >>> [''.join(unrank(i)) for i in range(8)]
     ['', 'a', 'b', 'ab', 'c', 'ac', 'bc', 'abc']
-    >>> unrank(147491)
-    ['a', 'b', 'f', 'o', 'r']
+
+    >>> unrank(299009)
+    ['a', 'm', 'p', 's']
     """
     return map(sequence.__getitem__, indexes(n))
-
-
-def _test(verbose=False):
-    import doctest
-    doctest.testmod(verbose=verbose)
-
-if __name__ == '__main__':
-    _test()

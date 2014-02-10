@@ -3,8 +3,8 @@
 import bitsets
 import bitsets.visualize
 
-four = bitsets.bitset('four', (1, 2, 3, 4))
+Four = bitsets.bitset('Four', (1, 2, 3, 4))
 
-bitsets.visualize.bitset(four, render=True)
+bitsets.visualize.bitset(Four, render=True)
 
-bitsets.visualize.bitset(four, member_label=True, render=True)
+bitsets.visualize.bitset(Four, member_label=True, render=True)

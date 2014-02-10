@@ -2,6 +2,16 @@ Bitsets Changelog
 =================
 
 
+Version 0.6
+-----------
+
+Added reverse argument to atoms() and inatoms(), improved visualization edge order.
+
+Changed series frombitsets argument to iterable argument instead of *args, fixed bits method.
+
+Improved doctests.
+
+
 Version 0.5.1
 -------------
 

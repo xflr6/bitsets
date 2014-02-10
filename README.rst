@@ -253,17 +253,22 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
 .. code:: python
 
     >>> from bitsets import visualize
-    >>> Four = bitset('four', (1, 2, 3, 4))
+    >>> Four = bitset('Four', (1, 2, 3, 4))
 
     >>> dot = visualize.bitset(Four)
 
     >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    // <class bitsets.meta.bitset('four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
-    digraph four {
+    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph Four {
     edge [dir=none]
     	b0 [label=0000]
+    	b1 [label=1000]
     		b1 -> b0
+    	b2 [label=0100]
     		b2 -> b0
+    	b3 [label=1100]
+    		b3 -> b1
+    		b3 -> b2
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-bits.png
@@ -277,12 +282,17 @@ Show members instead of bits:
     >>> dot = visualize.bitset(Four, member_label=True)
 
     >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
-    // <class bitsets.meta.bitset('four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
-    digraph four {
+    // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
+    digraph Four {
     edge [dir=none]
     	b0 [label="{}"]
+    	b1 [label="{1}"]
     		b1 -> b0
+    	b2 [label="{2}"]
     		b2 -> b0
+    	b3 [label="{1,2}"]
+    		b3 -> b1
+    		b3 -> b2
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-members.png
@@ -290,7 +300,7 @@ Show members instead of bits:
 
 Remember that the graphs have ``2 ** domain_size`` nodes.
 
-	
+
 Advanced usage
 --------------
 
@@ -305,7 +315,7 @@ and pass it to the ``bitset`` function.
     ...     def issubset_proper(self, other):
     ...         return self & other == self != other
 
-    >>> Ints = bitsets.bitset('Ints', tuple(range(1, 7)), base=ProperSet)
+    >>> Ints = bitsets.bitset('Ints', (1, 2, 3, 4, 5, 6), base=ProperSet)
 
     >>> issubclass(Ints, ProperSet)
     True
@@ -394,6 +404,7 @@ See also
 - bitstring_ |--| pure-Python bit string based on ``bytearray``
 - BitVector_ |--| pure-Python bit array based on unsigned short ``array``
 - Bitsets_ |--| Cython interface to fast bitsets in Sage
+- bitfield_ |--| Cython positive integer sets
 
 
 License
@@ -408,6 +419,7 @@ Bitsets is distributed under the `MIT license`_.
 .. _bitstring: http://pypi.python.org/pypi/bitstring
 .. _BitVector: http://pypi.python.org/pypi/BitVector
 .. _Bitsets: http://www.sagemath.org/doc/reference/misc/sage/misc/bitset.html
+.. _bitfield: http://pypi.python.org/pypi/bitfield
 
 .. _MIT license: http://opensource.org/licenses/MIT
 

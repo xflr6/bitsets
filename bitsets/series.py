@@ -5,13 +5,64 @@
 from itertools import imap
 
 import meta
-import bases
 
 __all__ = ['List', 'Tuple']
 
 
 class Series(object):
-    """Abstract bitset sequence."""
+    """Bitset sequence.
+
+    >>> import bases
+
+    >>> Nums = bases.BitSet._make_subclass('Nums', (1, 2, 3, 4, 5, 6), listcls=List, tuplecls=Tuple)
+
+    >>> Nums.List  # doctest: +ELLIPSIS
+    <class bitsets.meta.bitset_list('Nums', (1, 2, 3, 4, 5, 6), 0x..., BitSet, List, Tuple)>
+
+    >>> Nums.Tuple  # doctest: +ELLIPSIS
+    <class bitsets.meta.bitset_tuple('Nums', (1, 2, 3, 4, 5, 6), 0x..., BitSet, List, Tuple)>
+
+    >>> Nums.List('101000','110000')
+    NumsList('101000', '110000')
+
+    >>> Nums.Tuple('101000','110000')
+    NumsTuple('101000', '110000')
+
+
+    >>> issubclass(Nums.List, list) and issubclass(Nums.Tuple, tuple)
+    True
+
+    >>> Nums.List.frombitsets([]), Nums.Tuple.frombitsets([])
+    (NumsList(), NumsTuple())
+    
+
+    >>> Nums.List.frommembers([(1, 3), (1, 2)])
+    NumsList('101000', '110000')
+
+    >>> Nums.List.frombools([(True, False, True), (True, True, False)])
+    NumsList('101000', '110000')
+
+    >>> Nums.List.frombits(['101000', '110000'])
+    NumsList('101000', '110000')
+
+
+    >>> Nums.List('101000', '110000').members()
+    [(1, 3), (1, 2)]
+
+    >>> Nums.List('101000', '110000').bools()  # doctest: +NORMALIZE_WHITESPACE
+    [(True, False, True, False, False, False),
+     (True, True, False, False, False, False)]
+
+    >>> Nums.List('101000', '110000').bits()
+    ['101000', '110000']
+
+
+    >>> Nums.List('101000', '110000').reduce_and()
+    Nums([1])
+
+    >>> Nums.List('101000', '110000').reduce_or()
+    Nums([1, 2, 3])
+    """
 
     __metaclass__ = meta.SeriesMeta
 
@@ -28,10 +79,9 @@ class Series(object):
         return cls.frombitsets(imap(cls.BitSet.frombools, bools))
 
     @classmethod
-    def frombits(cls, *bits):
+    def frombits(cls, bits):
+        """Series from binary string arguments."""
         return cls.frombitsets(imap(cls.BitSet.frombits, bits))
-
-    __new__ = frombits.__func__
 
     def members(self):
         """Return the series as list of set member tuples."""
@@ -43,7 +93,7 @@ class Series(object):
 
     def bits(self):
         """Return the series as list of binary set membership strings."""
-        return [b.bools() for b in self]
+        return [b.bits() for b in self]
 
     def __repr__(self):
         items = ', '.join('%r' % b.bits() for b in self)
@@ -59,43 +109,7 @@ class Series(object):
 
 
 class List(Series, list):
-    """Mutable bitset sequence.
-
-    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), List, Tuple)
-    >>> IntsList = Ints.List
-    >>> issubclass(IntsList, list)
-    True
-
-    >>> IntsList.frommembers([(1, 3), (1, 2)])
-    IntsList('101000', '110000')
-
-    >>> IntsList.frombools([(True, False, True), (True, True, False)])
-    IntsList('101000', '110000')
-
-    >>> IntsList('100100', '000000')
-    IntsList('100100', '000000')
-
-    >>> IntsList.frombits('100100', '000000')
-    IntsList('100100', '000000')
-
-    >>> IntsList.frombitsets([Ints.frombits('100100')])
-    IntsList('100100')
-
-    >>> IntsList('101000').members()
-    [(1, 3)]
-
-    >>> IntsList('101000').bools()
-    [(True, False, True, False, False, False)]
-
-    >>> IntsList('101000').bits()
-    [(True, False, True, False, False, False)]
-
-    >>> IntsList('100100', '000100').reduce_and()
-    Ints([4])
-
-    >>> IntsList('100100', '000100').reduce_or()
-    Ints([1, 4])
-    """
+    """Mutable bitset sequence."""
 
     __slots__ = ()
 
@@ -114,43 +128,7 @@ class List(Series, list):
 
 
 class Tuple(Series, tuple):
-    """Immutable bitset sequence.
-
-    >>> Ints = bases.BitSet.subclass('Ints', tuple(range(1, 7)), List, Tuple)
-    >>> IntsTuple = Ints.Tuple
-    >>> issubclass(IntsTuple, tuple)
-    True
-
-    >>> IntsTuple.frommembers([(1, 3), (1, 2)])
-    IntsTuple('101000', '110000')
-
-    >>> IntsTuple.frombools([(True, False, True), (True, True, False)])
-    IntsTuple('101000', '110000')
-
-    >>> IntsTuple('100100', '000000')
-    IntsTuple('100100', '000000')
-
-    >>> IntsTuple.frombits('100100', '000000')
-    IntsTuple('100100', '000000')
-
-    >>> IntsTuple.frombitsets([Ints.frombits('100100')])
-    IntsTuple('100100')
-
-    >>> IntsTuple('101000').members()
-    [(1, 3)]
-
-    >>> IntsTuple('101000').bools()
-    [(True, False, True, False, False, False)]
-
-    >>> IntsTuple('101000').bits()
-    [(True, False, True, False, False, False)]
-
-    >>> IntsTuple('100100', '000100').reduce_and()
-    Ints([4])
-
-    >>> IntsTuple('100100', '000100').reduce_or()
-    Ints([1, 4])
-    """
+    """Immutable bitset sequence."""
 
     __slots__ = ()
 
@@ -158,10 +136,5 @@ class Tuple(Series, tuple):
 
     frombitsets = classmethod(tuple.__new__)
 
-
-def _test(verbose=False):
-    import doctest
-    doctest.testmod(verbose=verbose)
-
-if __name__ == '__main__':
-    _test()
+    def __new__(cls, *bits):
+        return tuple.__new__(cls, imap(cls.BitSet.frombits, bits))
