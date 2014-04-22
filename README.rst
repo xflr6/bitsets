@@ -17,6 +17,8 @@ be compared, intersected, etc. using normal **bitwise operations** of integers
 Installation
 ------------
 
+This package runs under Python 2.7 and 3.3+, use pip_ to install:
+
 .. code:: bash
 
     $ pip install bitsets
@@ -36,14 +38,16 @@ a fixed set of items (the domain):
 
 The domain collection needs to be a hashable sequence (e.g. a ``tuple``).
 
-The resulting class is an integer (``long``) subclass, so its instances (being
-integers) are **immutable and hashable** and thus in many ways similar to
-pythons built-in ``frozenset``.
+The resulting class is an integer (``int`` or ``long`` depending on Python
+version) subclass, so its instances (being integers) are **immutable and
+hashable** and thus in many ways similar to pythons built-in ``frozenset``.
 
 .. code:: python
 
-   >>> issubclass(Pythons, long)
-   True
+    >>> from bitsets._compat import integer_types
+
+    >>> issubclass(Pythons, integer_types)
+    True
 
 
 The domain items are mapped to **powers of two** (their *rank* in
@@ -151,7 +155,7 @@ Iterate over a bitsets' ``powerset`` in short lexicographic order:
 .. code:: python
 
     >>> for p in Pythons(['Palin', 'Idle']).powerset():
-    ...     print p.members()
+    ...     print(p.members())
     ()
     ('Idle',)
     ('Palin',)
@@ -182,8 +186,8 @@ their **integer semantics**:
 
 .. code:: python
 
-    >>> Pythons(['Chapman', 'Idle']) - Pythons(['Idle'])
-    1L
+    >>> print(Pythons(['Chapman', 'Idle']) - Pythons(['Idle']))
+    1
 
 
 In tight loops it might be worth to use **bitwise expressions** (``&, |, ^, ~``)
@@ -246,7 +250,7 @@ Download and install Graphviz_. Then install the Python interface:
 
 .. code:: bash
 
-    $ pip install "graphviz>=0.2, <0.3"
+    $ pip install "graphviz>=0.3, <0.4"
 
 Make sure that the ``bin`` directory of Graphviz is on your system path.
 
@@ -257,7 +261,7 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
 
     >>> dot = visualize.bitset(Four)
 
-    >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    >>> print(dot.source)  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
     // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
     digraph Four {
     edge [dir=none]
@@ -281,7 +285,7 @@ Show members instead of bits:
 
     >>> dot = visualize.bitset(Four, member_label=True)
 
-    >>> print dot.source  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
+    >>> print(dot.source)  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
     // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
     digraph Four {
     edge [dir=none]
@@ -301,11 +305,41 @@ Show members instead of bits:
 Remember that the graphs have ``2 ** domain_size`` nodes.
 
 
-Advanced usage
---------------
+Containers
+----------
 
-To use a **customized bitset**, extend a class from the ``bitsets.bases`` module
-and pass it to the ``bitset`` function.
+When activated, each bitset class comes with tailored **collection classes**
+(bitset list and bitset tuple) for its instances.
+
+.. code:: python
+
+    >>> Letters = bitset('Letters', 'abcdef', list=True)
+
+    >>> Letters.List.frommembers(['a', 'bcd', 'ef'])
+    LettersList('100000', '011100', '000011')
+
+The collection classes have convenience methods for set **intersection** and
+**union**:
+
+.. code:: python
+
+    >>> import string
+
+    >>> Ascii = bitset('Ascii', string.ascii_lowercase, list=True)
+    >>> ascii = Ascii.List.frommembers(['spam', 'eggspam', 'ham'])
+
+    >>> ascii.reduce_and()
+    Ascii(['a', 'm'])
+
+    >>> ascii.reduce_or()
+    Ascii(['a', 'e', 'g', 'h', 'm', 'p', 's'])
+
+
+Customization
+-------------
+
+To use a **customized bitset class**, extend one of the classes from the
+``bitsets.bases`` module and pass it to the ``bitset`` function.
 
 .. code:: python
 
@@ -315,7 +349,7 @@ and pass it to the ``bitset`` function.
     ...     def issubset_proper(self, other):
     ...         return self & other == self != other
 
-    >>> Ints = bitsets.bitset('Ints', (1, 2, 3, 4, 5, 6), base=ProperSet)
+    >>> Ints = bitset('Ints', (1, 2, 3, 4, 5, 6), base=ProperSet)
 
     >>> issubclass(Ints, ProperSet)
     True
@@ -327,29 +361,22 @@ and pass it to the ``bitset`` function.
     False
 
 
-When activated, each bitset class comes with tailored **collection classes**
-(bitset list and bitset tuple) for its instances.
+
+To use a **customized bitset collection class**, extend one of the classes from
+the ``bitsets.series`` module and pass it to the ``bitset`` function.
 
 .. code:: python
 
-    >>> Letters = bitsets.bitset('Letters', 'abcdef', list=True)
-
-    >>> Letters.List.frommembers(['a', 'bcd', 'ef'])
-    LettersList('100000', '011100', '000011')
-
-
-To use a **customized bitset collection class**, extend a class from the
-``bitsets.series`` module and pass it to the ``bitset`` function
-
-.. code:: python
+    >>> from functools import reduce
+    >>> import operator
 
     >>> class ReduceList(bitsets.series.List):
     ...     def intersection(self):
-    ...         return self.BitSet.fromint(reduce(long.__and__, self))
+    ...         return self.BitSet.fromint(reduce(operator.and_, self))
     ...     def union(self):
-    ...         return self.BitSet.fromint(reduce(long.__or__, self))
+    ...         return self.BitSet.fromint(reduce(operator.or_, self))
 
-    >>> Nums = bitsets.bitset('Nums', (1, 2, 3), list=ReduceList)
+    >>> Nums = bitset('Nums', (1, 2, 3), list=ReduceList)
 
     >>> issubclass(Nums.List, ReduceList)
     True
@@ -362,8 +389,13 @@ To use a **customized bitset collection class**, extend a class from the
     >>> numslist.union()
     Nums([1, 2, 3])
 
-Since version 0.4, this very functionality was added to the ``bitsets.series``
-classes as ``reduce_and`` and ``reduce_or`` methods.
+Note that since version 0.4, this very functionality was added to the
+``bitsets.series`` classes as ``reduce_and`` and ``reduce_or`` methods (see
+above).
+
+
+Persistence
+-----------
 
 Bitset classes, collection classes and their instances are **pickleable**:
 
@@ -376,6 +408,20 @@ Bitset classes, collection classes and their instances are **pickleable**:
 
     >>> pickle.loads(pickle.dumps(Pythons()))
     Pythons()
+
+    >>> pickle.loads(pickle.dumps(Pythons(), protocol=pickle.HIGHEST_PROTOCOL))
+    Pythons()
+
+    >>> pickle.loads(pickle.dumps(Letters.List)) is Letters.List
+    True
+
+    >>> pickle.loads(pickle.dumps(Letters.List()))
+    LettersList()
+
+As long as customized bitset collection classes are defined at the top-level of
+an importable module, the class and its instances are picklable.
+
+.. code:: python
 
     >>> pickle.loads(pickle.dumps(Nums.List)) is Nums.List  # doctest: +SKIP
     True
@@ -412,7 +458,7 @@ License
 
 Bitsets is distributed under the `MIT license`_.
 
-
+.. _pip: http://pip.readthedocs.org
 .. _Graphviz: http://www.graphviz.org
 
 .. _bitarray: http://pypi.python.org/pypi/bitarray

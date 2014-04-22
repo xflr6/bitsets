@@ -3,14 +3,12 @@
 """Ordered subsets of a predetermined finite domain."""
 
 __title__ = 'bitsets'
-__version__ = '0.6.1'
+__version__ = '0.7'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE'
 __copyright__ = 'Copyright (c) 2013-2014 Sebastian Bank'
 
-import meta
-import bases
-import series
+from . import meta, bases, series
 
 __all__ = ['bitset']
 

@@ -2,8 +2,7 @@
 
 """Dynamic bitset class creation and retrieval."""
 
-from itertools import izip, ifilter, ifilterfalse
-import copy_reg
+from ._compat import integer_types, zip, filter, filterfalse, copyreg
 
 __all__ = ['MemberBitsMeta', 'SeriesMeta']
 
@@ -47,7 +46,7 @@ class MemberBitsMeta(type):
         self._len = len(self._members)
 
         self._atoms = tuple(self.fromint(1 << i) for i in range(self._len))
-        self._map = {m: i for m, i in izip(self._members, self._atoms)}
+        self._map = {m: i for m, i in zip(self._members, self._atoms)}
 
         self.infimum = self.fromint(0)  # all zeros
         self.supremum = self.fromint((1 << self._len) - 1)  # all ones
@@ -74,7 +73,7 @@ class MemberBitsMeta(type):
 
     def _get_subclass(self, name, members, id, listcls, tuplecls):
         """Return or create class with name, members, and id (for unpickling)."""
-        if not isinstance(id, (int, long)):
+        if not isinstance(id, integer_types):
             raise RuntimeError
 
         if (name, members, id) in self.__registry:  # enable roundtrip reprs
@@ -84,11 +83,11 @@ class MemberBitsMeta(type):
 
     def atomic(self, bitset):
         """Member singleton generator."""
-        return ifilter(bitset.__and__, self._atoms)
+        return filter(bitset.__and__, self._atoms)
 
     def inatomic(self, bitset):
         """Complement singleton generator."""
-        return ifilterfalse(bitset.__and__, self._atoms)
+        return filterfalse(bitset.__and__, self._atoms)
 
     def reduce_and(self, bitsets):
         """Generalized intersection."""
@@ -105,7 +104,7 @@ class MemberBitsMeta(type):
         return self.frombitset(union)
 
 
-copy_reg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
+copyreg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
 
 
 class SeriesMeta(type):
@@ -123,7 +122,7 @@ class SeriesMeta(type):
         if not hasattr(self, 'BitSet'):
             return type.__repr__(self)
 
-        bs=self.BitSet
+        bs = self.BitSet
         return '<class %s.bitset_%s(%r, %r, %#x, %s, %s, %s)>' % (self.__module__,
             self._series.lower(), bs.__name__, bs._members, bs._id, bs.__base__.__name__,
             bs.List.__base__.__name__ if hasattr(bs, 'List') else None,
@@ -134,13 +133,13 @@ class SeriesMeta(type):
             return self.__name__
 
         bitset_series = {'List': bitset_list, 'Tuple': bitset_tuple}[self._series]
-        bs=self.BitSet
+        bs = self.BitSet
         return bitset_series, (bs.__name__, bs._members, bs._id, bs.__base__,
             bs.List.__base__ if hasattr(bs, 'List') else None,
             bs.Tuple.__base__ if hasattr(bs, 'Tuple') else None)
 
 
-copy_reg.pickle(SeriesMeta, SeriesMeta.__reduce__)
+copyreg.pickle(SeriesMeta, SeriesMeta.__reduce__)
 
 
 def bitset(name, members, id, basecls, listcls, tuplecls):

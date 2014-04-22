@@ -1,10 +1,12 @@
 # visualize.py - create hasse diagrams
 
-from itertools import imap
+from ._compat import map
 
 import graphviz
 
 __all__ = ['bitset']
+
+FILENAME = 'bs-%s-%s.gv'
 
 MEMBER_LABEL = False
 
@@ -13,7 +15,7 @@ NAME_GETTERS = [lambda b: 'b%d' % b, lambda b: b.bits()]
 LABEL_GETTERS = {
     None: lambda b: '',
     False: lambda b: b.bits(),
-    True: lambda b: '{%s}' % ','.join(imap(str, b.members())),
+    True: lambda b: '{%s}' % ','.join(map(str, b.members())),
 }
 
 
@@ -23,7 +25,8 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
         member_label = MEMBER_LABEL
 
     if filename is None:
-        filename = 'bs-%s-%s.gv' % (bs.__name__, 'members' if member_label else 'bits')
+        kind = 'members' if member_label else 'bits'
+        filename = FILENAME % (bs.__name__, kind)
 
     dot = graphviz.Digraph(
         name=bs.__name__,
@@ -34,7 +37,6 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
     )
 
     node_name = NAME_GETTERS[0] 
-
     node_label = LABEL_GETTERS[member_label]
 
     for i in range(bs.supremum + 1):

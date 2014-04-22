@@ -2,16 +2,19 @@
 
 """Base classes for bitsets providing integer-like and set-like interface."""
 
-from itertools import imap, compress, ifilter, ifilterfalse
+from itertools import compress
 
-import meta
-import integers
-import combos
+from ._compat import long_int, get_unbound_func, map, filter, filterfalse,\
+     with_metaclass
+
+from . import meta, integers, combos
 
 __all__ = ['MemberBits', 'BitSet']
 
+__new__ = long_int.__new__
 
-class MemberBits(long):
+
+class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     """Subsets of a predefined domain as rank in colexicographical order.
 
     >>> Ints = MemberBits._make_subclass('Ints', (1, 2, 3, 4, 5, 6))
@@ -45,8 +48,8 @@ class MemberBits(long):
     >>> Ints('100011').bits()
     '100011'
 
-    >>> Ints('100011').int
-    49L
+    >>> print(Ints('100011').int)
+    49
 
 
     >>> list(Ints('100011').atoms())
@@ -79,7 +82,7 @@ class MemberBits(long):
 
     >>> uptotwo = [i for i in Ints.supremum.powerset() if i.count() <= 2]
 
-    >>> [''.join(imap(str, u.members())) for u in
+    >>> [''.join(map(str, u.members())) for u in
     ... sorted(uptotwo, key=lambda u: u.shortlex())]  # doctest: +NORMALIZE_WHITESPACE
     ['',
      '1', '2', '3', '4', '5', '6',
@@ -89,7 +92,7 @@ class MemberBits(long):
                        '45', '46',
                              '56']
 
-    >>> [''.join(imap(str, u.members())) for u in
+    >>> [''.join(map(str, u.members())) for u in
     ... sorted(uptotwo, key=lambda u: u.shortcolex())]  # doctest: +NORMALIZE_WHITESPACE
     ['',
      '1', '2', '3', '4', '5', '6',
@@ -110,18 +113,16 @@ class MemberBits(long):
     True
     """
 
-    __metaclass__ = meta.MemberBitsMeta
-
     _indexes = integers.indexes
 
     _reinverted = integers.reinverted
 
-    frombitset = fromint = classmethod(long.__new__)
+    frombitset = fromint = classmethod(long_int.__new__)
 
     @classmethod
     def frommembers(cls, members=()):
         """Create a set from an iterable of members."""
-        return cls.fromint(sum(imap(cls._map.__getitem__, set(members))))
+        return cls.fromint(sum(map(cls._map.__getitem__, set(members))))
 
     @classmethod
     def frombools(cls, bools=()):
@@ -137,11 +138,14 @@ class MemberBits(long):
 
     __new__ = frombits.__func__
 
-    int = long.real
+    def __reduce__(self):
+        return __new__, (self.__class__, self.real)
+
+    int = long_int.real
 
     def members(self):
         """Return the set members tuple."""
-        return tuple(imap(self._members.__getitem__, self._indexes()))
+        return tuple(map(self._members.__getitem__, self._indexes()))
 
     def bools(self):
         """Return the boolean sequence of set membership."""
@@ -157,14 +161,14 @@ class MemberBits(long):
     def atoms(self, reverse=False):
         """Yield the singleton for every set member."""
         if reverse:
-            return ifilter(self.__and__, reversed(self._atoms))
-        return ifilter(self.__and__, self._atoms)
+            return filter(self.__and__, reversed(self._atoms))
+        return filter(self.__and__, self._atoms)
 
     def inatoms(self, reverse=False):
         """Yield the singleton for every non-member."""
         if reverse:
-            return ifilterfalse(self.__and__, reversed(self._atoms))
-        return ifilterfalse(self.__and__, self._atoms)
+            return filterfalse(self.__and__, reversed(self._atoms))
+        return filterfalse(self.__and__, self._atoms)
 
     def powerset(self, start=None, excludestart=False):
         """Yield combinations from start to self in short lexicographic order."""
@@ -176,7 +180,7 @@ class MemberBits(long):
                 raise ValueError('%r is no subset of %r' % (start, self))
             other = self & ~start
             other = other.atoms()
-        return imap(self.frombitset, combos.shortlex(start, list(other)))
+        return map(self.frombitset, combos.shortlex(start, list(other)))
 
     def shortlex(self):
         """Return sort key for short lexicographical order."""
@@ -260,20 +264,20 @@ class BitSet(MemberBits):
 
     __new__ = MemberBits.frommembers.__func__
 
-    __nonzero__ = MemberBits.any.__func__
+    __nonzero__ = get_unbound_func(MemberBits.any)
 
-    __len__ = MemberBits.count.__func__
+    __len__ = get_unbound_func(MemberBits.count)
 
     def __iter__(self):
         """Iterate over the set members."""
-        return imap(self._members.__getitem__, self._indexes())
+        return map(self._members.__getitem__, self._indexes())
 
     def __contains__(self, member):
         """Set membership."""
         return self._map[member] & self
 
     def __repr__(self):
-        members = map(self._members.__getitem__, self._indexes())
+        members = list(map(self._members.__getitem__, self._indexes()))
         arg = '%r' % members if members else ''
         return '%s(%s)' % (self.__class__.__name__, arg)
         

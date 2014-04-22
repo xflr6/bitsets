@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.7
+-----------
+
+Added Python 3.3+ support.
+Fixed (un)pickling with protocol 2 and higher.
+Added fromints() and ints() methods to collections.
+
+
 Version 0.6.1
 -------------
 

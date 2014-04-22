@@ -2,17 +2,17 @@
 
 """Ordered collections of bitset instances."""
 
-from itertools import imap
+from ._compat import map, with_metaclass
 
-import meta
+from . import meta
 
 __all__ = ['List', 'Tuple']
 
 
-class Series(object):
+class Series(with_metaclass(meta.SeriesMeta, object)):
     """Bitset sequence.
 
-    >>> import bases
+    >>> from bitsets import bases
 
     >>> Nums = bases.BitSet._make_subclass('Nums', (1, 2, 3, 4, 5, 6), listcls=List, tuplecls=Tuple)
 
@@ -45,6 +45,9 @@ class Series(object):
     >>> Nums.List.frombits(['101000', '110000'])
     NumsList('101000', '110000')
 
+    >>> Nums.List.fromints([5, 3])
+    NumsList('101000', '110000')
+
 
     >>> Nums.List('101000', '110000').members()
     [(1, 3), (1, 2)]
@@ -56,6 +59,9 @@ class Series(object):
     >>> Nums.List('101000', '110000').bits()
     ['101000', '110000']
 
+    >>> [str(i) for i in Nums.List('101000', '110000').ints()]
+    ['5', '3']
+
 
     >>> Nums.List('101000', '110000').reduce_and()
     Nums([1])
@@ -64,24 +70,27 @@ class Series(object):
     Nums([1, 2, 3])
     """
 
-    __metaclass__ = meta.SeriesMeta
-
     __slots__ = ()
 
     @classmethod
     def frommembers(cls, members):
         """Series from iterable of member iterables."""
-        return cls.frombitsets(imap(cls.BitSet.frommembers, members))
+        return cls.frombitsets(map(cls.BitSet.frommembers, members))
         
     @classmethod
     def frombools(cls, bools):
         """Series from iterable of boolean evaluable iterables."""
-        return cls.frombitsets(imap(cls.BitSet.frombools, bools))
+        return cls.frombitsets(map(cls.BitSet.frombools, bools))
 
     @classmethod
     def frombits(cls, bits):
         """Series from binary string arguments."""
-        return cls.frombitsets(imap(cls.BitSet.frombits, bits))
+        return cls.frombitsets(map(cls.BitSet.frombits, bits))
+
+    @classmethod
+    def fromints(cls, ints):
+        """Series from integer rank arguments."""
+        return cls.frombitsets(map(cls.BitSet.fromint, ints))
 
     def members(self):
         """Return the series as list of set member tuples."""
@@ -94,6 +103,10 @@ class Series(object):
     def bits(self):
         """Return the series as list of binary set membership strings."""
         return [b.bits() for b in self]
+
+    def ints(self):
+        """Return the series as list of integers ranks."""
+        return [b.int for b in self]
 
     def __repr__(self):
         items = ', '.join('%r' % b.bits() for b in self)
@@ -124,7 +137,7 @@ class List(Series, list):
     __new__ = list.__new__
 
     def __init__(self, *bits):
-        list.__init__(self, imap(self.BitSet.frombits, bits))
+        list.__init__(self, map(self.BitSet.frombits, bits))
 
 
 class Tuple(Series, tuple):
@@ -137,4 +150,4 @@ class Tuple(Series, tuple):
     frombitsets = classmethod(tuple.__new__)
 
     def __new__(cls, *bits):
-        return tuple.__new__(cls, imap(cls.BitSet.frombits, bits))
+        return tuple.__new__(cls, map(cls.BitSet.frombits, bits))

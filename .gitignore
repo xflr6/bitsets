@@ -1,7 +1,11 @@
-*.py[cod]
-MAINIFEST
+*.py[co]
+__pycache__/
+MANIFEST
+build/
 dist/
 *.egg-info/
-bs-Four-*
-Thumbs.db
 .coverage
+
+Thumbs.db
+
+visualize-output/

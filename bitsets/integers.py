@@ -2,6 +2,8 @@
 
 """Bit manipulation for set rank and unrank."""
 
+from ._compat import map
+
 import string
 
 __all__ = ['indexes', 'reinverted', 'unrank']
@@ -51,4 +53,4 @@ def unrank(n, sequence=string.ascii_lowercase):
     >>> unrank(299009)
     ['a', 'm', 'p', 's']
     """
-    return map(sequence.__getitem__, indexes(n))
+    return list(map(sequence.__getitem__, indexes(n)))
