@@ -23,6 +23,11 @@ This package runs under Python 2.7 and 3.3+, use pip_ to install:
 
     $ pip install bitsets
 
+There are no other dependencies. Optionally, you can install Graphviz_ and this
+`Python wrapper`__ for drawing Hasse diagrams (see below).
+
+.. __: http://pypi.python.org/pypi/graphviz
+
 
 Creation
 --------
@@ -168,7 +173,7 @@ Iterate over a bitsets' ``powerset`` in short lexicographic order:
 For convenience, bitsets provide the same methods as ``frozenset`` (i.e.
 ``issubset``, ``issuperset``, ``isdisjoint``, ``intersection``, ``union``,
 ``difference``, ``symmetric_difference``, ``__len__``, ``__iter__``,
-``__nonzero__``, and ``__contains__``).
+``__bool__``, and ``__contains__``).
 
 .. code:: python
 
@@ -241,7 +246,7 @@ Visualization
 -------------
 
 With the help of the optional Graphviz_ graph layout library and this `Python
-interface`__, the ``bitsets.visualize`` module can create **hasse diagrams** of
+interface`__, the ``bitsets.visualize`` module can create **Hasse diagrams** of
 all bitsets from your domain:
 
 .. __: http://pypi.python.org/pypi/graphviz
@@ -264,15 +269,15 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
     >>> print(dot.source)  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
     // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
     digraph Four {
-    edge [dir=none]
-    	b0 [label=0000]
-    	b1 [label=1000]
-    		b1 -> b0
-    	b2 [label=0100]
-    		b2 -> b0
-    	b3 [label=1100]
-    		b3 -> b1
-    		b3 -> b2
+    	edge [dir=none]
+    		b0 [label=0000]
+    		b1 [label=1000]
+    			b1 -> b0
+    		b2 [label=0100]
+    			b2 -> b0
+    		b3 [label=1100]
+    			b3 -> b1
+    			b3 -> b2
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-bits.png
@@ -288,15 +293,15 @@ Show members instead of bits:
     >>> print(dot.source)  # doctest: +ELLIPSIS, +NORMALIZE_WHITESPACE
     // <class bitsets.meta.bitset('Four', (1, 2, 3, 4), 0x..., BitSet, None, None)>
     digraph Four {
-    edge [dir=none]
-    	b0 [label="{}"]
-    	b1 [label="{1}"]
-    		b1 -> b0
-    	b2 [label="{2}"]
-    		b2 -> b0
-    	b3 [label="{1,2}"]
-    		b3 -> b1
-    		b3 -> b2
+    	edge [dir=none]
+    		b0 [label="{}"]
+    		b1 [label="{1}"]
+    			b1 -> b0
+    		b2 [label="{2}"]
+    			b2 -> b0
+    		b3 [label="{1,2}"]
+    			b3 -> b1
+    			b3 -> b2
     ...
 
 .. image:: https://raw.github.com/xflr6/bitsets/master/docs/hasse-members.png
@@ -419,7 +424,7 @@ Bitset classes, collection classes and their instances are **pickleable**:
     LettersList()
 
 As long as customized bitset collection classes are defined at the top-level of
-an importable module, the class and its instances are picklable.
+an importable module, the class and its instances are pickleable.
 
 .. code:: python
 

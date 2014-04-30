@@ -35,9 +35,9 @@ class MemberBitsMeta(type):
 
         return cls
 
-    def __new__(self, name, bases, dct):
+    def __new__(cls, name, bases, dct):
         dct.setdefault('__slots__', ())
-        return super(MemberBitsMeta, self).__new__(self, name, bases, dct)
+        return super(MemberBitsMeta, cls).__new__(cls, name, bases, dct)
 
     def __init__(self, name, bases, dct):
         if not hasattr(self, '_members'):

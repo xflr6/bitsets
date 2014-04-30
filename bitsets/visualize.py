@@ -19,7 +19,8 @@ LABEL_GETTERS = {
 }
 
 
-def bitset(bs, member_label=None, filename=None, directory=None, render=False, view=False):
+def bitset(bs, member_label=None, filename=None, directory=None, format=None,
+           render=False, view=False):
     """Graphviz source for the Hasse diagram of the domains' Boolean algebra."""
     if member_label is None:
         member_label = MEMBER_LABEL
@@ -33,10 +34,11 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
         comment=repr(bs),
         filename=filename,
         directory=directory,
+        format=format,
         edge_attr=dict(dir='none')
     )
 
-    node_name = NAME_GETTERS[0] 
+    node_name = NAME_GETTERS[0]
     node_label = LABEL_GETTERS[member_label]
 
     for i in range(bs.supremum + 1):
@@ -46,5 +48,5 @@ def bitset(bs, member_label=None, filename=None, directory=None, render=False, v
         dot.edges((name, node_name(b & ~a)) for a in b.atoms(reverse=True))
 
     if render or view:
-        dot.render(view=view)
+        dot.render(view=view)  # pragma: no cover
     return dot

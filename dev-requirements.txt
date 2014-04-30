@@ -1,0 +1,7 @@
+wheel
+nose
+coverage
+flake8
+pep8-naming
+
+graphviz==0.3.2

@@ -5,7 +5,7 @@
 from itertools import compress
 
 from ._compat import long_int, get_unbound_func, map, filter, filterfalse,\
-     with_metaclass
+     py2_bool_to_nonzero, with_metaclass
 
 from . import meta, integers, combos
 
@@ -84,23 +84,39 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
     >>> [''.join(map(str, u.members())) for u in
     ... sorted(uptotwo, key=lambda u: u.shortlex())]  # doctest: +NORMALIZE_WHITESPACE
-    ['',
-     '1', '2', '3', '4', '5', '6',
-     '12', '13', '14', '15', '16',
-           '23', '24', '25', '26',
-                 '34', '35', '36',
-                       '45', '46',
-                             '56']
+    ['',  '1',  '2',  '3',  '4',  '5',  '6',
+               '12', '13', '14', '15', '16',
+                     '23', '24', '25', '26',
+                           '34', '35', '36',
+                                 '45', '46',
+                                       '56']
 
     >>> [''.join(map(str, u.members())) for u in
     ... sorted(uptotwo, key=lambda u: u.shortcolex())]  # doctest: +NORMALIZE_WHITESPACE
-    ['',
-     '1', '2', '3', '4', '5', '6',
-     '12',
+    ['',  '1',  '2',  '3',  '4',  '5',  '6',
+          '12',
+          '13', '23',
+          '14', '24', '34',
+          '15', '25', '35', '45',
+          '16', '26', '36', '46', '56']
+
+    >>> [''.join(map(str, u.members())) for u in
+    ... sorted(uptotwo, key=lambda u: u.longlex())]  # doctest: +NORMALIZE_WHITESPACE
+    ['12', '13', '14', '15', '16',
+           '23', '24', '25', '26',
+                 '34', '35', '36',
+                       '45', '46',
+                             '56',
+     '1',  '2',  '3',  '4',  '5',  '6',  '']
+
+    >>> [''.join(map(str, u.members())) for u in
+    ... sorted(uptotwo, key=lambda u: u.longcolex())]  # doctest: +NORMALIZE_WHITESPACE
+    ['12',
      '13', '23',
      '14', '24', '34',
      '15', '25', '35', '45',
-     '16', '26', '36', '46', '56']
+     '16', '26', '36', '46', '56',
+     '1',  '2',  '3',  '4',  '5',  '6',  '']
 
 
     >>> Ints('100011').count()
@@ -178,7 +194,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         else:
             if self | start != self:
                 raise ValueError('%r is no subset of %r' % (start, self))
-            other = self & ~start
+            other = self.fromint(self & ~start)
             other = other.atoms()
         return map(self.frombitset, combos.shortlex(start, list(other)))
 
@@ -211,6 +227,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         return self != self.infimum
 
 
+@py2_bool_to_nonzero
 class BitSet(MemberBits):
     """Ordered container of unique elements from a predefined domain.
 
@@ -264,7 +281,7 @@ class BitSet(MemberBits):
 
     __new__ = MemberBits.frommembers.__func__
 
-    __nonzero__ = get_unbound_func(MemberBits.any)
+    __bool__ = get_unbound_func(MemberBits.any)
 
     __len__ = get_unbound_func(MemberBits.count)
 
@@ -280,7 +297,7 @@ class BitSet(MemberBits):
         members = list(map(self._members.__getitem__, self._indexes()))
         arg = '%r' % members if members else ''
         return '%s(%s)' % (self.__class__.__name__, arg)
-        
+
     def issubset(self, other):
         """Inverse set containment."""
         if not isinstance(other, self.__class__):

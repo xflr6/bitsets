@@ -34,7 +34,7 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
 
     >>> Nums.List.frombitsets([]), Nums.Tuple.frombitsets([])
     (NumsList(), NumsTuple())
-    
+
 
     >>> Nums.List.frommembers([(1, 3), (1, 2)])
     NumsList('101000', '110000')
@@ -76,7 +76,7 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
     def frommembers(cls, members):
         """Series from iterable of member iterables."""
         return cls.frombitsets(map(cls.BitSet.frommembers, members))
-        
+
     @classmethod
     def frombools(cls, bools):
         """Series from iterable of boolean evaluable iterables."""
