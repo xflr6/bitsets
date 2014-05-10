@@ -8,6 +8,9 @@ dist/
 
 .coverage
 cover/
+htmlcov/
+.cache/
+.tox/
 
 Thumbs.db
 

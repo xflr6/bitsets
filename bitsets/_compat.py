@@ -9,6 +9,8 @@ if PY2:  # pragma: no cover
     long_int = long
     integer_types = (int, long)
 
+    unichr = unichr
+
     get_unbound_func = lambda unbound_method: unbound_method.__func__
 
     from itertools import imap as map
@@ -27,6 +29,8 @@ if PY2:  # pragma: no cover
 else:  # pragma: no cover
     long_int = int
     integer_types = (int,)
+
+    unichr = chr  
 
     get_unbound_func = lambda func: func
 

@@ -2,10 +2,16 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.2
+-------------
+
+Support custom label function in visualization.
+
+
 Version 0.7.1
 -------------
 
-Fixef powerset() failing with start argument.
+Fixed powerset() failing with start argument.
 
 Fixed bool(bitset) never False under py3.
 

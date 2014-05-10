@@ -10,12 +10,16 @@ from bitsets.series import Series, List, Tuple
 
 class TestMeta(unittest.TestCase):
 
-    def setUp(self):
-        self.Ints = MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-            -1, None, None)
+    @classmethod
+    def setUpClass(cls):
+        cls.Ints = MemberBits._make_subclass('Ints', (1, 2, 3, 4, 5, 6))
+
+    @classmethod
+    def tearDownClass(cls):
+        del cls.Ints
 
     def test_make_subclass_invalid(self):
-        with self.assertRaises(RuntimeError):
+        with self.assertRaisesRegexp(RuntimeError, 'make_subclass'):
             self.Ints._make_subclass('Ints', (1, 2, 3, 4, 5, 6),
                 None, None, None)
 
@@ -27,6 +31,10 @@ class TestMeta(unittest.TestCase):
         with self.assertRaises(RuntimeError):
             MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
                 None, None, None)
+        self.assertIsInstance(
+            MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
+                -1, None, None),
+            MemberBits.__class__)
 
     def test_atomic(self):
         self.assertEqual(list(self.Ints.atomic(self.Ints('100011'))),
@@ -39,12 +47,17 @@ class TestMeta(unittest.TestCase):
 
 class TestSeriesMeta(unittest.TestCase):
 
-    def setUp(self):
-        self.Nums = MemberBits._make_subclass('Nums', (1, 2, 3, 4, 5, 6),
+    @classmethod
+    def setUpClass(cls):
+        cls.Nums = MemberBits._make_subclass('Nums', (1, 2, 3, 4, 5, 6),
             listcls=List, tuplecls=Tuple)
 
+    @classmethod
+    def tearDownClass(cls):
+        del cls.Nums
+
     def test_make_subclass_invalid(self):
-        with self.assertRaises(RuntimeError):
+        with self.assertRaisesRegexp(RuntimeError, 'make_subclass'):
             self.Nums.List._make_subclass('NumsList', List)
 
     def test_repr(self):

@@ -149,7 +149,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def frombits(cls, bits='0'):
         """Create a set from binary string."""
         if len(bits) > cls._len:
-            raise ValueError(bits)
+            raise ValueError('%r: too many bits.' % bits)
         return cls.fromint(bits[::-1], 2)
 
     __new__ = frombits.__func__

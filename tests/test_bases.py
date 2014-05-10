@@ -7,12 +7,16 @@ from bitsets.bases import MemberBits, BitSet
 
 class TestMemberBits(unittest.TestCase):
 
-    def setUp(self):
-        self.Ints = MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-            -1, None, None)
+    @classmethod
+    def setUpClass(cls):
+        cls.Ints = MemberBits._make_subclass('Ints', (1, 2, 3, 4, 5, 6))
+
+    @classmethod
+    def tearDownClass(cls):
+        del cls.Ints
 
     def test_frombits_invalid(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegexp(ValueError, 'too many bits'):
             self.Ints.frombits('1000001')
 
     def test_inatoms_reverse(self):
@@ -20,7 +24,7 @@ class TestMemberBits(unittest.TestCase):
             [self.Ints('000100'), self.Ints('001000'), self.Ints('010000')])
 
     def test_powerset_invalid_start(self):
-        with self.assertRaises(ValueError):
+        with self.assertRaisesRegexp(ValueError, 'no subset'):
             self.Ints('1').powerset(self.Ints('111'))
 
     def test_powerset_with_start(self):
@@ -32,9 +36,13 @@ class TestMemberBits(unittest.TestCase):
 
 class TestBitSet(unittest.TestCase):
 
-    def setUp(self):
-        self.Nums = BitSet._get_subclass('Nums', (1, 2, 3, 4, 5, 6),
-            -1, None, None)
+    @classmethod
+    def setUpClass(cls):
+        cls.Nums = BitSet._make_subclass('Nums', (1, 2, 3, 4, 5, 6))
+
+    @classmethod
+    def tearDownClass(cls):
+        del cls.Nums
 
     def test_bool(self):
         self.assertTrue(self.Nums([1]))
