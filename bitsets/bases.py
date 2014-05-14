@@ -157,6 +157,10 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def __reduce__(self):
         return __new__, (self.__class__, self.real)
 
+    def copy(self):
+        """Return the set unchanged (as its is immutable)."""
+        return self
+
     int = long_int.real
 
     def members(self):

@@ -19,6 +19,14 @@ class TestMemberBits(unittest.TestCase):
         with self.assertRaisesRegexp(ValueError, 'too many bits'):
             self.Ints.frombits('1000001')
 
+    def test_copy(self):
+        bs = self.Ints('100011')
+        self.assertIs(bs.copy(), bs)
+        changed = bs
+        changed |= self.Ints('011100')
+        self.assertEqual(changed, self.Ints('111111'))
+        self.assertEqual(bs, self.Ints('100011'))
+
     def test_inatoms_reverse(self):
         self.assertEqual(list(self.Ints('100011').inatoms(reverse=True)),
             [self.Ints('000100'), self.Ints('001000'), self.Ints('010000')])

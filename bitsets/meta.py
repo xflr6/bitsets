@@ -91,14 +91,14 @@ class MemberBitsMeta(type):
 
     def reduce_and(self, bitsets):
         """Generalized intersection."""
-        inters = self.frombitset(self.supremum)
+        inters = self.supremum.copy()
         for b in bitsets:
             inters &= b
         return self.frombitset(inters)
 
     def reduce_or(self, bitsets):
         """Generalized union."""
-        union = self.frombitset(self.infimum)
+        union = self.infimum.copy()
         for b in bitsets:
             union |= b
         return self.frombitset(union)

@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.3
+-------------
+
+Added integers.compress().
+
+Added copy() method (improve set compatibility).
+
+
 Version 0.7.2
 -------------
 

@@ -44,6 +44,20 @@ class TestMeta(unittest.TestCase):
         self.assertEqual(list(self.Ints.inatomic(self.Ints('100011'))),
             [self.Ints('010000'), self.Ints('001000'), self.Ints('000100')])
 
+    def test_reduce_and(self):
+        self.assertEqual(self.Ints.reduce_and([]), self.Ints('111111'))
+        self.assertEqual(self.Ints.reduce_and(
+            [self.Ints('110011'), self.Ints('011110'), self.Ints('010010')]),
+            self.Ints('010010'))
+        self.assertEqual(self.Ints.reduce_and([]), self.Ints('111111'))
+
+    def test_reduce_or(self):
+        self.assertEqual(self.Ints.reduce_or([]), self.Ints('000000'))
+        self.assertEqual(self.Ints.reduce_or(
+            [self.Ints('100001'), self.Ints('010010'), self.Ints('110011')]),
+            self.Ints('110011'))
+        self.assertEqual(self.Ints.reduce_or([]), self.Ints('000000'))
+
 
 class TestSeriesMeta(unittest.TestCase):
 

@@ -54,3 +54,17 @@ def unrank(n, sequence=string.ascii_lowercase):
     ['a', 'm', 'p', 's']
     """
     return list(map(sequence.__getitem__, indexes(n)))
+
+
+def compress(sequence, n ):
+    """Filter sequence items unranking n in colexicographical order.
+
+    >>> list(compress(string.ascii_lowercase, 299009))
+    ['a', 'm', 'p', 's']
+    """
+    for s in sequence:
+        if n & 1:
+            yield s
+        n >>= 1
+        if not n:
+            return

@@ -173,7 +173,7 @@ Iterate over a bitsets' ``powerset`` in short lexicographic order:
 For convenience, bitsets provide the same methods as ``frozenset`` (i.e.
 ``issubset``, ``issuperset``, ``isdisjoint``, ``intersection``, ``union``,
 ``difference``, ``symmetric_difference``, ``__len__``, ``__iter__``,
-``__bool__``, and ``__contains__``).
+``__bool__``, ``__contains__``, and as a non-op ``copy``).
 
 .. code:: python
 
