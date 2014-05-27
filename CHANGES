@@ -2,6 +2,12 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.4
+-------------
+
+Support domains of just one element (minimum was two).
+
+
 Version 0.7.3
 -------------
 

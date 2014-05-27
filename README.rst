@@ -41,7 +41,8 @@ a fixed set of items (the domain):
 
     >>> Pythons = bitset('Pythons', ('Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin'))
 
-The domain collection needs to be a hashable sequence (e.g. a ``tuple``).
+The domain collection needs to be a hashable sequence (e.g. a ``tuple``) of at
+least one item.
 
 The resulting class is an integer (``int`` or ``long`` depending on Python
 version) subclass, so its instances (being integers) are **immutable and
