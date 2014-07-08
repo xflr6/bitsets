@@ -41,6 +41,14 @@ class TestMemberBits(unittest.TestCase):
             [self.Ints('1'), self.Ints('11'), self.Ints('101'),
              self.Ints('111')])
 
+    def test_count_invalid(self):
+        with self.assertRaises(ValueError):
+            self.Ints('110011').count('0')
+        with self.assertRaises(ValueError):
+            self.Ints('110011').count('1')
+        with self.assertRaises(ValueError):
+            self.Ints('110011').count(2)
+
 
 class TestBitSet(unittest.TestCase):
 

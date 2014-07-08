@@ -6,7 +6,7 @@ from ._compat import map
 
 import string
 
-__all__ = ['indexes', 'reinverted', 'unrank']
+__all__ = ['indexes', 'reinverted', 'unrank', 'compress', 'bit_mask']
 
 
 def indexes(n):
@@ -56,7 +56,7 @@ def unrank(n, sequence=string.ascii_lowercase):
     return list(map(sequence.__getitem__, indexes(n)))
 
 
-def compress(sequence, n ):
+def compress(sequence, n):
     """Filter sequence items unranking n in colexicographical order.
 
     >>> list(compress(string.ascii_lowercase, 299009))
@@ -68,3 +68,12 @@ def compress(sequence, n ):
         n >>= 1
         if not n:
             return
+
+
+def bit_mask(n):
+    """Return an integer of n bits length with all bits set.
+
+    >>> bin(bit_mask(5))
+    '0b11111'
+    """
+    return (1 << n) - 1

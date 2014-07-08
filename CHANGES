@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.5
+-------------
+
+Added optional boolean value argument to count() method.
+
+Added integers.bit_mask().
+
+
 Version 0.7.4
 -------------
 

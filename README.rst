@@ -457,6 +457,8 @@ See also
 - BitVector_ |--| pure-Python bit array based on unsigned short ``array``
 - Bitsets_ |--| Cython interface to fast bitsets in Sage
 - bitfield_ |--| Cython positive integer sets
+- intbitset_ |--| integer bit sets as C extension 
+- gmpy2_ |--| fast arbitrary precision integer arithmetic
 
 
 License
@@ -472,6 +474,8 @@ Bitsets is distributed under the `MIT license`_.
 .. _BitVector: http://pypi.python.org/pypi/BitVector
 .. _Bitsets: http://www.sagemath.org/doc/reference/misc/sage/misc/bitset.html
 .. _bitfield: http://pypi.python.org/pypi/bitfield
+.. _intbitset: http://pypi.python.org/pypi/intbitset
+.. _gmpy2: http://pypi.python.org/pypi/gmpy2
 
 .. _MIT license: http://opensource.org/licenses/MIT
 

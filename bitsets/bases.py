@@ -122,6 +122,9 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     >>> Ints('100011').count()
     3
 
+    >>> Ints('111011').count(False)
+    1
+
     >>> Ints('111111').all() and not Ints('001010').all()
     True
 
@@ -218,9 +221,11 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         """Return sort key for long colexicographical order."""
         return -bin(self).count('1'), self.int
 
-    def count(self):
-        """Returns the number of items in the set (cardinality)."""
-        return bin(self).count('1')
+    def count(self, value=True):
+        """Returns the number of present/absent members."""
+        if value not in (True, False):
+            raise ValueError(value)
+        return bin(self)[2:].count('01'[value])
 
     def all(self):
         """Return True iff the set contains all domain items."""
@@ -287,7 +292,9 @@ class BitSet(MemberBits):
 
     __bool__ = get_unbound_func(MemberBits.any)
 
-    __len__ = get_unbound_func(MemberBits.count)
+    def __len__(self):
+        """Return the number of items in the set (cardinality)."""
+        return bin(self).count('1')
 
     def __iter__(self):
         """Iterate over the set members."""

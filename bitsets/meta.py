@@ -46,7 +46,7 @@ class MemberBitsMeta(type):
         self._len = len(self._members)
 
         self._atoms = tuple(self.fromint(1 << i) for i in range(self._len))
-        self._map = {m: i for m, i in zip(self._members, self._atoms)}
+        self._map = dict(zip(self._members, self._atoms))
 
         self.infimum = self.fromint(0)  # all zeros
         self.supremum = self.fromint((1 << self._len) - 1)  # all ones
