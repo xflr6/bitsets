@@ -49,6 +49,10 @@ class TestMemberBits(unittest.TestCase):
         with self.assertRaises(ValueError):
             self.Ints('110011').count(2)
 
+    def test_members_as_set(self):
+        self.assertEqual(self.Ints('110011').members(as_set=True),
+            frozenset([1, 2, 5, 6]))
+
 
 class TestBitSet(unittest.TestCase):
 

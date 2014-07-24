@@ -2,6 +2,12 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.6
+-------------
+
+Added optional as_set parameter to members() method returning a frozenset.
+
+
 Version 0.7.5
 -------------
 

@@ -152,7 +152,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def frombits(cls, bits='0'):
         """Create a set from binary string."""
         if len(bits) > cls._len:
-            raise ValueError('%r: too many bits.' % bits)
+            raise ValueError('too many bits %r' % (bits,))
         return cls.fromint(bits[::-1], 2)
 
     __new__ = frombits.__func__
@@ -166,8 +166,10 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
     int = long_int.real
 
-    def members(self):
-        """Return the set members tuple."""
+    def members(self, as_set=False):
+        """Return the set members tuple/frozenset."""
+        if as_set:
+            return frozenset(map(self._members.__getitem__, self._indexes()))
         return tuple(map(self._members.__getitem__, self._indexes()))
 
     def bools(self):
@@ -201,8 +203,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         else:
             if self | start != self:
                 raise ValueError('%r is no subset of %r' % (start, self))
-            other = self.fromint(self & ~start)
-            other = other.atoms()
+            other = self.fromint(self & ~start).atoms()
         return map(self.frombitset, combos.shortlex(start, list(other)))
 
     def shortlex(self):
@@ -224,7 +225,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def count(self, value=True):
         """Returns the number of present/absent members."""
         if value not in (True, False):
-            raise ValueError(value)
+            raise ValueError('can only count True or False, not %r' % (value,))
         return bin(self)[2:].count('01'[value])
 
     def all(self):
@@ -257,7 +258,7 @@ class BitSet(MemberBits):
 
     >>> -1 in Nums()
     Traceback (most recent call last):
-    ...
+        ...
     KeyError: -1
 
 

@@ -52,6 +52,9 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
     >>> Nums.List('101000', '110000').members()
     [(1, 3), (1, 2)]
 
+    >>> Nums.List('101000').members(as_set=True) == [frozenset([1, 3])]
+    True
+
     >>> Nums.List('101000', '110000').bools()  # doctest: +NORMALIZE_WHITESPACE
     [(True, False, True, False, False, False),
      (True, True, False, False, False, False)]
@@ -92,9 +95,9 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
         """Series from integer rank arguments."""
         return cls.frombitsets(map(cls.BitSet.fromint, ints))
 
-    def members(self):
-        """Return the series as list of set member tuples."""
-        return [b.members() for b in self]
+    def members(self, as_set=False):
+        """Return the series as list of set member tuples/frozensets."""
+        return [b.members(as_set) for b in self]
 
     def bools(self):
         """Return the series as list of boolean set membership sequences."""
