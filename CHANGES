@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.7
+-------------
+
+Made indexes() available on bitsets as iter_set() method.
+
+Added transform module providing additional integer (un)packing tools.
+
+
 Version 0.7.6
 -------------
 

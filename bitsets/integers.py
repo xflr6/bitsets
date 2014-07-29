@@ -2,9 +2,9 @@
 
 """Bit manipulation for set rank and unrank."""
 
-from ._compat import map
-
 import string
+
+from ._compat import map
 
 __all__ = ['indexes', 'reinverted', 'unrank', 'compress', 'bit_mask']
 

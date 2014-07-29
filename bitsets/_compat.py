@@ -11,12 +11,11 @@ if PY2:  # pragma: no cover
 
     unichr = unichr
 
-    get_unbound_func = lambda unbound_method: unbound_method.__func__
+    def get_unbound_func(unbound_method):
+        return unbound_method.__func__
 
-    from itertools import imap as map
-    from itertools import izip as zip
-    from itertools import ifilter as filter
-    from itertools import ifilterfalse as filterfalse
+    from itertools import imap as map, izip as zip, ifilter as filter
+    from itertools import ifilterfalse as filterfalse, izip_longest as zip_longest
 
     def py2_bool_to_nonzero(cls):
         cls.__nonzero__ = cls.__bool__
@@ -30,14 +29,13 @@ else:  # pragma: no cover
     long_int = int
     integer_types = (int,)
 
-    unichr = chr  
+    unichr = chr
 
-    get_unbound_func = lambda func: func
+    def get_unbound_func(func):
+        return func
 
-    map = map
-    zip = zip
-    filter = filter
-    from itertools import filterfalse
+    map, zip, filter = map, zip, filter
+    from itertools import filterfalse, zip_longest
 
     def py2_bool_to_nonzero(cls):
         return cls

@@ -166,6 +166,8 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
     int = long_int.real
 
+    iter_set = integers.indexes
+
     def members(self, as_set=False):
         """Return the set members tuple/frozenset."""
         if as_set:

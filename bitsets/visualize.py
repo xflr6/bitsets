@@ -1,8 +1,8 @@
 # visualize.py - create hasse diagrams
 
-from ._compat import map, unichr
-
 import graphviz
+
+from ._compat import map, unichr
 
 __all__ = ['bitset']
 
