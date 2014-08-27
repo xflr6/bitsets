@@ -17,9 +17,10 @@ def shortlex(start, other, excludestart=False):
     ... for s in shortlex(set(), [{'a'}, {'b'}, {'c'}, {'d'}]))
     ', a, b, c, d, ab, ac, ad, bc, bd, cd, abc, abd, acd, bcd, abcd'
     """
-    queue = collections.deque([(start, other)])
     if not excludestart:
         yield start
+
+    queue = collections.deque([(start, other)])
 
     while queue:
         current, other = queue.popleft()
@@ -45,9 +46,10 @@ def reverse_shortlex(end, other, excludeend=False):
     ... [{'b', 'c', 'd'}, {'a', 'c', 'd'}, {'a', 'b', 'd'}, {'a', 'b', 'c'}]))
     'abcd, bcd, acd, abd, abc, cd, bd, bc, ad, ac, ab, d, c, b, a, '
     """
-    queue = collections.deque([(end, other)])
     if not excludeend:
         yield end
+
+    queue = collections.deque([(end, other)])
 
     while queue:
         current, other = queue.popleft()

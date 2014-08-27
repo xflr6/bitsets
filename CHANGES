@@ -2,6 +2,14 @@ Bitsets Changelog
 =================
 
 
+Version 0.7.8
+-------------
+
+Added integers.n() and integers.rank().
+
+Make iter_set() available on series as index_sets() method.
+
+
 Version 0.7.7
 -------------
 

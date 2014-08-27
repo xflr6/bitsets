@@ -66,6 +66,10 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
     ['5', '3']
 
 
+    >>> Nums.List('101000', '110000').index_sets()
+    [(0, 2), (0, 1)]
+
+
     >>> Nums.List('101000', '110000').reduce_and()
     Nums([1])
 
@@ -114,6 +118,11 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
     def __repr__(self):
         items = ', '.join('%r' % b.bits() for b in self)
         return '%s(%s)' % (self.__class__.__name__, items)
+
+    def index_sets(self, as_set=False):
+        """Return the series as list of index set tuples."""
+        indexes = frozenset if as_set else tuple
+        return [indexes(b.iter_set()) for b in self]
 
     def reduce_and(self):
         """Return the intersection of all series elements."""

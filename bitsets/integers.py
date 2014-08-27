@@ -6,11 +6,11 @@ import string
 
 from ._compat import map
 
-__all__ = ['indexes', 'reinverted', 'unrank', 'compress', 'bit_mask']
+__all__ = ['indexes', 'n', 'reinverted', 'rank', 'unrank', 'compress', 'bit_mask']
 
 
 def indexes(n):
-    """Yield indexes unranking n in colexicographical order.
+    """Yield index sets unranking n in colexicographical order.
 
     >>> [tuple(indexes(i)) for i in range(8)]
     [(), (0,), (1,), (0, 1), (2,), (0, 2), (1, 2), (0, 1, 2)]
@@ -21,6 +21,15 @@ def indexes(n):
             yield i
         i += 1
         n >>= 1
+
+
+def n(indexes):
+    """Return n ranking index sets in colexicographical order.
+
+    >>> [n(ind) for ind in ((), (0,), (1,), (0, 1), (2,))]
+    [0, 1, 2, 3, 4]
+    """
+    return sum(1 << i for i in indexes)
 
 
 def reinverted(n, r):
@@ -42,6 +51,19 @@ def reinverted(n, r):
     if r:
         result |= (r << 1) - 1
     return result
+
+
+def rank(items, sequence=string.ascii_lowercase):
+    """Rank items from sequence in colexicographical order.
+
+    >>> [rank(i) for i in ('', 'a', 'b', 'ab', 'c')]
+    [0, 1, 2, 3, 4]
+
+    >>> rank('spam')
+    299009
+    """
+    items = set(items)
+    return sum(1 << i for i, s in enumerate(sequence) if s in items)
 
 
 def unrank(n, sequence=string.ascii_lowercase):

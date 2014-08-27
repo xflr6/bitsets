@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bitsets',
-    version='0.7.7',
+    version='0.7.8',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
@@ -20,7 +20,7 @@ setup(
     platforms='any',
     long_description=open('README.rst').read(),
     classifiers=[
-        'Development Status :: 3 - Alpha',
+        'Development Status :: 4 - Beta',
         'Environment :: Console',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
