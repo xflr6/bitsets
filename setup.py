@@ -4,7 +4,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bitsets',
-    version='0.7.8',
+    version='0.7.9.dev0',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
@@ -13,9 +13,9 @@ setup(
     url='http://github.com/xflr6/bitsets',
     packages=find_packages(),
     extras_require={
-        'visualization': ['graphviz>=0.3, <0.4'],
-        'dev': ['wheel'],
         'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
+        'dev': ['wheel'],
+        'visualization': ['graphviz>=0.3, <0.5'],
     },
     platforms='any',
     long_description=open('README.rst').read(),

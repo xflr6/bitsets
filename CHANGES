@@ -1,5 +1,15 @@
-Bitsets Changelog
-=================
+Changelog
+=========
+
+
+Version 0.7.9 (in development)
+------------------------------
+
+Raise an error if bitset members have duplicates.
+
+Extended and improved documentation, added Sphinx-based API reference.
+
+Improved unittests.
 
 
 Version 0.7.8

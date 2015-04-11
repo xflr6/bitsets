@@ -43,6 +43,12 @@ else:  # pragma: no cover
     import copyreg
 
 
+def register_reduce(mcls):
+    """Register __reduce__ as reduction function for mcls instances."""
+    copyreg.pickle(mcls, mcls.__reduce__)
+    return mcls
+
+
 def with_metaclass(meta, *bases):
     """From Jinja2 (BSD licensed).
 

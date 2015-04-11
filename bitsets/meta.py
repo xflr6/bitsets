@@ -2,11 +2,12 @@
 
 """Dynamic bitset class creation and retrieval."""
 
-from ._compat import integer_types, zip, filter, filterfalse, copyreg
+from ._compat import integer_types, zip, filter, filterfalse, register_reduce
 
 __all__ = ['MemberBitsMeta', 'SeriesMeta']
 
 
+@register_reduce
 class MemberBitsMeta(type):
 
     __registry = {}
@@ -104,9 +105,7 @@ class MemberBitsMeta(type):
         return self.frombitset(union)
 
 
-copyreg.pickle(MemberBitsMeta, MemberBitsMeta.__reduce__)
-
-
+@register_reduce
 class SeriesMeta(type):
 
     def _make_subclass(self, name, cls):
@@ -137,9 +136,6 @@ class SeriesMeta(type):
         return bitset_series, (bs.__name__, bs._members, bs._id, bs.__base__,
             bs.List.__base__ if hasattr(bs, 'List') else None,
             bs.Tuple.__base__ if hasattr(bs, 'Tuple') else None)
-
-
-copyreg.pickle(SeriesMeta, SeriesMeta.__reduce__)
 
 
 def bitset(name, members, id, basecls, listcls, tuplecls):
