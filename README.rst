@@ -25,8 +25,8 @@ Links
 - GitHub: http://github.com/xflr6/bitsets
 - PyPI: http://pypi.python.org/pypi/bitsets
 - Download: http://pypi.python.org/pypi/bitsets#downloads
-- Documentation: 
-- Changelog: 
+- Documentation: http://bitsets.readthedocs.org
+- Changelog: http://bitsets.readthedocs.org/en/latest/changelog.html
 - Issue Tracker: http://github.com/xflr6/bitsets/issues
 
 
