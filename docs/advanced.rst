@@ -42,7 +42,7 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
     			b3 -> b2
     ...
 
-.. image:: hasse-bits.png
+.. image:: _static/hasse-bits.png
     :align: center
 
 
@@ -66,7 +66,7 @@ Show members instead of bits:
     			b3 -> b2
     ...
 
-.. image:: hasse-members.png
+.. image:: _static/hasse-members.png
     :align: center
 
 Remember that the graphs have ``2 ** domain_size`` nodes.
