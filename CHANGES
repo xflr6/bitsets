@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.9 (in development)
-------------------------------
+Version 0.7.9
+-------------
 
 Raise an error if bitset members have duplicates.
 
