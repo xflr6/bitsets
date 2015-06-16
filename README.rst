@@ -162,18 +162,18 @@ Bitsets is distributed under the `MIT license`_.
 .. |--| unicode:: U+2013
 
 
-.. |PyPI version| image:: https://pypip.in/v/bitsets/badge.svg
+.. |PyPI version| image:: https://img.shields.io/pypi/v/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: Latest PyPI Version
-.. |License| image:: https://pypip.in/license/bitsets/badge.svg
+.. |License| image:: https://img.shields.io/pypi/l/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: License
-.. |Supported Python| image:: https://pypip.in/py_versions/bitsets/badge.svg
+.. |Supported Python| image:: https://img.shields.io/pypi/pyversions/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: Supported Python Versions
-.. |Format| image:: https://pypip.in/format/bitsets/badge.svg
+.. |Format| image:: https://img.shields.io/pypi/format/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: Format
-.. |Downloads| image:: https://pypip.in/d/bitsets/badge.svg
+.. |Downloads| image:: https://img.shields.io/pypi/dm/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: Downloads
