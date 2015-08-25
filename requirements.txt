@@ -1,2 +1,2 @@
 # exact (optional) dependency versions used in development
-graphviz==0.4.4
+graphviz==0.4.6

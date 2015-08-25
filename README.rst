@@ -13,10 +13,11 @@ Each instance is a Python integer where the presence/absence of the *nth* pool
 item is its *nth* bit being set/unset (a.k.a. bit strings, powers of two, rank
 in *colexicographical* order).
 
-Being just a regular (long) integer with some convenience methods for
-translating between unique object collections and bit patterns allows to
-perform certain tasks in a more natural way, e.g. sorting a collection of sets
-lexicographically, or enumerating possible combinations in an ordered fashion.
+Being just a regular (arbitrary precision) integer with some convenience
+methods for translating between unique object collections and bit patterns
+allows to perform certain tasks in a more natural way, e.g. sorting a
+collection of sets lexicographically, or enumerating possible combinations in
+an ordered fashion.
 
 
 Links
@@ -24,10 +25,10 @@ Links
 
 - GitHub: http://github.com/xflr6/bitsets
 - PyPI: http://pypi.python.org/pypi/bitsets
-- Download: http://pypi.python.org/pypi/bitsets#downloads
 - Documentation: http://bitsets.readthedocs.org
 - Changelog: http://bitsets.readthedocs.org/en/latest/changelog.html
 - Issue Tracker: http://github.com/xflr6/bitsets/issues
+- Download: http://pypi.python.org/pypi/bitsets#downloads
 
 
 Installation

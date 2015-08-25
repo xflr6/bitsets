@@ -48,7 +48,7 @@ class TestMemberBits(unittest.TestCase):
         self.assertEqual(self.Ints('100011').int, 49)
 
     def test_members(self):
-        self.assertEqual(self.Ints('100011').members(), (1, 5, 6))        
+        self.assertEqual(self.Ints('100011').members(), (1, 5, 6))
 
     def test_members_as_set(self):
         self.assertEqual(self.Ints('110011').members(as_set=True),
@@ -110,7 +110,7 @@ class TestMemberBits(unittest.TestCase):
                                    '34', '35', '36',
                                          '45', '46',
                                                '56'])
-            
+
     def test_longlex(self):
         uptotwo = [i for i in self.Ints.supremum.powerset() if i.count() <= 2]
         longlex = [''.join(map(str, u.members()))
@@ -123,7 +123,7 @@ class TestMemberBits(unittest.TestCase):
                                      '56',
              '1',  '2',  '3',  '4',  '5',  '6',  ''])
 
-    def test_shortlex(self):
+    def test_shorcotlex(self):
         uptotwo = [i for i in self.Ints.supremum.powerset() if i.count() <= 2]
         shortcolex = [''.join(map(str, u.members()))
             for u in sorted(uptotwo, key=lambda u: u.shortcolex())]
@@ -134,6 +134,7 @@ class TestMemberBits(unittest.TestCase):
                   '14', '24', '34',
                   '15', '25', '35', '45',
                   '16', '26', '36', '46', '56'])
+
     def test_longcolex(self):
         uptotwo = [i for i in self.Ints.supremum.powerset() if i.count() <= 2]
         longcolex = [''.join(map(str, u.members()))
@@ -145,7 +146,7 @@ class TestMemberBits(unittest.TestCase):
              '15', '25', '35', '45',
              '16', '26', '36', '46', '56',
              '1',  '2',  '3',  '4',  '5',  '6',  ''])
-        
+
     def test_powerset_start(self):
         result = self.Ints('111').powerset(self.Ints('1'))
         self.assertEqual(list(result),

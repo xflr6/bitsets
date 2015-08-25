@@ -67,9 +67,9 @@ class TestSeries(unittest.TestCase):
         self.assertEqual(self.Nums.List('101000', '110000').ints(), [5, 3])
 
     def test_repr(self):
-        self.assertEqual(repr(self.Nums.List('101000','110000')),
+        self.assertEqual(repr(self.Nums.List('101000', '110000')),
             "NumsList('101000', '110000')")
-        self.assertEqual(repr(self.Nums.Tuple('101000','110000')),
+        self.assertEqual(repr(self.Nums.Tuple('101000', '110000')),
             "NumsTuple('101000', '110000')")
 
     def test_index_sets(self):

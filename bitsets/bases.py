@@ -43,13 +43,13 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     __new__ = frombits.__func__
 
     def __reduce__(self):
-        return __new__, (self.__class__, self.real)
+        return __new__, (self.__class__, self._int)
 
     def copy(self):
         """Return the set unchanged (as its is immutable)."""
         return self
 
-    int = long_int.real
+    int = _int = long_int.real
 
     iter_set = integers.indexes
 
@@ -103,11 +103,11 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
     def shortcolex(self):
         """Return sort key for short colexicographical order."""
-        return bin(self).count('1'), self.int
+        return bin(self).count('1'), self._int
 
     def longcolex(self):
         """Return sort key for long colexicographical order."""
-        return -bin(self).count('1'), self.int
+        return -bin(self).count('1'), self._int
 
     def count(self, value=True):
         """Returns the number of present/absent members."""
