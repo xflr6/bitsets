@@ -15,7 +15,11 @@ __new__ = long_int.__new__
 
 
 class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
-    """Subsets of a predefined domain as rank in colexicographical order."""
+    """Subsets of a predefined domain as rank in colexicographical order.
+
+    Args:
+        bits: String with the binary membership representation.
+    """
 
     _indexes = integers.indexes
 
@@ -126,7 +130,13 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
 @py2_bool_to_nonzero
 class BitSet(MemberBits):
-    """Ordered container of unique elements from a predefined domain."""
+    """Ordered container of unique elements from a predefined domain.
+
+    Args:
+        members: Iterable of domain members.
+    Raises:
+        KeyError: if a member is not in the domain of the set.
+    """
 
     __new__ = MemberBits.frommembers.__func__
 

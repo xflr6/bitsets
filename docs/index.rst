@@ -1,4 +1,4 @@
-.. bitsets documentation master file, created by
+.. bitsets documentation master file
 
 .. include:: ../README.rst
 

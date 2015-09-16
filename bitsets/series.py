@@ -69,7 +69,11 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
 
 
 class List(Series, list):
-    """Mutable bitset sequence."""
+    """Mutable bitset sequence.
+
+    Args:
+        *bits(str): Strings with the binary membership representation.
+    """
 
     __slots__ = ()
 
@@ -88,7 +92,11 @@ class List(Series, list):
 
 
 class Tuple(Series, tuple):
-    """Immutable bitset sequence."""
+    """Immutable bitset sequence.
+
+    Args:
+        *bits(str): Strings with the binary membership representation.
+    """
 
     __slots__ = ()
 
