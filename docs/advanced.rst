@@ -8,12 +8,11 @@ Visualization
 -------------
 
 With the help of the optional Graphviz_ graph layout library and this `Python
-interface`__, the ``bitsets.visualize`` module can create **Hasse diagrams** of
+interface`_, the ``bitsets.visualize`` module can create **Hasse diagrams** of
 all bitsets from your domain:
 
-.. __: http://pypi.python.org/pypi/graphviz
-
-Download and install Graphviz_. Then install the Python interface:
+Download and install Graphviz_. Then install the Python interface
+(documentation_):
 
 .. code:: bash
 
@@ -198,3 +197,5 @@ an importable module, the class and its instances are pickleable.
 
 
 .. _Graphviz: http://www.graphviz.org
+.. _Python interface: http://pypi.python.org/pypi/graphviz
+.. _documentation: http://graphviz.readthedocs.org
