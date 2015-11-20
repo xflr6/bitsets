@@ -86,8 +86,8 @@ for its instances.
     LettersList('100000', '011100', '000011')
 
 The collection classes have convenience methods for set **intersection** and
-**union** of the contained sets (:meth:`reduce_and <.series.List.reduce_and>`
-and :meth:`reduce_or <.series.List.reduce_or>`):
+**union** of the contained sets (:meth:`reduce_and() <.series.List.reduce_and>`
+and :meth:`reduce_or() <.series.List.reduce_or>`):
 
 .. code:: python
 
@@ -158,8 +158,8 @@ the :mod:`bitsets.series` module and pass it to the :func:`bitset` function.
     Nums([1, 2, 3])
 
 Note that since version 0.4, this very functionality was added to the
-:mod:`bitsets.series` classes as :meth:`reduce_and <.series.List.reduce_and>`
-and :meth:`reduce_or <.series.List.reduce_or>` methods (see
+:mod:`bitsets.series` classes as :meth:`reduce_and() <.series.List.reduce_and>`
+and :meth:`reduce_or() <.series.List.reduce_or>` methods (see
 `above <Containers_>`_).
 
 
