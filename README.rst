@@ -94,7 +94,7 @@ Translate to/from bit string, boolean sequence, and int:
     Pythons(['Chapman', 'Gilliam'])
     
 
-Set operation and comparison methods (cf. build-in ``frozenset``):
+Set operation and comparison methods (cf. build-in ``frozenset``, `docs <frozenset_>`_):
 
 .. code:: python
 
@@ -147,7 +147,9 @@ License
 
 Bitsets is distributed under the `MIT license`_.
 
+
 .. _pip: http://pip.readthedocs.org
+.. _frozenset: http://docs.python.org/2/library/stdtypes.html#frozenset
 
 .. _bitarray: http://pypi.python.org/pypi/bitarray
 .. _bitstring: http://pypi.python.org/pypi/bitstring

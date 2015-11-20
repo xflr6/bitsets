@@ -8,8 +8,8 @@ Visualization
 -------------
 
 With the help of the optional Graphviz_ graph layout library and this `Python
-interface`_, the ``bitsets.visualize`` module can create **Hasse diagrams** of
-all bitsets from your domain:
+interface`_, the :mod:`bitsets.visualize` module can create **Hasse diagrams**
+of all bitsets from your domain:
 
 Download and install Graphviz_. Then install the Python interface
 (documentation_):
@@ -75,7 +75,8 @@ Containers
 ----------
 
 When activated, each bitset class comes with tailored **collection classes**
-(bitset list and bitset tuple) for its instances.
+(:class:`BitSet.List <.series.List>` and :class:`BitSet.Tuple <.series.Tuple>`)
+for its instances.
 
 .. code:: python
 
@@ -85,7 +86,8 @@ When activated, each bitset class comes with tailored **collection classes**
     LettersList('100000', '011100', '000011')
 
 The collection classes have convenience methods for set **intersection** and
-**union**:
+**union** of the contained sets (:meth:`reduce_and <.series.List.reduce_and>`
+and :meth:`reduce_or <.series.List.reduce_or>`):
 
 .. code:: python
 
@@ -105,7 +107,7 @@ Customization
 -------------
 
 To use a **customized bitset class**, extend one of the classes from the
-``bitsets.bases`` module and pass it to the ``bitset`` function.
+:mod:`bitsets.bases` module and pass it to the :func:`.bitset` function.
 
 .. code:: python
 
@@ -129,7 +131,7 @@ To use a **customized bitset class**, extend one of the classes from the
 
 
 To use a **customized bitset collection class**, extend one of the classes from
-the ``bitsets.series`` module and pass it to the ``bitset`` function.
+the :mod:`bitsets.series` module and pass it to the :func:`bitset` function.
 
 .. code:: python
 
@@ -156,8 +158,9 @@ the ``bitsets.series`` module and pass it to the ``bitset`` function.
     Nums([1, 2, 3])
 
 Note that since version 0.4, this very functionality was added to the
-``bitsets.series`` classes as ``reduce_and`` and ``reduce_or`` methods (see
-above).
+:mod:`bitsets.series` classes as :meth:`reduce_and <.series.List.reduce_and>`
+and :meth:`reduce_or <.series.List.reduce_or>` methods (see
+`above <Containers_>`_).
 
 
 Persistence
