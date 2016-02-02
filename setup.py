@@ -13,8 +13,6 @@ setup(
     url='http://github.com/xflr6/bitsets',
     packages=find_packages(),
     extras_require={
-        'test': ['nose', 'coverage', 'flake8', 'pep8-naming'],
-        'dev': ['wheel'],
         'visualization': ['graphviz>=0.3, <1.0'],
     },
     platforms='any',
