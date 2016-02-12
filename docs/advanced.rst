@@ -22,7 +22,7 @@ Make sure that the ``bin`` directory of Graphviz is on your system path.
 
 .. code:: python
 
-    >>> from bitsets import visualize
+    >>> from bitsets import bitset, visualize
     >>> Four = bitset('Four', (1, 2, 3, 4))
 
     >>> dot = visualize.bitset(Four)
@@ -171,6 +171,9 @@ Bitset classes, collection classes and their instances are **pickleable**:
 .. code:: python
 
     >>> import pickle
+
+    >>> PYTHONS = ('Chapman', 'Cleese', 'Gilliam', 'Idle', 'Jones', 'Palin')
+    >>> Pythons = bitset('Pythons', PYTHONS)
 
     >>> pickle.loads(pickle.dumps(Pythons)) is Pythons
     True
