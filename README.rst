@@ -25,8 +25,8 @@ Links
 
 - GitHub: http://github.com/xflr6/bitsets
 - PyPI: http://pypi.python.org/pypi/bitsets
-- Documentation: http://bitsets.readthedocs.org
-- Changelog: http://bitsets.readthedocs.org/en/latest/changelog.html
+- Documentation: http://bitsets.readthedocs.io
+- Changelog: http://bitsets.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: http://github.com/xflr6/bitsets/issues
 - Download: http://pypi.python.org/pypi/bitsets#downloads
 
@@ -148,7 +148,7 @@ License
 Bitsets is distributed under the `MIT license`_.
 
 
-.. _pip: http://pip.readthedocs.org
+.. _pip: http://pip.readthedocs.io
 
 .. _bitarray: http://pypi.python.org/pypi/bitarray
 .. _bitstring: http://pypi.python.org/pypi/bitstring
