@@ -1,5 +1,5 @@
 # exact (optional) dependency versions used in development
-graphviz==0.4.10
+graphviz==0.5.1
 # dependencies for testing and building
 coverage
 flake8
