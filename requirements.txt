@@ -1,8 +1,8 @@
 # exact (optional) dependency versions used in development
 graphviz==0.5.1
 # dependencies for testing and building
+nose
 coverage
 flake8
-nose
 pep8-naming
 wheel
