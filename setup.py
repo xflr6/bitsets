@@ -10,7 +10,7 @@ setup(
     description='Ordered subsets over a predefined domain',
     keywords='ordered set finite immutable bit string array map field',
     license='MIT',
-    url='http://github.com/xflr6/bitsets',
+    url='https://github.com/xflr6/bitsets',
     packages=find_packages(),
     extras_require={
         'visualization': ['graphviz>=0.3, <1.0'],

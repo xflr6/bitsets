@@ -52,7 +52,7 @@ def register_reduce(mcls):
 def with_metaclass(meta, *bases):
     """From Jinja2 (BSD licensed).
 
-    http://github.com/mitsuhiko/jinja2/blob/master/jinja2/_compat.py
+    https://github.com/mitsuhiko/jinja2/blob/master/jinja2/_compat.py
     """
     class metaclass(meta):
         __call__ = type.__call__

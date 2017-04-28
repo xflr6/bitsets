@@ -203,5 +203,5 @@ an importable module, the class and its instances are pickleable.
 
 
 .. _Graphviz: http://www.graphviz.org
-.. _Python interface: http://pypi.python.org/pypi/graphviz
-.. _documentation: http://graphviz.readthedocs.io
+.. _Python interface: https://pypi.python.org/pypi/graphviz
+.. _documentation: https://graphviz.readthedocs.io

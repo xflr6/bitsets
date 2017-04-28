@@ -23,12 +23,12 @@ an ordered fashion.
 Links
 -----
 
-- GitHub: http://github.com/xflr6/bitsets
-- PyPI: http://pypi.python.org/pypi/bitsets
-- Documentation: http://bitsets.readthedocs.io
-- Changelog: http://bitsets.readthedocs.io/en/latest/changelog.html
-- Issue Tracker: http://github.com/xflr6/bitsets/issues
-- Download: http://pypi.python.org/pypi/bitsets#downloads
+- GitHub: https://github.com/xflr6/bitsets
+- PyPI: https://pypi.python.org/pypi/bitsets
+- Documentation: https://bitsets.readthedocs.io
+- Changelog: https://bitsets.readthedocs.io/en/latest/changelog.html
+- Issue Tracker: https://github.com/xflr6/bitsets/issues
+- Download: https://pypi.python.org/pypi/bitsets#downloads
 
 
 Installation
@@ -120,14 +120,14 @@ Set operation and comparison methods (cf. build-in ``frozenset``):
 Further reading
 ---------------
 
-- http://wiki.python.org/moin/BitManipulation
-- http://wiki.python.org/moin/BitArrays
+- https://wiki.python.org/moin/BitManipulation
+- https://wiki.python.org/moin/BitArrays
 
-- http://en.wikipedia.org/wiki/Bit_array
-- http://en.wikipedia.org/wiki/Bit_manipulation
+- https://en.wikipedia.org/wiki/Bit_array
+- https://en.wikipedia.org/wiki/Bit_manipulation
 
-- http://en.wikipedia.org/wiki/Lexicographical_order
-- http://en.wikipedia.org/wiki/Colexicographical_order
+- https://en.wikipedia.org/wiki/Lexicographical_order
+- https://en.wikipedia.org/wiki/Colexicographical_order
 
 
 See also
@@ -148,17 +148,17 @@ License
 Bitsets is distributed under the `MIT license`_.
 
 
-.. _pip: http://pip.readthedocs.io
+.. _pip: https://pip.readthedocs.io
 
-.. _bitarray: http://pypi.python.org/pypi/bitarray
-.. _bitstring: http://pypi.python.org/pypi/bitstring
-.. _BitVector: http://pypi.python.org/pypi/BitVector
-.. _Bitsets: http://www.sagemath.org/doc/reference/data_structures/sage/data_structures/bitset.html
-.. _bitfield: http://pypi.python.org/pypi/bitfield
-.. _intbitset: http://pypi.python.org/pypi/intbitset
-.. _gmpy2: http://pypi.python.org/pypi/gmpy2
+.. _bitarray: https://pypi.python.org/pypi/bitarray
+.. _bitstring: https://pypi.python.org/pypi/bitstring
+.. _BitVector: https://pypi.python.org/pypi/BitVector
+.. _Bitsets: https://www.sagemath.org/doc/reference/data_structures/sage/data_structures/bitset.html
+.. _bitfield: https://pypi.python.org/pypi/bitfield
+.. _intbitset: https://pypi.python.org/pypi/intbitset
+.. _gmpy2: https://pypi.python.org/pypi/gmpy2
 
-.. _MIT license: http://opensource.org/licenses/MIT
+.. _MIT license: https://opensource.org/licenses/MIT
 
 
 .. |--| unicode:: U+2013

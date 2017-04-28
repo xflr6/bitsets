@@ -295,8 +295,8 @@ Test if a bitset is non-minimal (the :attr:`~.BitSet.infimum`), same as
     False
 
 
-.. _pip: http://pip.readthedocs.io
+.. _pip: https://pip.readthedocs.io
 .. _Graphviz: http://www.graphviz.org
-.. _Python wrapper: http://pypi.python.org/pypi/graphviz
+.. _Python wrapper: https://pypi.python.org/pypi/graphviz
 
-.. _recipes: http://docs.python.org/2/library/itertools.html#recipes
+.. _recipes: https://docs.python.org/2/library/itertools.html#recipes
