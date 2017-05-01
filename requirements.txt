@@ -1,7 +1,8 @@
 # exact (optional) dependency versions used in development
-graphviz==0.6
+graphviz==0.7
 # dependencies for testing and building
-nose
+pytest>=3
+pytest-cov
 coverage
 flake8
 pep8-naming

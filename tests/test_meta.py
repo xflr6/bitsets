@@ -1,83 +1,67 @@
 # test_meta.py
 
-import unittest
-
 import pickle
 
+import pytest
+
+import bitsets.series
 from bitsets.bases import MemberBits
-from bitsets.series import Series, List, Tuple
 
 
-class TestMeta(unittest.TestCase):
-
-    @classmethod
-    def setUpClass(cls):
-        cls.Ints = MemberBits._make_subclass('Ints', (1, 2, 3, 4, 5, 6))
-
-    @classmethod
-    def tearDownClass(cls):
-        del cls.Ints
-
-    def test_make_subclass_invalid(self):
-        with self.assertRaisesRegexp(RuntimeError, 'make_subclass'):
-            self.Ints._make_subclass('Ints', (1, 2, 3, 4, 5, 6),
-                None, None, None)
-
-    def test_repr(self):
-        self.assertEqual(repr(MemberBits),
-            "<class 'bitsets.bases.MemberBits'>")
-
-    def test_get_subclass(self):
-        with self.assertRaises(RuntimeError):
-            MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-                None, None, None)
-        self.assertIsInstance(
-            MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-                -1, None, None),
-            MemberBits.__class__)
-
-    def test_atomic(self):
-        self.assertEqual(list(self.Ints.atomic(self.Ints('100011'))),
-            [self.Ints('100000'), self.Ints('000010'), self.Ints('000001')])
-
-    def test_inatomic(self):
-        self.assertEqual(list(self.Ints.inatomic(self.Ints('100011'))),
-            [self.Ints('010000'), self.Ints('001000'), self.Ints('000100')])
-
-    def test_reduce_and(self):
-        self.assertEqual(self.Ints.reduce_and([]), self.Ints('111111'))
-        self.assertEqual(self.Ints.reduce_and(
-            [self.Ints('110011'), self.Ints('011110'), self.Ints('010010')]),
-            self.Ints('010010'))
-        self.assertEqual(self.Ints.reduce_and([]), self.Ints('111111'))
-
-    def test_reduce_or(self):
-        self.assertEqual(self.Ints.reduce_or([]), self.Ints('000000'))
-        self.assertEqual(self.Ints.reduce_or(
-            [self.Ints('100001'), self.Ints('010010'), self.Ints('110011')]),
-            self.Ints('110011'))
-        self.assertEqual(self.Ints.reduce_or([]), self.Ints('000000'))
+def test_memberbits_make_subclass_invalid(Ints):
+    with pytest.raises(RuntimeError) as e:
+        Ints._make_subclass('Ints', (1, 2, 3, 4, 5, 6),
+            None, None, None)
+    e.match(r'make_subclass')
 
 
-class TestSeriesMeta(unittest.TestCase):
+def test_repr_ints_cls(Ints):
+    assert repr(MemberBits) == "<class 'bitsets.bases.MemberBits'>"
 
-    @classmethod
-    def setUpClass(cls):
-        cls.Nums = MemberBits._make_subclass('Nums', (1, 2, 3, 4, 5, 6),
-            listcls=List, tuplecls=Tuple)
 
-    @classmethod
-    def tearDownClass(cls):
-        del cls.Nums
+def test_get_subclass(Ints):
+    with pytest.raises(RuntimeError):
+        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
+            None, None, None)
+    assert isinstance(
+        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
+            -1, None, None),
+        MemberBits.__class__)
 
-    def test_make_subclass_invalid(self):
-        with self.assertRaisesRegexp(RuntimeError, 'make_subclass'):
-            self.Nums.List._make_subclass('NumsList', List)
 
-    def test_repr(self):
-        self.assertEqual(repr(Series),
-            "<class 'bitsets.series.Series'>")
+def test_atomic(Ints):
+    assert list(Ints.atomic(Ints('100011'))) == \
+           [Ints('100000'), Ints('000010'), Ints('000001')]
 
-    def test_reconstruct(self):
-        self.assertIs(pickle.loads(pickle.dumps(self.Nums.Tuple)),
-            self.Nums.Tuple)
+
+def test_inatomic(Ints):
+    assert list(Ints.inatomic(Ints('100011'))) == \
+           [Ints('010000'), Ints('001000'), Ints('000100')]
+
+
+def test_reduce_and(Ints):
+    assert Ints.reduce_and([]) == Ints('111111')
+    assert Ints.reduce_and([Ints('110011'), Ints('011110'), Ints('010010')]) == \
+           Ints('010010')
+    assert Ints.reduce_and([]) == Ints('111111')
+
+
+def test_reduce_or(Ints):
+    assert Ints.reduce_or([]) == Ints('000000')
+    assert Ints.reduce_or([Ints('100001'), Ints('010010'), Ints('110011')]) == \
+           Ints('110011')
+    assert Ints.reduce_or([]) == Ints('000000')
+
+
+def test_series_make_subclass_invalid(Nums):
+    with pytest.raises(RuntimeError) as e:
+        Nums.List._make_subclass('NumsList', Nums.List)
+    e.match(r'make_subclass')
+
+
+def test_repr_nums_cls(Nums):
+    assert repr(bitsets.series.Series) == "<class 'bitsets.series.Series'>"
+
+
+def test_reconstruct(Nums):
+    assert pickle.loads(pickle.dumps(Nums.Tuple)) is Nums.Tuple

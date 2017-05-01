@@ -24,15 +24,11 @@ class MemberBitsMeta(type):
 
         self.__registry[(cls.__name__, cls._members, cls._id)] = cls
 
-        if listcls is not None:
-            listcls = listcls._make_subclass(name, cls)
-            assert listcls._series == 'List'
-            setattr(cls, listcls._series, listcls)
-
-        if tuplecls is not None:
-            tuplecls = tuplecls._make_subclass(name, cls)
-            assert tuplecls._series == 'Tuple'
-            setattr(cls, tuplecls._series, tuplecls)
+        for scls, attr in [(listcls, 'List'), (tuplecls, 'Tuple')]:
+            if scls is not None:
+                scls = scls._make_subclass(name, cls)
+                assert scls._series == attr
+                setattr(cls, scls._series, scls)
 
         return cls
 
