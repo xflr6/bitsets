@@ -181,8 +181,8 @@ Bitsets is distributed under the `MIT license`_.
 .. |Downloads| image:: https://img.shields.io/pypi/dm/bitsets.svg
     :target: https://pypi.python.org/pypi/bitsets
     :alt: Downloads
-.. |Docs| image:: https://readthedocs.org/projects/bitsets/badge/?version=stable
-    :target: https://bitsets.readthedocs.io/en/stable/
+.. |Docs| image:: https://readthedocs.org/projects/bitsets/badge/?version=latest
+    :target: https://bitsets.readthedocs.io/en/latest/
     :alt: Readthedocs
 .. |Travis| image:: https://img.shields.io/travis/xflr6/bitsets.svg
    :target: https://travis-ci.org/xflr6/bitsets
