@@ -9,10 +9,8 @@ from bitsets.bases import MemberBits
 
 
 def test_memberbits_make_subclass_invalid(Ints):
-    with pytest.raises(RuntimeError) as e:
-        Ints._make_subclass('Ints', (1, 2, 3, 4, 5, 6),
-            None, None, None)
-    e.match(r'make_subclass')
+    with pytest.raises(RuntimeError, match=r'make_subclass'):
+        Ints._make_subclass('Ints', (1, 2, 3, 4, 5, 6), None, None, None)
 
 
 def test_repr_ints_cls(Ints):
@@ -21,11 +19,9 @@ def test_repr_ints_cls(Ints):
 
 def test_get_subclass(Ints):
     with pytest.raises(RuntimeError):
-        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-            None, None, None)
+        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6), None, None, None)
     assert isinstance(
-        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6),
-            -1, None, None),
+        MemberBits._get_subclass('Ints', (1, 2, 3, 4, 5, 6), -1, None, None),
         MemberBits.__class__)
 
 
@@ -54,9 +50,8 @@ def test_reduce_or(Ints):
 
 
 def test_series_make_subclass_invalid(Nums):
-    with pytest.raises(RuntimeError) as e:
+    with pytest.raises(RuntimeError, match=r'make_subclass'):
         Nums.List._make_subclass('NumsList', Nums.List)
-    e.match(r'make_subclass')
 
 
 def test_repr_nums_cls(Nums):

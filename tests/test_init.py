@@ -6,45 +6,38 @@ from bitsets import bitset
 
 
 def test_empty_name():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'empty'):
         bitset('', 'abc')
-    e.match(r'empty')
 
 
 def test_members_nonsequence():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'sequence'):
         bitset('Letters', frozenset('abc'))
-    e.match(r'sequence')
 
 
 def test_no_member():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'one'):
         bitset('Letters', '')
-    e.match(r'one')
 
 
 def test_duplicated_member():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'duplicates'):
         bitset('Letters', 'abca')
-    e.match(r'duplicates')
 
 
 def test_unhashable_members():
-    with pytest.raises(TypeError) as e:
+    with pytest.raises(TypeError, match=r'unhashable'):
         bitset('Letters', list('abc'))
-    e.match(r'unhashable')
 
 
 def test_unhashable_member():
-    with pytest.raises(TypeError) as e:
+    with pytest.raises(TypeError, match=r'unhashable'):
         bitset('Letters', ([], None))
-    e.match(r'unhashable')
 
 
 def test_wrong_base():
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'subclass'):
         bitset('Letters', 'abc', set)
-    e.match(r'subclass')
 
 
 def test_one_member():

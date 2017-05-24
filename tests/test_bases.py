@@ -27,9 +27,8 @@ def test_frombits(Ints):
 
 
 def test_frombits_invalid(Ints):
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'too many bits'):
         Ints.frombits('1000001')
-    e.match(r'too many bits')
 
 
 def test_copy(Ints):
@@ -163,9 +162,8 @@ def test_powerset_start(Ints):
 
 
 def test_powerset_invalid_start(Ints):
-    with pytest.raises(ValueError) as e:
+    with pytest.raises(ValueError, match=r'no subset'):
         Ints('1').powerset(Ints('111'))
-    e.match(r'no subset')
 
 
 def test_count(Ints):
