@@ -36,7 +36,7 @@ Links
 Installation
 ------------
 
-This package runs under Python 2.7 and 3.3+ and has no required dependencies,
+This package runs under Python 2.7 and 3.4+ and has no required dependencies,
 use pip_ to install:
 
 .. code:: bash
