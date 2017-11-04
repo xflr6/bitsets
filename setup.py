@@ -13,7 +13,7 @@ setup(
     url='https://github.com/xflr6/bitsets',
     packages=find_packages(),
     extras_require={
-        'visualization': ['graphviz>=0.3, <1.0'],
+        'visualization': ['graphviz~=0.7'],
     },
     platforms='any',
     long_description=open('README.rst').read(),
