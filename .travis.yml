@@ -1,4 +1,3 @@
-dist: trusty
 language: python
 python:
   - "2.7"
@@ -9,7 +8,6 @@ cache: pip
 before_cache:
   - rm -f $HOME/.cache/pip/log/debug.log
 install:
-  - pip install -e .[visualization]
-  - pip install "pytest>=3.1" pytest-cov coveralls
+  - pip install .[test,visualization] coveralls
 script: pytest
 after_success: if [[ $TRAVIS_PYTHON_VERSION == 3.6* ]]; then coveralls; fi
