@@ -5,7 +5,7 @@ import sys
 PY2 = sys.version_info[0] == 2
 
 
-if PY2:  # pragma: no cover
+if PY2:
     long_int = long
     integer_types = (int, long)
 
@@ -25,7 +25,7 @@ if PY2:  # pragma: no cover
     import copy_reg as copyreg
 
 
-else:  # pragma: no cover
+else:
     long_int = int
     integer_types = (int,)
 
