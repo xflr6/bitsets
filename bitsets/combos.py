@@ -16,6 +16,9 @@ def shortlex(start, other, excludestart=False):
     >>> ', '.join(''.join(sorted(s))
     ... for s in shortlex(set(), [{'a'}, {'b'}, {'c'}, {'d'}]))
     ', a, b, c, d, ab, ac, ad, bc, bd, cd, abc, abd, acd, bcd, abcd'
+
+    >>> assert list(shortlex(set(), [{1}, {2}], excludestart=True)) == \
+        [{1}, {2}, {1, 2}]
     """
     if not excludestart:
         yield start
@@ -45,6 +48,9 @@ def reverse_shortlex(end, other, excludeend=False):
     ... for s in reverse_shortlex({'a', 'b', 'c', 'd'},
     ... [{'b', 'c', 'd'}, {'a', 'c', 'd'}, {'a', 'b', 'd'}, {'a', 'b', 'c'}]))
     'abcd, bcd, acd, abd, abc, cd, bd, bc, ad, ac, ab, d, c, b, a, '
+
+    >>> assert list(reverse_shortlex({1, 2}, [{1}, {2}], excludeend=True)) == \
+        [{1}, {2}, set()]
     """
     if not excludeend:
         yield end

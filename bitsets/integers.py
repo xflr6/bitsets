@@ -83,6 +83,9 @@ def compress(sequence, n):
 
     >>> list(compress(string.ascii_lowercase, 299009))
     ['a', 'm', 'p', 's']
+
+    >>> list(compress('', 1))
+    []
     """
     for s in sequence:
         if n & 1:
