@@ -190,6 +190,3 @@ Bitsets is distributed under the `MIT license`_.
 .. |Codecov| image:: https://codecov.io/gh/xflr6/bitsets/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/xflr6/bitsets
     :alt: Codecov
-.. |Coveralls| image:: https://img.shields.io/coveralls/xflr6/bitsets.svg
-    :target: https://coveralls.io/github/xflr6/bitsets
-    :alt: Coveralls
