@@ -3,6 +3,15 @@
 API Reference
 =============
 
+.. autosummary::
+    :nosignatures:
+
+    ~bitsets.bitset
+    bitsets.bases.BitSet
+    bitsets.series.List
+    bitsets.series.Tuple
+
+
 bitset
 ------
 

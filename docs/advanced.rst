@@ -16,9 +16,9 @@ Download and install Graphviz_. Then install the Python interface
 
 .. code:: bash
 
-    $ pip install "graphviz>=0.3, <1.0"
+    $ pip install "graphviz~=0.7"
 
-Make sure that the ``bin`` directory of Graphviz is on your system path.
+Make sure that the ``bin/`` directory of Graphviz is on your system path.
 
 .. code:: python
 
