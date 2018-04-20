@@ -26,11 +26,11 @@ Links
 -----
 
 - GitHub: https://github.com/xflr6/bitsets
-- PyPI: https://pypi.python.org/pypi/bitsets
+- PyPI: https://pypi.org/project/bitsets/
 - Documentation: https://bitsets.readthedocs.io
 - Changelog: https://bitsets.readthedocs.io/en/latest/changelog.html
 - Issue Tracker: https://github.com/xflr6/bitsets/issues
-- Download: https://pypi.python.org/pypi/bitsets#downloads
+- Download: https://pypi.org/project/bitsets/#files
 
 
 Installation
@@ -152,13 +152,13 @@ Bitsets is distributed under the `MIT license`_.
 
 .. _pip: https://pip.readthedocs.io
 
-.. _bitarray: https://pypi.python.org/pypi/bitarray
-.. _bitstring: https://pypi.python.org/pypi/bitstring
-.. _BitVector: https://pypi.python.org/pypi/BitVector
+.. _bitarray: https://pypi.org/project/bitarray/
+.. _bitstring: https://pypi.org/project/bitstring/
+.. _BitVector: https://pypi.org/project/BitVector/
 .. _Bitsets: https://www.sagemath.org/doc/reference/data_structures/sage/data_structures/bitset.html
-.. _bitfield: https://pypi.python.org/pypi/bitfield
-.. _intbitset: https://pypi.python.org/pypi/intbitset
-.. _gmpy2: https://pypi.python.org/pypi/gmpy2
+.. _bitfield: https://pypi.org/project/bitfield/
+.. _intbitset: https://pypi.org/project/intbitset/
+.. _gmpy2: https://pypi.org/project/gmpy2/
 
 .. _MIT license: https://opensource.org/licenses/MIT
 
@@ -167,20 +167,17 @@ Bitsets is distributed under the `MIT license`_.
 
 
 .. |PyPI version| image:: https://img.shields.io/pypi/v/bitsets.svg
-    :target: https://pypi.python.org/pypi/bitsets
+    :target: https://pypi.org/project/bitsets/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/bitsets.svg
-    :target: https://pypi.python.org/pypi/bitsets
+    :target: https://pypi.org/project/bitsets/
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/bitsets.svg
-    :target: https://pypi.python.org/pypi/bitsets
+    :target: https://pypi.org/project/bitsets/
     :alt: Supported Python Versions
 .. |Format| image:: https://img.shields.io/pypi/format/bitsets.svg
-    :target: https://pypi.python.org/pypi/bitsets
+    :target: https://pypi.org/project/bitsets/
     :alt: Format
-.. |Downloads| image:: https://img.shields.io/pypi/dm/bitsets.svg
-    :target: https://pypi.python.org/pypi/bitsets
-    :alt: Downloads
 .. |Docs| image:: https://readthedocs.org/projects/bitsets/badge/?version=stable
     :target: https://bitsets.readthedocs.io/en/stable/
     :alt: Readthedocs
