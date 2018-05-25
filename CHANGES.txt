@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.13 (in development)
--------------------------------
+Version 0.7.13
+--------------
 
 Use compatible release version specifiers (bump optional ``graphviz`` to ~=0.7).
 
