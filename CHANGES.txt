@@ -3,7 +3,7 @@ Changelog
 
 
 Version 0.7.14 (in development)
-------------------------------
+-------------------------------
 
 Tag Python 3.7 support.
 
