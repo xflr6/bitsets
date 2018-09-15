@@ -71,7 +71,7 @@ class MemberBitsMeta(type):
     def _get_subclass(self, name, members, id, listcls, tuplecls):
         """Return or create class with name, members, and id (for unpickling)."""
         if not isinstance(id, integer_types):
-            raise RuntimeError
+            raise RuntimeError('non-integer id: %r' % id)
 
         if (name, members, id) in self.__registry:  # enable roundtrip reprs
             return self.__registry[(name, members, id)]
