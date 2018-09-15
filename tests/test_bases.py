@@ -156,9 +156,12 @@ def test_longcolex(Ints):
             '1',  '2',  '3',  '4',  '5',  '6',  '']
 
 
-def test_powerset_start(Ints):
-    result = Ints('111').powerset(Ints('1'))
-    assert list(result) == [Ints('1'), Ints('11'), Ints('101'), Ints('111')]
+@pytest.mark.parametrize('bits, other, expected', [
+    ('111', '1', ['1', '11', '101', '111']),
+    ('111', '11', ['11', '111']),
+])
+def test_powerset_start(Ints, bits, other, expected):
+    assert list(Ints(bits).powerset(Ints(other))) == [Ints(e) for e in expected]
 
 
 def test_powerset_invalid_start(Ints):
@@ -174,23 +177,20 @@ def test_count_false(Ints):
     assert Ints('111011').count(False) == 1
 
 
-def test_count_invalid(Ints):
-    with pytest.raises(ValueError):
-        Ints('110011').count('0')
-    with pytest.raises(ValueError):
-        Ints('110011').count('1')
-    with pytest.raises(ValueError):
-        Ints('110011').count(2)
+@pytest.mark.parametrize('value', ['0', '1', 2, None, -1, object()])
+def test_count_invalid(Ints, value):
+    with pytest.raises(ValueError, match=r'True or False'):
+        Ints('110011').count(value)
 
 
-def test_all(Ints):
-    assert Ints('111111').all() is True
-    assert Ints('001010').all() is False
+@pytest.mark.parametrize('bits, expected', [('111111', True), ('001010', False)])
+def test_all(Ints, bits, expected):
+    assert Ints(bits).all() is expected
 
 
-def test_any(Ints):
-    assert Ints('100000').any() is True
-    assert Ints('000000').any() is False
+@pytest.mark.parametrize('bits, expected', [('100000', True), ('000000', False)])
+def test_any(Ints, bits, expected):
+    assert Ints(bits).any() is expected
 
 
 def test_repr_nums_cls(Nums):
@@ -198,14 +198,14 @@ def test_repr_nums_cls(Nums):
                     repr(Nums))
 
 
-def test_bool(Nums):
-    assert bool(Nums([1])) is True
-    assert bool(Nums()) is False
+@pytest.mark.parametrize('args, expected', [(([1],), True), ((), False)])
+def test_bool(Nums, args, expected):
+    assert bool(Nums(*args)) is expected
 
 
-def test_len(Nums):
-    assert len(Nums([1])) == 1
-    assert len(Nums()) == 0
+@pytest.mark.parametrize('args, expected', [(([1],), 1), ((), 0), (([1, 2],), 2)])
+def test_len(Nums, args, expected):
+    assert len(Nums(*args)) == expected
 
 
 def test_iter(Nums):
