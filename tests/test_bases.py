@@ -6,8 +6,10 @@ import pytest
 
 
 def test_repr_ints_cls(Ints):
-    assert re.match(r"<class bitsets\.meta\.bitset\('Ints', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, MemberBits, None, None\)>",
-                    repr(Ints))
+    assert re.match(
+        r"<class bitsets\.meta\.bitset\("
+        r"'Ints', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, MemberBits, None, None"
+        r"\)>", repr(Ints))
 
 
 def test_fromint(Ints):
@@ -194,8 +196,11 @@ def test_any(Ints, bits, expected):
 
 
 def test_repr_nums_cls(Nums):
-    assert re.match(r"<class bitsets\.meta\.bitset\('Nums', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, BitSet, List, Tuple\)>",
-                    repr(Nums))
+    pattern = (
+        r"<class bitsets\.meta\.bitset\("
+        r"'Nums', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, BitSet, List, Tuple"
+        r"\)>")
+    assert re.match(pattern, repr(Nums))
 
 
 @pytest.mark.parametrize('args, expected', [(([1],), True), ((), False)])
