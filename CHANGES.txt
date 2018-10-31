@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.14 (in development)
--------------------------------
+Version 0.7.14
+--------------
 
 Tag Python 3.7 support, add simple tox config.
 
