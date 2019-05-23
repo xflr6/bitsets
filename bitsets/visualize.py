@@ -41,14 +41,9 @@ def bitset(bs, member_label=None, filename=None, directory=None, format=None,
         kind = 'members' if member_label else 'bits'
         filename = FILENAME % (bs.__name__, kind)
 
-    dot = graphviz.Digraph(
-        name=bs.__name__,
-        comment=repr(bs),
-        filename=filename,
-        directory=directory,
-        format=format,
-        edge_attr={'dir': 'none'}
-    )
+    dot = graphviz.Digraph(name=bs.__name__, comment=repr(bs),
+                           filename=filename, directory=directory,
+                           format=format, edge_attr={'dir': 'none'})
 
     node_name = NAME_GETTERS[0]
 

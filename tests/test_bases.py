@@ -6,10 +6,10 @@ import pytest
 
 
 def test_repr_ints_cls(Ints):
-    assert re.match(
-        r"<class bitsets\.meta\.bitset\("
-        r"'Ints', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, MemberBits, None, None"
-        r"\)>", repr(Ints))
+    assert re.match(r"<class bitsets\.meta\.bitset\("
+                    r"'Ints', \(1, 2, 3, 4, 5, 6\), "
+                    r"0x[0-9a-fA-F]+, MemberBits, None, None"
+                    r"\)>", repr(Ints))
 
 
 def test_fromint(Ints):
@@ -67,95 +67,99 @@ def test_repr_ints(Ints):
 
 
 def test_atoms(Ints):
-    assert list(Ints('100011').atoms()) == \
-           [Ints('100000'), Ints('000010'), Ints('000001')]
+    assert list(Ints('100011').atoms()) == [Ints('100000'),
+                                            Ints('000010'),
+                                            Ints('000001')]
 
 
 def test_atoms_reverse(Ints):
-    assert list(Ints('100011').atoms(reverse=True)) == \
-           [Ints('000001'), Ints('000010'), Ints('100000')]
+    assert list(Ints('100011').atoms(reverse=True)) == [Ints('000001'),
+                                                        Ints('000010'),
+                                                        Ints('100000')]
 
 
 def test_inatoms(Ints):
-    assert list(Ints('100011').inatoms()) == \
-           [Ints('010000'), Ints('001000'), Ints('000100')]
+    assert list(Ints('100011').inatoms()) == [Ints('010000'),
+                                              Ints('001000'),
+                                              Ints('000100')]
 
 
 def test_inatoms_reverse(Ints):
-    assert list(Ints('100011').inatoms(reverse=True)) == \
-           [Ints('000100'), Ints('001000'), Ints('010000')]
+    assert list(Ints('100011').inatoms(reverse=True)) == [Ints('000100'),
+                                                          Ints('001000'),
+                                                          Ints('010000')]
 
 
 def test_powerset(Ints):
     triples = [i for i in Ints.supremum.powerset() if i.count() == 3]
-    assert ['%d%d%d' % t.members() for t in triples] == \
-           ['123', '124', '125', '126',
-                   '134', '135', '136',
-                          '145', '146',
-                                 '156',
-                   '234', '235', '236',
-                          '245', '246',
-                                 '256',
-                          '345', '346',
-                                 '356',
-                                 '456']
-    assert ['%d%d%d' % t.members() for t in sorted(triples)] == \
-           ['123',
-            '124', '134', '234',
-            '125', '135', '235', '145', '245', '345',
-            '126', '136', '236', '146', '246', '346', '156', '256', '356', '456']
+    members = ['%d%d%d' % t.members() for t in triples]
+    assert members == ['123', '124', '125', '126',
+                              '134', '135', '136',
+                                     '145', '146',
+                                            '156',
+                              '234', '235', '236',
+                                     '245', '246',
+                                            '256',
+                                     '345', '346',
+                                            '356',
+                                            '456']
+    msorted = ['%d%d%d' % t.members() for t in sorted(triples)]
+    assert msorted == ['123',
+                       '124', '134', '234',
+                       '125', '135', '235', '145', '245', '345',
+                       '126', '136', '236', '146', '246', '346', '156', '256', '356', '456']
 
 
-def test_shortlex(Ints):
+def test_shortlex(Ints):  # noqa: N803
     uptotwo = [i for i in Ints.supremum.powerset() if i.count() <= 2]
     shortlex = [''.join(map(str, u.members()))
-        for u in sorted(uptotwo, key=lambda u: u.shortlex())]
-    assert shortlex == \
-           ['',  '1',  '2',  '3',  '4',  '5',  '6',
-                      '12', '13', '14', '15', '16',
-                            '23', '24', '25', '26',
-                                  '34', '35', '36',
-                                        '45', '46',
-                                              '56']
+                for u in sorted(uptotwo, key=lambda u: u.shortlex())]
+    assert shortlex == ['',
+                        u'1', u'2', u'3', u'4', u'5', u'6',
+                              '12', '13', '14', '15', '16',
+                                    '23', '24', '25', '26',
+                                          '34', '35', '36',
+                                                '45', '46',
+                                                      '56']
 
 
 def test_longlex(Ints):
     uptotwo = [i for i in Ints.supremum.powerset() if i.count() <= 2]
     longlex = [''.join(map(str, u.members()))
-        for u in sorted(uptotwo, key=lambda u: u.longlex())]
-    assert longlex == \
-           ['12', '13', '14', '15', '16',
-                  '23', '24', '25', '26',
-                        '34', '35', '36',
-                              '45', '46',
-                                    '56',
-            '1',  '2',  '3',  '4',  '5',  '6',  '']
+               for u in sorted(uptotwo, key=lambda u: u.longlex())]
+    assert longlex == ['12', '13', '14', '15', '16',
+                             '23', '24', '25', '26',
+                                   '34', '35', '36',
+                                         '45', '46',
+                                               '56',
+                  '1', u'2', u'3', u'4', u'5', u'6',
+                  '']
 
 
 def test_shorcotlex(Ints):
     uptotwo = [i for i in Ints.supremum.powerset() if i.count() <= 2]
     shortcolex = [''.join(map(str, u.members()))
-        for u in sorted(uptotwo, key=lambda u: u.shortcolex())]
-    assert shortcolex == \
-           ['',  '1',  '2',  '3',  '4',  '5',  '6',
-            '12',
-            '13', '23',
-            '14', '24', '34',
-            '15', '25', '35', '45',
-            '16', '26', '36', '46', '56']
+                  for u in sorted(uptotwo, key=lambda u: u.shortcolex())]
+    assert shortcolex == ['',
+                          '1', u'2', u'3', u'4', u'5', u'6',
+                          '12',
+                          '13', '23',
+                          '14', '24', '34',
+                          '15', '25', '35', '45',
+                          '16', '26', '36', '46', '56']
 
 
 def test_longcolex(Ints):
     uptotwo = [i for i in Ints.supremum.powerset() if i.count() <= 2]
     longcolex = [''.join(map(str, u.members()))
-        for u in sorted(uptotwo, key=lambda u: u.longcolex())]
-    assert longcolex == \
-           ['12',
-            '13', '23',
-            '14', '24', '34',
-            '15', '25', '35', '45',
-            '16', '26', '36', '46', '56',
-            '1',  '2',  '3',  '4',  '5',  '6',  '']
+                 for u in sorted(uptotwo, key=lambda u: u.longcolex())]
+    assert longcolex == ['12',
+                         '13', '23',
+                         '14', '24', '34',
+                         '15', '25', '35', '45',
+                         '16', '26', '36', '46', '56',
+                         '1', u'2', u'3', u'4', u'5', u'6',
+                         '']
 
 
 @pytest.mark.parametrize('bits, other, expected', [
@@ -196,11 +200,10 @@ def test_any(Ints, bits, expected):
 
 
 def test_repr_nums_cls(Nums):
-    pattern = (
-        r"<class bitsets\.meta\.bitset\("
-        r"'Nums', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, BitSet, List, Tuple"
-        r"\)>")
-    assert re.match(pattern, repr(Nums))
+    assert re.match(r"<class bitsets\.meta\.bitset\("
+                    r"'Nums', \(1, 2, 3, 4, 5, 6\), "
+                    r"0x[0-9a-fA-F]+, BitSet, List, Tuple"
+                    r"\)>", repr(Nums))
 
 
 @pytest.mark.parametrize('args, expected', [(([1],), True), ((), False)])

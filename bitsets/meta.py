@@ -12,7 +12,8 @@ class MemberBitsMeta(type):
 
     __registry = {}
 
-    def _make_subclass(self, name, members, id=None, listcls=None, tuplecls=None):
+    def _make_subclass(self, name, members, id=None,
+                       listcls=None, tuplecls=None):
         if hasattr(self, '_members'):
             raise RuntimeError('%r attempt _make_subclass' % self)
 
@@ -55,18 +56,19 @@ class MemberBitsMeta(type):
         if not hasattr(self, '_members'):
             return super(MemberBitsMeta, self).__repr__()
 
-        return '<class %s.bitset(%r, %r, %#x, %s, %s, %s)>' % (self.__module__,
-            self.__name__, self._members, self._id, self.__base__.__name__,
-            self.List.__base__.__name__ if hasattr(self, 'List') else None,
-            self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None)
+        tmpl = '<class %s.bitset(%r, %r, %#x, %s, %s, %s)>'
+        return tmpl % (self.__module__, self.__name__, self._members,
+                       self._id, self.__base__.__name__,
+                       self.List.__base__.__name__ if hasattr(self, 'List') else None,
+                       self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None)
 
     def __reduce__(self):
         if not hasattr(self, '_members'):
             return self.__name__
 
         return bitset, (self.__name__, self._members, self._id, self.__base__,
-            self.List.__base__ if hasattr(self, 'List') else None,
-            self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
+                        self.List.__base__ if hasattr(self, 'List') else None,
+                        self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
 
     def _get_subclass(self, name, members, id, listcls, tuplecls):
         """Return or create class with name, members, and id (for unpickling)."""
@@ -118,10 +120,11 @@ class SeriesMeta(type):
             return type.__repr__(self)
 
         bs = self.BitSet
-        return '<class %s.bitset_%s(%r, %r, %#x, %s, %s, %s)>' % (self.__module__,
-            self._series.lower(), bs.__name__, bs._members, bs._id, bs.__base__.__name__,
-            bs.List.__base__.__name__ if hasattr(bs, 'List') else None,
-            bs.Tuple.__base__.__name__ if hasattr(bs, 'Tuple') else None)
+        tmpl = '<class %s.bitset_%s(%r, %r, %#x, %s, %s, %s)>'
+        return tmpl % (self.__module__, self._series.lower(),
+                       bs.__name__, bs._members, bs._id, bs.__base__.__name__,
+                       bs.List.__base__.__name__ if hasattr(bs, 'List') else None,
+                       bs.Tuple.__base__.__name__ if hasattr(bs, 'Tuple') else None)
 
     def __reduce__(self):
         if not hasattr(self, 'BitSet'):
@@ -130,8 +133,8 @@ class SeriesMeta(type):
         bitset_series = {'List': bitset_list, 'Tuple': bitset_tuple}[self._series]
         bs = self.BitSet
         return bitset_series, (bs.__name__, bs._members, bs._id, bs.__base__,
-            bs.List.__base__ if hasattr(bs, 'List') else None,
-            bs.Tuple.__base__ if hasattr(bs, 'Tuple') else None)
+                               bs.List.__base__ if hasattr(bs, 'List') else None,
+                               bs.Tuple.__base__ if hasattr(bs, 'Tuple') else None)
 
 
 def bitset(name, members, id, basecls, listcls, tuplecls):

@@ -9,14 +9,14 @@ def test_class(Nums):
 
 
 def test_classrepr(Nums):
-    assert re.match(
-        r"<class bitsets\.meta\.bitset_list\("
-        r"'Nums', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, BitSet, List, Tuple"
-        r"\)>", repr(Nums.List))
-    assert re.match(
-        r"<class bitsets\.meta\.bitset_tuple\("
-        r"'Nums', \(1, 2, 3, 4, 5, 6\), 0x[0-9a-fA-F]+, BitSet, List, Tuple"
-        r"\)>", repr(Nums.Tuple))
+    assert re.match(r"<class bitsets\.meta\.bitset_list\("
+                    r"'Nums', \(1, 2, 3, 4, 5, 6\), "
+                    r"0x[0-9a-fA-F]+, BitSet, List, Tuple"
+                    r"\)>", repr(Nums.List))
+    assert re.match(r"<class bitsets\.meta\.bitset_tuple\("
+                    r"'Nums', \(1, 2, 3, 4, 5, 6\), "
+                    r"0x[0-9a-fA-F]+, BitSet, List, Tuple"
+                    r"\)>", repr(Nums.Tuple))
 
 
 def test_frombitsets(Nums):
