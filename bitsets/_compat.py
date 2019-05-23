@@ -54,7 +54,7 @@ def with_metaclass(meta, *bases):
 
     https://github.com/mitsuhiko/jinja2/blob/master/jinja2/_compat.py
     """
-    class metaclass(meta):
+    class metaclass(meta):  # noqa: N801
         __call__ = type.__call__
         __init__ = type.__init__
         def __new__(cls, name, this_bases, d):

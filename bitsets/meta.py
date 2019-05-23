@@ -12,7 +12,7 @@ class MemberBitsMeta(type):
 
     __registry = {}
 
-    def _make_subclass(self, name, members, id=None,
+    def _make_subclass(self, name, members, id=None,  # noqa: N804
                        listcls=None, tuplecls=None):
         if hasattr(self, '_members'):
             raise RuntimeError('%r attempt _make_subclass' % self)
@@ -37,7 +37,7 @@ class MemberBitsMeta(type):
         dct.setdefault('__slots__', ())
         return super(MemberBitsMeta, cls).__new__(cls, name, bases, dct)
 
-    def __init__(self, name, bases, dct):
+    def __init__(self, name, bases, dct):  # noqa: N804
         if not hasattr(self, '_members'):
             return
 
@@ -52,7 +52,7 @@ class MemberBitsMeta(type):
         if not hasattr(self, '_id'):
             self._id = id(self)
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: N804
         if not hasattr(self, '_members'):
             return super(MemberBitsMeta, self).__repr__()
 
@@ -62,7 +62,7 @@ class MemberBitsMeta(type):
                        self.List.__base__.__name__ if hasattr(self, 'List') else None,
                        self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None)
 
-    def __reduce__(self):
+    def __reduce__(self):  # noqa: N804
         if not hasattr(self, '_members'):
             return self.__name__
 
@@ -70,7 +70,7 @@ class MemberBitsMeta(type):
                         self.List.__base__ if hasattr(self, 'List') else None,
                         self.Tuple.__base__ if hasattr(self, 'Tuple') else None)
 
-    def _get_subclass(self, name, members, id, listcls, tuplecls):
+    def _get_subclass(self, name, members, id, listcls, tuplecls):  # noqa: N804
         """Return or create class with name, members, and id (for unpickling)."""
         if not isinstance(id, integer_types):
             raise RuntimeError('non-integer id: %r' % id)
@@ -80,22 +80,22 @@ class MemberBitsMeta(type):
 
         return self._make_subclass(name, members, id, listcls, tuplecls)
 
-    def atomic(self, bitset):
+    def atomic(self, bitset):  # noqa: N804
         """Member singleton generator."""
         return filter(bitset.__and__, self._atoms)
 
-    def inatomic(self, bitset):
+    def inatomic(self, bitset):  # noqa: N804
         """Complement singleton generator."""
         return filterfalse(bitset.__and__, self._atoms)
 
-    def reduce_and(self, bitsets):
+    def reduce_and(self, bitsets):  # noqa: N804
         """Generalized intersection."""
         inters = self.supremum.copy()
         for b in bitsets:
             inters &= b
         return self.frombitset(inters)
 
-    def reduce_or(self, bitsets):
+    def reduce_or(self, bitsets):  # noqa: N804
         """Generalized union."""
         union = self.infimum.copy()
         for b in bitsets:
@@ -106,7 +106,7 @@ class MemberBitsMeta(type):
 @register_reduce
 class SeriesMeta(type):
 
-    def _make_subclass(self, name, cls):
+    def _make_subclass(self, name, cls):  # noqa: N804
         if hasattr(self, 'BitSet'):
             raise RuntimeError('%r attempt _make_subclass' % self)
 
@@ -115,7 +115,7 @@ class SeriesMeta(type):
             dct['__slots__'] = self.__slots__
         return type('%s%s' % (name, self.__name__), (self,), dct)
 
-    def __repr__(self):
+    def __repr__(self):  # noqa: N804
         if not hasattr(self, 'BitSet'):
             return type.__repr__(self)
 
@@ -126,7 +126,7 @@ class SeriesMeta(type):
                        bs.List.__base__.__name__ if hasattr(bs, 'List') else None,
                        bs.Tuple.__base__.__name__ if hasattr(bs, 'Tuple') else None)
 
-    def __reduce__(self):
+    def __reduce__(self):  # noqa: N804
         if not hasattr(self, 'BitSet'):
             return self.__name__
 
