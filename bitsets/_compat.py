@@ -14,8 +14,11 @@ if PY2:
     def get_unbound_func(unbound_method):
         return unbound_method.__func__
 
-    from itertools import imap as map, izip as zip, ifilter as filter
-    from itertools import ifilterfalse as filterfalse, izip_longest as zip_longest
+    from itertools import (imap as map,
+                           izip as zip,
+                           ifilter as filter,
+                           ifilterfalse as filterfalse,
+                           izip_longest as zip_longest)
 
     def py2_bool_to_nonzero(cls):
         cls.__nonzero__ = cls.__bool__
