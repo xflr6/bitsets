@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.7.15 (in development)
--------------------------------
+Version 0.7.15
+--------------
 
 Drop Python 3.4 support.
 
