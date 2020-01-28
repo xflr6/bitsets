@@ -12,6 +12,11 @@ setup(
     keywords='ordered set finite immutable bit string array map field',
     license='MIT',
     url='https://github.com/xflr6/bitsets',
+    project_urls={
+        'Documentation': 'https://bitsets.readthedocs.io',
+        'Changelog': 'https://bitsets.readthedocs.io/en/latest/changelog.html',
+        'Issue Tracker': 'https://github.com/xflr6/bitsets/issues',
+    },
     packages=find_packages(),
     platforms='any',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
