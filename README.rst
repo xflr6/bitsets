@@ -3,12 +3,7 @@ Bitsets
 
 |PyPI version| |License| |Supported Python| |Format| 
 
-======== ====================
-Build    |Travis|
-Coverage |Codecov|
-Docs     |Readthedocs-stable|
-Dev docs |Readthedocs-latest|
-======== ====================
+|Travis| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
 This package provides a memory-efficient pure-python **immutable ordered set
 data type** for working with large numbers of subsets from a predetermined pool
