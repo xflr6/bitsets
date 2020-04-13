@@ -1,9 +1,14 @@
 Bitsets
 =======
 
-|PyPI version| |License| |Supported Python| |Format| |Docs|
+|PyPI version| |License| |Supported Python| |Format| 
 
-|Travis| |Codecov|
+======== ====================
+Build    |Travis|
+Coverage |Codecov|
+Docs     |Readthedocs-stable|
+Dev docs |Readthedocs-latest|
+======== ====================
 
 This package provides a memory-efficient pure-python **immutable ordered set
 data type** for working with large numbers of subsets from a predetermined pool
@@ -177,13 +182,17 @@ Bitsets is distributed under the `MIT license`_.
     :alt: Supported Python Versions
 .. |Format| image:: https://img.shields.io/pypi/format/bitsets.svg
     :target: https://pypi.org/project/bitsets/
-    :alt: Format
-.. |Docs| image:: https://readthedocs.org/projects/bitsets/badge/?version=stable
-    :target: https://bitsets.readthedocs.io/en/stable/
-    :alt: Readthedocs
+    :alt: Package Format
+
 .. |Travis| image:: https://img.shields.io/travis/xflr6/bitsets.svg
     :target: https://travis-ci.org/xflr6/bitsets
     :alt: Travis
 .. |Codecov| image:: https://codecov.io/gh/xflr6/bitsets/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/xflr6/bitsets
     :alt: Codecov
+.. |Readthedocs-stable| image:: https://readthedocs.org/projects/bitsets/badge/?version=stable
+    :target: https://bitsets.readthedocs.io/en/stable/?badge=stable
+    :alt: Readthedocs stable
+.. |Readthedocs-latest| image:: https://readthedocs.org/projects/bitsets/badge/?version=latest
+    :target: https://bitsets.readthedocs.io/en/latest/?badge=latest
+    :alt: Readthedocs latest
