@@ -21,9 +21,9 @@ setup(
     platforms='any',
     python_requires='>=2.7,!=3.0.*,!=3.1.*,!=3.2.*,!=3.3.*,!=3.4.*',
     extras_require={
-        'dev': ['flake8', 'pep8-naming', 'wheel', 'twine'],
-        'test': ['pytest>=3.4,!=3.10.0', 'pytest-cov'],
-        'docs': ['sphinx>=1.7', 'sphinx-rtd-theme'],
+        'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
+        'test': ['pytest>=4', 'pytest-cov'],
+        'docs': ['sphinx>=1.8', 'sphinx-rtd-theme'],
         'visualization': ['graphviz~=0.7'],
     },
     long_description=io.open('README.rst', encoding='utf-8').read(),
