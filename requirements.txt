@@ -1,4 +1,4 @@
 # development environment: install in development mode
 -e .[dev,test,docs]
 # exact (optional) dependency versions used in development
-graphviz==0.15
+graphviz==0.16
