@@ -4,8 +4,8 @@ import pickle
 
 import pytest
 
-import bitsets.series
 from bitsets.bases import MemberBits
+import bitsets.series
 
 
 def test_memberbits_make_subclass_invalid(Ints):  # noqa: N803

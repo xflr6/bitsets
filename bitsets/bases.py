@@ -7,7 +7,9 @@ from itertools import compress
 from ._compat import (long_int, get_unbound_func, map, filter, filterfalse,
                       py2_bool_to_nonzero, with_metaclass)
 
-from . import meta, integers, combos
+from . import combos
+from . import integers
+from . import meta
 
 __all__ = ['MemberBits', 'BitSet']
 

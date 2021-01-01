@@ -2,7 +2,9 @@
 
 """Ordered subsets of a predetermined finite domain."""
 
-from . import meta, bases, series
+from . import bases
+from . import meta
+from . import series
 
 __all__ = ['bitset']
 
