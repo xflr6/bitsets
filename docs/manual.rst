@@ -17,7 +17,7 @@ integers (``&, |, ^, ~``).
 Installation
 ------------
 
-:mod:`bitsets` is a pure-python package that runs both under Python 2.7 and 3.6+.
+:mod:`bitsets` is a pure-python package that runs under Python 3.6+.
 To install it with using pip_, run the following command:
 
 .. code:: bash
@@ -46,10 +46,9 @@ subsets from a fixed set of items (the *domain*):
 The domain needs to be a hashable duplicate-free sequence of at least one item
 (usually, a ``tuple``).
 
-The resulting class is an integer (``int`` or ``long`` depending on Python
-version) subclass, so its instances (being integers) are **immutable and
-hashable** and thus in many ways similar to Python's built-in
-:class:`py:frozenset`.
+The resulting class is an integer (``int``) subclass, so its instances (being
+integers) are **immutable and hashable** and thus in many ways similar to
+Python's built-in :class:`py:frozenset`.
 
 .. code:: python
 
