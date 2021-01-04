@@ -42,7 +42,7 @@ class MemberBitsMeta(type):
 
     def __new__(cls, name, bases, dct):
         dct.setdefault('__slots__', ())
-        return super(MemberBitsMeta, cls).__new__(cls, name, bases, dct)
+        return super().__new__(cls, name, bases, dct)
 
     def __init__(self, name, bases, dct):  # noqa: N804
         if not hasattr(self, '_members'):
@@ -61,7 +61,7 @@ class MemberBitsMeta(type):
 
     def __repr__(self):  # noqa: N804
         if not hasattr(self, '_members'):
-            return super(MemberBitsMeta, self).__repr__()
+            return super().__repr__()
 
         list_base = self.List.__base__.__name__ if hasattr(self, 'List') else None
         tuple_base = self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None
