@@ -4,8 +4,6 @@
 
 import string
 
-from ._compat import map
-
 __all__ = ['indexes', 'n', 'reinverted', 'rank', 'unrank', 'compress', 'bit_mask']
 
 

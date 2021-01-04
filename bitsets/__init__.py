@@ -33,19 +33,19 @@ def bitset(name, members, base=bases.BitSet, list=False, tuple=False):
         Letters(['a', 'b', 'd', 'e', 'f'])
     """
     if not name:
-        raise ValueError('empty bitset name: %r' % name)
+        raise ValueError(f'empty bitset name: {name!r}')
 
     if not hasattr(members, '__getitem__') or not hasattr(members, '__len__'):
-        raise ValueError('non-sequence bitset members: %r' % members)
+        raise ValueError(f'non-sequence bitset members: {members!r}')
 
     if not len(members):
-        raise ValueError('less than one bitset member: %r' % (members,))
+        raise ValueError(f'less than one bitset member: {members!r}')
 
     if len(set(members)) != len(members):
-        raise ValueError('bitset members contains duplicates: %r' % (members,))
+        raise ValueError(f'bitset members contains duplicates: {members!r}')
 
     if not issubclass(base.__class__, meta.MemberBitsMeta):
-        raise ValueError('base does not subclass bitset.bases: %r' % base)
+        raise ValueError(f'base does not subclass bitset.bases: {base!r}')
 
     list = {False: None, True: series.List}.get(list, list)
     tuple = {False: None, True: series.Tuple}.get(tuple, tuple)

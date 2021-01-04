@@ -2,14 +2,12 @@
 
 """Ordered collections of bitset instances."""
 
-from ._compat import map, with_metaclass
-
 from . import meta
 
 __all__ = ['List', 'Tuple']
 
 
-class Series(with_metaclass(meta.SeriesMeta, object)):
+class Series(metaclass=meta.SeriesMeta):
     """Bitset sequence."""
 
     __slots__ = ()
@@ -51,8 +49,8 @@ class Series(with_metaclass(meta.SeriesMeta, object)):
         return [b.int for b in self]
 
     def __repr__(self):
-        items = ', '.join('%r' % b.bits() for b in self)
-        return '%s(%s)' % (self.__class__.__name__, items)
+        items = ', '.join(f'{b.bits()!r}' for b in self)
+        return f'{self.__class__.__name__}({items})'
 
     def index_sets(self, as_set=False):
         """Return the series as list of index set tuples."""

@@ -52,9 +52,7 @@ Python's built-in :class:`py:frozenset`.
 
 .. code:: python
 
-    >>> from bitsets._compat import integer_types
-
-    >>> issubclass(Pythons, integer_types)
+    >>> issubclass(Pythons, int)
     True
 
 

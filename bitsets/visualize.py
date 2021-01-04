@@ -2,20 +2,18 @@
 
 import graphviz
 
-from ._compat import map, unichr
-
 __all__ = ['bitset']
 
-FILENAME = 'bs-%s-%s.gv'
+FILENAME = 'bs-{name}-{kind}.gv'
 
 MEMBER_LABEL = False
 
-NAME_GETTERS = [lambda b: 'b%d' % b, lambda b: b.bits()]
+NAME_GETTERS = [lambda b: f'b{b:d}', lambda b: b.bits()]
 
 LABEL_GETTERS = {None: lambda b: '',
                  False: lambda b: b.bits(),
                  True: lambda b: '{%s}' % ','.join(map(str, b.members())),
-                 'iching': lambda b: unichr(HEXAGRAMS[b])}
+                 'iching': lambda b: chr(HEXAGRAMS[b])}
 
 HEXAGRAMS = [0x4dc1, 0x4dd6, 0x4dc7, 0x4dd3, 0x4dcf, 0x4de2, 0x4dec, 0x4dcb,
              0x4dce, 0x4df3, 0x4de6, 0x4df4, 0x4dfd, 0x4df7, 0x4dde, 0x4de0,
@@ -35,7 +33,7 @@ def bitset(bs, member_label=None, filename=None, directory=None, format=None,
 
     if filename is None:
         kind = 'members' if member_label else 'bits'
-        filename = FILENAME % (bs.__name__, kind)
+        filename = FILENAME.format(name=bs.__name__, kind=kind)
 
     dot = graphviz.Digraph(name=bs.__name__, comment=repr(bs),
                            filename=filename, directory=directory,

@@ -2,10 +2,7 @@
 
 """Base classes for bitsets providing integer-like and set-like interface."""
 
-from itertools import compress
-
-from ._compat import (long_int, get_unbound_func, map, filter, filterfalse,
-                      py2_bool_to_nonzero, with_metaclass)
+from itertools import compress, filterfalse
 
 from . import combos
 from . import integers
@@ -13,10 +10,10 @@ from . import meta
 
 __all__ = ['MemberBits', 'BitSet']
 
-__new__ = long_int.__new__
+__new__ = int.__new__
 
 
-class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
+class MemberBits(int, metaclass=meta.MemberBitsMeta):
     """Subsets of a predefined domain as rank in colexicographical order.
 
     Args:
@@ -27,7 +24,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
 
     _reinverted = integers.reinverted
 
-    frombitset = fromint = classmethod(long_int.__new__)
+    frombitset = fromint = classmethod(int.__new__)
 
     @classmethod
     def frommembers(cls, members=()):
@@ -43,7 +40,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def frombits(cls, bits='0'):
         """Create a set from binary string."""
         if len(bits) > cls._len:
-            raise ValueError('too many bits %r' % (bits,))
+            raise ValueError(f'too many bits {bits!r}')
         return cls.fromint(bits[::-1], 2)
 
     __new__ = frombits.__func__
@@ -55,7 +52,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         """Return the set unchanged (as its is immutable)."""
         return self
 
-    int = _int = long_int.real
+    int = _int = int.real
 
     iter_set = integers.indexes
 
@@ -74,7 +71,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         return '{0:0{1}b}'.format(self, self._len)[::-1]
 
     def __repr__(self):
-        return '%s(%r)' % (self.__class__.__name__, self.bits())
+        return f'{self.__class__.__name__}({self.bits()!r})'
 
     def atoms(self, reverse=False):
         """Yield the singleton for every set member."""
@@ -95,7 +92,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
             other = self.atoms()
         else:
             if self | start != self:
-                raise ValueError('%r is no subset of %r' % (start, self))
+                raise ValueError(f'{start!r} is no subset of {self!r}')
             other = self.fromint(self & ~start).atoms()
         return map(self.frombitset, combos.shortlex(start, list(other)))
 
@@ -118,7 +115,7 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
     def count(self, value=True):
         """Returns the number of present/absent members."""
         if value not in (True, False):
-            raise ValueError('can only count True or False, not %r' % (value,))
+            raise ValueError(f'can only count True or False, not {value!r}')
         return bin(self)[2:].count('01'[value])
 
     def all(self):
@@ -130,7 +127,6 @@ class MemberBits(with_metaclass(meta.MemberBitsMeta, long_int)):
         return self != self.infimum
 
 
-@py2_bool_to_nonzero
 class BitSet(MemberBits):
     """Ordered container of unique elements from a predefined domain.
 
@@ -142,7 +138,7 @@ class BitSet(MemberBits):
 
     __new__ = MemberBits.frommembers.__func__
 
-    __bool__ = get_unbound_func(MemberBits.any)
+    __bool__ = MemberBits.any
 
     def __len__(self):
         """Return the number of items in the set (cardinality)."""
@@ -162,8 +158,8 @@ class BitSet(MemberBits):
 
     def __repr__(self):
         members = list(map(self._members.__getitem__, self._indexes()))
-        arg = '%r' % members if members else ''
-        return '%s(%s)' % (self.__class__.__name__, arg)
+        arg = repr(members) if members else ''
+        return f'{self.__class__.__name__}({arg})'
 
     def issubset(self, other):
         """Inverse set containment."""

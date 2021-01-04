@@ -6,9 +6,7 @@ Note: chunks have little-endian bit-order
       like gmpy2.(un)pack, but reverse of numpy.(un)packbits
 """
 
-from itertools import compress
-
-from ._compat import map, zip_longest
+from itertools import compress, zip_longest
 
 __all__ = ['chunkreverse', 'pack', 'unpack', 'packbools', 'unpackbools']
 

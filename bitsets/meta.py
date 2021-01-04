@@ -2,9 +2,16 @@
 
 """Dynamic bitset class creation and retrieval."""
 
-from ._compat import integer_types, zip, filter, filterfalse, register_reduce
+import copyreg
+from itertools import filterfalse
 
 __all__ = ['MemberBitsMeta', 'SeriesMeta']
+
+
+def register_reduce(mcls):
+    """Register __reduce__ as reduction function for mcls instances."""
+    copyreg.pickle(mcls, mcls.__reduce__)
+    return mcls
 
 
 @register_reduce
@@ -15,7 +22,7 @@ class MemberBitsMeta(type):
     def _make_subclass(self, name, members, id=None,  # noqa: N804
                        listcls=None, tuplecls=None):
         if hasattr(self, '_members'):
-            raise RuntimeError('%r attempt _make_subclass' % self)
+            raise RuntimeError(f'{self!r} attempt _make_subclass')
 
         dct = {'_members': members}
         if id:
@@ -56,11 +63,11 @@ class MemberBitsMeta(type):
         if not hasattr(self, '_members'):
             return super(MemberBitsMeta, self).__repr__()
 
-        tmpl = '<class %s.bitset(%r, %r, %#x, %s, %s, %s)>'
-        return tmpl % (self.__module__, self.__name__, self._members,
-                       self._id, self.__base__.__name__,
-                       self.List.__base__.__name__ if hasattr(self, 'List') else None,
-                       self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None)
+        list_base = self.List.__base__.__name__ if hasattr(self, 'List') else None
+        tuple_base = self.Tuple.__base__.__name__ if hasattr(self, 'Tuple') else None
+        return (f'<class {self.__module__}.bitset('
+                f'{self.__name__!r}, {self._members!r}, {self._id:#x},'
+                f' {self.__base__.__name__}, {list_base}, {tuple_base})>')
 
     def __reduce__(self):  # noqa: N804
         if not hasattr(self, '_members'):
@@ -72,8 +79,8 @@ class MemberBitsMeta(type):
 
     def _get_subclass(self, name, members, id, listcls, tuplecls):  # noqa: N804
         """Return or create class with name, members, and id (for unpickling)."""
-        if not isinstance(id, integer_types):
-            raise RuntimeError('non-integer id: %r' % id)
+        if not isinstance(id, int):
+            raise RuntimeError(f'non-integer id: {id!r}')
 
         if (name, members, id) in self.__registry:  # enable roundtrip reprs
             return self.__registry[(name, members, id)]
@@ -108,23 +115,23 @@ class SeriesMeta(type):
 
     def _make_subclass(self, name, cls):  # noqa: N804
         if hasattr(self, 'BitSet'):
-            raise RuntimeError('%r attempt _make_subclass' % self)
+            raise RuntimeError(f'{self!r} attempt _make_subclass')
 
         dct = {'BitSet': cls}
         if '__slots__' in self.__dict__:
             dct['__slots__'] = self.__slots__
-        return type('%s%s' % (name, self.__name__), (self,), dct)
+        return type(f'{name}{self.__name__}', (self,), dct)
 
     def __repr__(self):  # noqa: N804
         if not hasattr(self, 'BitSet'):
             return type.__repr__(self)
 
         bs = self.BitSet
-        tmpl = '<class %s.bitset_%s(%r, %r, %#x, %s, %s, %s)>'
-        return tmpl % (self.__module__, self._series.lower(),
-                       bs.__name__, bs._members, bs._id, bs.__base__.__name__,
-                       bs.List.__base__.__name__ if hasattr(bs, 'List') else None,
-                       bs.Tuple.__base__.__name__ if hasattr(bs, 'Tuple') else None)
+        list_base = bs.List.__base__.__name__ if hasattr(bs, 'List') else None
+        tuple_base = bs.Tuple.__base__.__name__ if hasattr(bs, 'Tuple') else None
+        return (f'<class {self.__module__}.bitset_{self._series.lower()}('
+                f'{bs.__name__!r}, {bs._members!r}, {bs._id:#x}, {bs.__base__.__name__},'
+                f' {list_base}, {tuple_base})>')
 
     def __reduce__(self):  # noqa: N804
         if not hasattr(self, 'BitSet'):

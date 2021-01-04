@@ -92,7 +92,7 @@ def test_inatoms_reverse(Ints):  # noqa: N803
 
 def test_powerset(Ints):  # noqa: N803
     triples = [i for i in Ints.supremum.powerset() if i.count() == 3]
-    members = ['%d%d%d' % t.members() for t in triples]
+    members = ['{:d}{:d}{:d}'.format(*t.members()) for t in triples]
     assert members == ['123', '124', '125', '126',
                               '134', '135', '136',
                                      '145', '146',
@@ -103,7 +103,7 @@ def test_powerset(Ints):  # noqa: N803
                                      '345', '346',
                                             '356',
                                             '456']
-    msorted = ['%d%d%d' % t.members() for t in sorted(triples)]
+    msorted = ['{:d}{:d}{:d}'.format(*t.members()) for t in sorted(triples)]
     assert msorted == ['123',
                        '124', '134', '234',
                        '125', '135', '235', '145', '245', '345',
