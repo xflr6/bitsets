@@ -2,8 +2,10 @@ Changelog
 =========
 
 
-Version 0.7.17 (in development)
--------------------------------
+Version 0.8 (in development)
+----------------------------
+
+Drop Python 2 support.
 
 Drop Python 3.5 support and tag Python 3.9 support.
 
