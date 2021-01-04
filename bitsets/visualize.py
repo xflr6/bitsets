@@ -12,7 +12,7 @@ NAME_GETTERS = [lambda b: f'b{b:d}', lambda b: b.bits()]
 
 LABEL_GETTERS = {None: lambda b: '',
                  False: lambda b: b.bits(),
-                 True: lambda b: '{%s}' % ','.join(map(str, b.members())),
+                 True: lambda b: '{{{}}}'.format(','.join(map(str, b.members()))),
                  'iching': lambda b: chr(HEXAGRAMS[b])}
 
 HEXAGRAMS = [0x4dc1, 0x4dd6, 0x4dc7, 0x4dd3, 0x4dcf, 0x4de2, 0x4dec, 0x4dcb,
