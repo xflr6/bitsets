@@ -13,12 +13,9 @@ def indexes(n):
     >>> [tuple(indexes(i)) for i in range(8)]
     [(), (0,), (1,), (0, 1), (2,), (0, 2), (1, 2), (0, 1, 2)]
     """
-    i = 0
-    while n:
-        if n & 1:
+    for i, b in enumerate(bin(n)[-1:1:-1]):
+        if b == '1':
             yield i
-        i += 1
-        n >>= 1
 
 
 def n(indexes):
