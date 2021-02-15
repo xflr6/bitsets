@@ -2,10 +2,10 @@ Changelog
 =========
 
 
-Version 0.8.1 (in development)
-------------------------------
+Version 0.8.1
+-------------
 
-
+Drop ``bdist_wheel = universal`` to avoid ``py2`` in the wheel filename.
 
 
 Version 0.8
