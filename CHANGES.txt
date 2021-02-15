@@ -2,8 +2,14 @@ Changelog
 =========
 
 
-Version 0.8.2 (in development)
+Version 0.8.3 (in development)
 ------------------------------
+
+
+
+
+Version 0.8.2
+-------------
 
 Drop obsolete ``_compat.py`` (accidentally included in the last distribution).
 
