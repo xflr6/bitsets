@@ -20,7 +20,7 @@ class MemberBits(int, metaclass=meta.MemberBitsMeta):
         bits: String with the binary membership representation.
     """
 
-    _indexes = integers.indexes
+    _indexes = integers.indexes_optimized
 
     _reinverted = integers.reinverted
 

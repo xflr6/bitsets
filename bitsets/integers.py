@@ -21,6 +21,18 @@ def indexes(n):
         n >>= 1
 
 
+def indexes_optimized(n):
+    """Yield index sets unranking n in colexicographical order. Faster version
+    of ``indexes``.
+
+    >>> [tuple(indexes_optimized(i)) for i in range(8)]
+    [(), (0,), (1,), (0, 1), (2,), (0, 2), (1, 2), (0, 1, 2)]
+    """
+    for i, b in enumerate(bin(n)[:1:-1]):
+        if b == '1':
+            yield i
+
+
 def n(indexes):
     """Return n ranking index sets in colexicographical order.
 
