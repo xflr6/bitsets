@@ -1,17 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 import platform
 import sys
 
 import pytest
 
-ARGS = [
-    #'--pdb',
-    #'--exitfirst',
-]
+ARGS = [#'--pdb',
+        #'--exitfirst',
+        ]
 
 if platform.system() == 'Windows':
     if 'idlelib' in sys.modules:
-        ARGS.extend(['--capture=sys', '--color=no'])
+        ARGS += ['--capture=sys', '--color=no']
 
 sys.exit(pytest.main(ARGS + sys.argv[1:]))

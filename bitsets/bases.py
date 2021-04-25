@@ -75,15 +75,13 @@ class MemberBits(int, metaclass=meta.MemberBitsMeta):
 
     def atoms(self, reverse=False):
         """Yield the singleton for every set member."""
-        if reverse:
-            return filter(self.__and__, reversed(self._atoms))
-        return filter(self.__and__, self._atoms)
+        atoms = reversed(self._atoms) if reverse else self._atoms
+        return filter(self.__and__, atoms)
 
     def inatoms(self, reverse=False):
         """Yield the singleton for every non-member."""
-        if reverse:
-            return filterfalse(self.__and__, reversed(self._atoms))
-        return filterfalse(self.__and__, self._atoms)
+        atoms = reversed(self._atoms) if reverse else self._atoms
+        return filterfalse(self.__and__, atoms)
 
     def powerset(self, start=None, excludestart=False):
         """Yield combinations from start to self in short lexicographic order."""
