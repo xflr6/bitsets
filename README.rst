@@ -3,7 +3,7 @@ Bitsets
 
 |PyPI version| |License| |Supported Python| |Format| 
 
-|Travis| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
+|Build| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
 This package provides a memory-efficient pure-python **immutable ordered set
 data type** for working with large numbers of subsets from a predetermined pool
@@ -179,9 +179,9 @@ Bitsets is distributed under the `MIT license`_.
     :target: https://pypi.org/project/bitsets/
     :alt: Package Format
 
-.. |Travis| image:: https://img.shields.io/travis/xflr6/bitsets.svg
-    :target: https://travis-ci.org/xflr6/bitsets
-    :alt: Travis
+.. |Build| image:: https://github.com/xflr6/bitsets/actions/workflows/build.yaml/badge.svg
+    :target: https://github.com/xflr6/bitsets/actions/workflows/build.yaml?query=branch%3Amaster
+    :alt: Build
 .. |Codecov| image:: https://codecov.io/gh/xflr6/bitsets/branch/master/graph/badge.svg
     :target: https://codecov.io/gh/xflr6/bitsets
     :alt: Codecov

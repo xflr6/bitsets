@@ -16,7 +16,7 @@ setup(
         'Documentation': 'https://bitsets.readthedocs.io',
         'Changelog': 'https://bitsets.readthedocs.io/en/latest/changelog.html',
         'Issue Tracker': 'https://github.com/xflr6/bitsets/issues',
-        'CI': 'https://travis-ci.org/xflr6/bitsets',
+        'CI': 'https://github.com/xflr6/bitsets/actions',
         'Coverage': 'https://codecov.io/gh/xflr6/bitsets',
     },
     packages=find_packages(),
