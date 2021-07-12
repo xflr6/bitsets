@@ -179,7 +179,7 @@ Bitsets is distributed under the `MIT license`_.
     :target: https://pypi.org/project/bitsets/
     :alt: Package Format
 
-.. |Build| image:: https://github.com/xflr6/bitsets/actions/workflows/build.yaml/badge.svg
+.. |Build| image:: https://github.com/xflr6/bitsets/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/bitsets/actions/workflows/build.yaml?query=branch%3Amaster
     :alt: Build
 .. |Codecov| image:: https://codecov.io/gh/xflr6/bitsets/branch/master/graph/badge.svg
