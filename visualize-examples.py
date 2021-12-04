@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-# visualize-examples.py
 
 import bitsets
 import bitsets.visualize
 
 ARGS = {'directory': 'visualize-output', 'format': 'pdf'}
+
 
 Four = bitsets.bitset('Four', (1, 2, 3, 4))
 
