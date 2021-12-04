@@ -10,9 +10,12 @@ import pytest
 
 SELF = pathlib.Path(__file__)
 
-ARGS = [#'--pdb',
-        #'--exitfirst',
-        ]
+ARGS = [#'--collect-only',
+        #'--verbose',
+        #'--pdb',
+        #'--exitfirst',  # a.k.a. -x
+        #'-W', 'error',
+       ]
 
 if platform.system() == 'Windows' and 'idlelib' in sys.modules:
     ARGS += ['--capture=sys', '--color=no']
