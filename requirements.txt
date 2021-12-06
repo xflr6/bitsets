@@ -1,4 +1,4 @@
-# development environment: install in development mode
+# development environment: --editable install in development mode (includes all extras_require)
 -e .[dev,test,docs]
 # exact (optional) dependency versions used in development
 graphviz==0.19
