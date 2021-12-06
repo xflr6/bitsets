@@ -3,7 +3,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='bitsets',
-    version='0.8.3.dev0',
+    version='0.8.3',
     author='Sebastian Bank',
     author_email='sebastian.bank@uni-leipzig.de',
     description='Ordered subsets over a predefined domain',
