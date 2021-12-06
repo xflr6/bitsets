@@ -1,7 +1,7 @@
 Bitsets
 =======
 
-|PyPI version| |License| |Supported Python| |Format| 
+|PyPI version| |License| |Supported Python| |Wheel|
 
 |Build| |Codecov| |Readthedocs-stable| |Readthedocs-latest|
 
@@ -170,14 +170,14 @@ Bitsets is distributed under the `MIT license`_.
     :target: https://pypi.org/project/bitsets/
     :alt: Latest PyPI Version
 .. |License| image:: https://img.shields.io/pypi/l/bitsets.svg
-    :target: https://pypi.org/project/bitsets/
+    :target: https://github.com/xflr6/bitsets/blob/master/LICENSE.txt
     :alt: License
 .. |Supported Python| image:: https://img.shields.io/pypi/pyversions/bitsets.svg
     :target: https://pypi.org/project/bitsets/
     :alt: Supported Python Versions
-.. |Format| image:: https://img.shields.io/pypi/format/bitsets.svg
-    :target: https://pypi.org/project/bitsets/
-    :alt: Package Format
+.. |Wheel| image:: https://img.shields.io/pypi/wheel/bitsets.svg
+    :target: https://pypi.org/project/bitsets/#files
+    :alt: Wheel format
 
 .. |Build| image:: https://github.com/xflr6/bitsets/actions/workflows/build.yaml/badge.svg?branch=master
     :target: https://github.com/xflr6/bitsets/actions/workflows/build.yaml?query=branch%3Amaster
