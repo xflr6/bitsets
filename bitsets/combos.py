@@ -1,5 +1,3 @@
-# combos - generate powersets
-
 """Powerset generators based on combining integers or sets."""
 
 import collections

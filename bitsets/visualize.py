@@ -1,4 +1,4 @@
-# visualize.py - create hasse diagrams
+"""Create hasse diagrams."""
 
 import graphviz
 

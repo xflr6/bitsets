@@ -1,6 +1,4 @@
-# series.py - bitset sequences
-
-"""Ordered collections of bitset instances."""
+"""Sequences (ordered collections) of bitset instances."""
 
 from . import meta
 

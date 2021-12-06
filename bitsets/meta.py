@@ -1,6 +1,4 @@
-# meta.py - dynamic class creation and unpickle reconstructors
-
-"""Dynamic bitset class creation and retrieval."""
+"""Dynamic bitset class creation and retrieval/unpickling."""
 
 import copyreg
 from itertools import filterfalse

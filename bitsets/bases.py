@@ -1,5 +1,3 @@
-# bases.py - bitset base classes
-
 """Base classes for bitsets providing integer-like and set-like interface."""
 
 from itertools import compress, filterfalse

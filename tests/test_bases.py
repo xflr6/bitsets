@@ -1,5 +1,3 @@
-# test_bases.py
-
 import re
 
 import pytest

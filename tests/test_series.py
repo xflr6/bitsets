@@ -1,5 +1,3 @@
-# test_series.py
-
 import re
 
 

@@ -1,6 +1,4 @@
-# integers.py - basic integer manipulations
-
-"""Bit manipulation for set rank and unrank."""
+"""Integer bit manipulation for set rank and unrank."""
 
 import string
 

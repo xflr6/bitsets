@@ -1,5 +1,3 @@
-# test_init.py
-
 import pytest
 
 from bitsets import bitset

@@ -1,5 +1,3 @@
-# test_visualize.py
-
 import bitsets.visualize
 
 

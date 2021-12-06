@@ -1,5 +1,3 @@
-# conftest.py
-
 import pytest
 
 import bitsets

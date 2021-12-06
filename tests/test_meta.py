@@ -1,5 +1,3 @@
-# test_meta.py
-
 import pickle
 
 import pytest
@@ -28,10 +26,10 @@ def test_get_subclass(Ints):  # noqa: N803
         MemberBits.__class__)
 
 
-@pytest.mark.parametrize('bits, expected', [
-    ('000000', []),
-    ('100011', ['100000', '000010', '000001']),
-])
+@pytest.mark.parametrize(
+    'bits, expected',
+    [('000000', []),
+     ('100011', ['100000', '000010', '000001'])])
 def test_atomic(Ints, bits, expected):  # noqa: N803
     assert list(Ints.atomic(Ints(bits))) == [Ints(e) for e in expected]
 
@@ -44,22 +42,22 @@ def test_inatomic(Ints, bits, expected):  # noqa: N803
     assert list(Ints.inatomic(Ints(bits))) == [Ints(e) for e in expected]
 
 
-@pytest.mark.parametrize('bits, expected', [
-    ([], '111111'),
-    (['111111', '111111'], '111111'),
-    (['110011', '011110', '010010'], '010010'),
-    (['100000', '001100', '000001'], '000000'),
-])
+@pytest.mark.parametrize(
+    'bits, expected',
+    [([], '111111'),
+     (['111111', '111111'], '111111'),
+     (['110011', '011110', '010010'], '010010'),
+     (['100000', '001100', '000001'], '000000')])
 def test_reduce_and(Ints, bits, expected):  # noqa: N803
     assert Ints.reduce_and(Ints(b) for b in bits) == Ints(expected)
 
 
-@pytest.mark.parametrize('bits, expected', [
-    ([], '000000'),
-    (['111000', '000111'], '111111'),
-    (['100001', '010010', '110011'], '110011'),
-    (['100000', '001100', '000001'], '101101'),
-])
+@pytest.mark.parametrize(
+    'bits, expected',
+    [([], '000000'),
+     (['111000', '000111'], '111111'),
+     (['100001', '010010', '110011'], '110011'),
+     (['100000', '001100', '000001'], '101101')])
 def test_reduce_or(Ints, bits, expected):  # noqa: N803
     assert Ints.reduce_or(Ints(b) for b in bits) == Ints(expected)
 

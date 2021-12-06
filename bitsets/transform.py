@@ -1,5 +1,3 @@
-# transform.py - integer packing and unpacking
-
 """Convert between larger integers and chunks of smaller integers and booleans.
 
 Note: chunks have little-endian bit-order
