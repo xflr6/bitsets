@@ -40,10 +40,10 @@ jobs:
         run: |
           echo "::group::Run python -m pip install --upgrade pip setuptools wheel"
           python -m pip install --upgrade pip setuptools wheel
-          echo ::endgroup::
+          echo "::endgroup::"
           echo "::group::Run pip install -e .[test,visualization]"
           pip install -e .[test,visualization]
-          echo ::endgroup::
+          echo "::endgroup::"
       - name: Run tests
         run: python run-tests.py
       - name: Upload coverage
