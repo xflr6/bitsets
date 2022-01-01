@@ -17,7 +17,7 @@ integers (``&, |, ^, ~``).
 Installation
 ------------
 
-:mod:`bitsets` is a pure-python package that runs under Python 3.6+.
+:mod:`bitsets` is a pure-python package that runs under Python 3.7+.
 To install it with using pip_, run the following command:
 
 .. code:: bash
