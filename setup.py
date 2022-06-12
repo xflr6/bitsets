@@ -22,7 +22,7 @@ setup(
     python_requires='>=3.7',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
-        'test': ['pytest>=6', 'pytest-cov'],
+        'test': ['pytest>=7', 'pytest-cov'],
         'docs': ['sphinx>=1.8', 'sphinx-rtd-theme'],
         'visualization': ['graphviz~=0.7'],
     },
