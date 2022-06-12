@@ -118,7 +118,7 @@ Bitsets cannot contain items other than those from their domain:
 
     >>> Pythons(['Brian'])
     Traceback (most recent call last):
-    ....
+    ...
     KeyError: 'Brian'
 
     >>> 'Spam' in Pythons(['Jones'])
