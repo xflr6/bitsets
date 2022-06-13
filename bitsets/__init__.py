@@ -9,7 +9,7 @@ from . import series
 __all__ = ['bitset']
 
 __title__ = 'bitsets'
-__version__ = '0.8.4'
+__version__ = '0.8.5.dev0'
 __author__ = 'Sebastian Bank <sebastian.bank@uni-leipzig.de>'
 __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2022 Sebastian Bank'
