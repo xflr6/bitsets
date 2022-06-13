@@ -2,8 +2,8 @@ Changelog
 =========
 
 
-Version 0.8.4 (in development)
-------------------------------
+Version 0.8.4
+-------------
 
 Drop Python 3.6 support.
 
