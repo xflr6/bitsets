@@ -19,7 +19,7 @@ setup(
     },
     packages=find_packages(),
     platforms='any',
-    python_requires='>=3.7',
+    python_requires='>=3.8',
     extras_require={
         'dev': ['tox>=3', 'flake8', 'pep8-naming', 'wheel', 'twine'],
         'test': ['pytest>=7', 'pytest-cov'],
@@ -27,13 +27,13 @@ setup(
         'visualization': ['graphviz~=0.7'],
     },
     long_description=pathlib.Path('README.rst').read_text(encoding='utf-8'),
+    long_description_content_type='text/x-rst',
     classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Developers',
         'License :: OSI Approved :: MIT License',
         'Operating System :: OS Independent',
         'Programming Language :: Python :: 3',
-        'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
         'Programming Language :: Python :: 3.10',
