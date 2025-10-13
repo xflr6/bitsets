@@ -2,11 +2,10 @@ Changelog
 =========
 
 
-Version 0.9.1 (in development)
-------------------------------
+Version 0.9.1
+-------------
 
-
-
+Fix readthedocs.org documentation build.
 
 
 Version 0.9
