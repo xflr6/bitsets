@@ -2,10 +2,11 @@ Changelog
 =========
 
 
-Version 0.8.5 (in development)
-------------------------------
+Version 0.9
+-----------
 
-Switch to pyproject.toml.
+Switch to pyproject.toml. This changes the source distribution format from ``.zip``
+to PEP 625 compliant ``.tar.gz`` (https://peps.python.org/pep-0625/).
 
 Drop Python 3.7, 3.8, and 3.9 support and tag Python 3.11, 3.12, 3.13, and 3.14 support.
 

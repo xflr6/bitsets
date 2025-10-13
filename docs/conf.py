@@ -19,11 +19,11 @@ import bitsets
 # -- Project information -----------------------------------------------------
 
 project = 'bitsets'
-copyright = '2013-2022, Sebastian Bank'
+copyright = '2013-2025, Sebastian Bank'
 author = 'Sebastian Bank'
 
 # The full version, including alpha/beta/rc tags
-release = '0.8.5.dev0'
+release = '0.9'
 
 
 # -- General configuration ---------------------------------------------------
