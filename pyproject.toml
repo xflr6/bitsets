@@ -31,7 +31,7 @@ Coverage = "https://codecov.io/gh/xflr6/bitsets"
 [project.optional-dependencies]
 dev = ["build", "wheel", "twine", "mypy", "flake8", "Flake8-pyproject", "pep8-naming", "tox>=3"]
 test = ["pytest>=7", "pytest-cov"]
-docs = ["sphinx", "sphinx-rtd-theme", "sphinx-rtd-theme"]
+docs = ["sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
 visualization = ["graphviz~=0.7"]
 
 [build-system]
