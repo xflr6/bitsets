@@ -1,6 +1,11 @@
+import pickle
 import re
 
 import pytest
+
+
+def test_reconstruct(Ints):  # noqa: N803
+    assert pickle.loads(pickle.dumps(Ints('110011'))) == Ints('110011')
 
 
 def test_repr_ints_cls(Ints):  # noqa: N803

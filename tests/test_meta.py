@@ -71,5 +71,9 @@ def test_repr_nums_cls(Nums):  # noqa: N803
     assert repr(bitsets.series.Series) == "<class 'bitsets.series.Series'>"
 
 
-def test_reconstruct(Nums):  # noqa: N803
+def test_reconstruct_list(Nums):  # noqa: N803
+    assert pickle.loads(pickle.dumps(Nums.List)) is Nums.List
+
+
+def test_reconstruct_tuple(Nums):  # noqa: N803
     assert pickle.loads(pickle.dumps(Nums.Tuple)) is Nums.Tuple
