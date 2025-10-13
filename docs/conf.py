@@ -36,6 +36,7 @@ extensions = [
     'sphinx.ext.autosummary',
     'sphinx.ext.intersphinx',
     'sphinx.ext.napoleon',
+    'sphinx_autodoc_typehints',  # https://github.com/tox-dev/sphinx-autodoc-typehints/issues/15
 ]
 
 # Add any paths that contain templates here, relative to this directory.
@@ -66,6 +67,12 @@ html_static_path = ['_static']
 
 
 # -- Extension configuration -------------------------------------------------
+
+# https://github.com/tox-dev/sphinx-autodoc-typehints
+always_use_bars_union = True
+typehints_use_signature = True
+typehints_use_signature_return = True
+
 
 # -- Options for intersphinx extension ---------------------------------------
 
