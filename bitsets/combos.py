@@ -5,7 +5,7 @@ import collections
 __all__ = ['shortlex', 'reverse_shortlex']
 
 
-def shortlex(start, other, excludestart=False):
+def shortlex(start, other, excludestart: bool = False):
     """Yield all unions of start with other in shortlex order.
 
     >>> ['{:03b}'.format(s) for s in shortlex(0, [0b100, 0b010, 0b001])]
@@ -36,7 +36,7 @@ def shortlex(start, other, excludestart=False):
                 queue.append((result, other))
 
 
-def reverse_shortlex(end, other, excludeend=False):
+def reverse_shortlex(end, other, excludeend: bool = False):
     """Yield all intersections of end with other in reverse shortlex order.
 
     >>> ['{:03b}'.format(s) for s in reverse_shortlex(0b111, [0b011, 0b101, 0b110])]

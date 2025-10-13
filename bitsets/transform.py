@@ -4,12 +4,15 @@ Note: chunks have little-endian bit-order
       like gmpy2.(un)pack, but reverse of numpy.(un)packbits
 """
 
+from collections.abc import Iterator, Mapping, Sequence
 from itertools import compress, zip_longest
 
 __all__ = ['chunkreverse', 'pack', 'unpack', 'packbools', 'unpackbools']
 
+NBITS: Mapping[int | str, int]
 NBITS = {'B': 8, 'H': 16, 'L': 32, 'Q': 64}
 
+ATOMS: Mapping[int | str, Sequence[int]]
 ATOMS = {r: [1 << i for i in range(r)] for r in NBITS.values()}
 
 ATOMS.update((t, ATOMS[r]) for t, r in NBITS.items())
@@ -19,7 +22,7 @@ NBITS.update({r: r for r in NBITS.values()})
 RBYTES = [int('{0:08b}'.format(i)[::-1], 2) for i in range(256)]
 
 
-def chunkreverse(integers, dtype='L'):
+def chunkreverse(integers, dtype='L') -> Iterator[int]:
     """Yield integers of dtype bit-length reverting their bit-order.
 
     >>> list(chunkreverse([0b10000000, 0b11000000, 0b00000001], 'B'))
@@ -36,7 +39,7 @@ def chunkreverse(integers, dtype='L'):
     return (int(fmt.format(chunk)[::-1], 2) for chunk in integers)
 
 
-def pack(chunks, r=32):
+def pack(chunks, r: int = 32) -> int:
     """Return integer concatenating integer chunks of r > 0 bit-length.
 
     >>> pack([0, 1, 0, 1, 0, 1], 1)
@@ -62,7 +65,7 @@ def pack(chunks, r=32):
     return n
 
 
-def unpack(n, r=32):
+def unpack(n, r: int = 32) -> Iterator[int]:
     """Yield r > 0 bit-length integers splitting n into chunks.
 
     >>> list(unpack(42, 1))
@@ -86,7 +89,7 @@ def unpack(n, r=32):
         n >>= r
 
 
-def packbools(bools, dtype='L'):
+def packbools(bools, dtype='L') -> Iterator[int]:
     """Yield integers concatenating bools in chunks of dtype bit-length.
 
     >>> list(packbools([False, True, False, True, False, True], 'B'))
@@ -99,7 +102,7 @@ def packbools(bools, dtype='L'):
         yield sum(compress(atoms, chunk))
 
 
-def unpackbools(integers, dtype='L'):
+def unpackbools(integers, dtype='L') -> Iterator[bool]:
     """Yield booleans unpacking integers of dtype bit-length.
 
     >>> list(unpackbools([42], 'B'))

@@ -60,15 +60,15 @@ class MemberBits(int, metaclass=meta.MemberBitsMeta):
             return frozenset(map(self._members.__getitem__, self._indexes()))
         return tuple(map(self._members.__getitem__, self._indexes()))
 
-    def bools(self):
+    def bools(self) -> tuple[bool, ...]:
         """Return the boolean sequence of set membership."""
         return tuple(not not self & a for a in self._atoms)
 
-    def bits(self):
+    def bits(self) -> str:
         """Return the binary string of set membership."""
         return '{0:0{1}b}'.format(self, self._len)[::-1]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         return f'{self.__class__.__name__}({self.bits()!r})'
 
     def atoms(self, reverse=False):
@@ -108,17 +108,17 @@ class MemberBits(int, metaclass=meta.MemberBitsMeta):
         """Return sort key for long colexicographical order."""
         return -bin(self).count('1'), self._int
 
-    def count(self, value=True):
+    def count(self, value: bool = True) -> int:
         """Returns the number of present/absent members."""
         if value not in (True, False):
             raise ValueError(f'can only count True or False, not {value!r}')
         return bin(self)[2:].count('01'[value])
 
-    def all(self):
+    def all(self) -> bool:
         """Return True iff the set contains all domain items."""
         return self == self.supremum
 
-    def any(self):
+    def any(self) -> bool:
         """Return True iff the set contains at least one item."""
         return self != self.infimum
 
@@ -136,7 +136,7 @@ class BitSet(MemberBits):
 
     __bool__ = MemberBits.any
 
-    def __len__(self):
+    def __len__(self) -> int:
         """Return the number of items in the set (cardinality)."""
         return bin(self).count('1')
 
@@ -152,24 +152,24 @@ class BitSet(MemberBits):
         """
         return self._map[member] & self
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         members = list(map(self._members.__getitem__, self._indexes()))
         arg = repr(members) if members else ''
         return f'{self.__class__.__name__}({arg})'
 
-    def issubset(self, other):
+    def issubset(self, other) -> bool:
         """Inverse set containment."""
         if not isinstance(other, self.__class__):
             other = self.frommembers(other)
         return self & other == self
 
-    def issuperset(self, other):
+    def issuperset(self, other) -> bool:
         """Set containment."""
         if not isinstance(other, self.__class__):
             other = self.frommembers(other)
         return self | other == self
 
-    def isdisjoint(self, other):
+    def isdisjoint(self, other) -> bool:
         """Set disjointness."""
         if not isinstance(other, self.__class__):
             other = self.frommembers(other)

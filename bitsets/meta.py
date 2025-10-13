@@ -42,7 +42,7 @@ class MemberBitsMeta(type):
         dct.setdefault('__slots__', ())
         return super().__new__(cls, name, bases, dct)
 
-    def __init__(self, name, bases, dct):  # noqa: N804
+    def __init__(self, name, bases, dct) -> None:  # noqa: N804
         if not hasattr(self, '_members'):
             return
 
@@ -57,7 +57,7 @@ class MemberBitsMeta(type):
         if not hasattr(self, '_id'):
             self._id = id(self)
 
-    def __repr__(self):  # noqa: N804
+    def __repr__(self) -> str:  # noqa: N804
         if not hasattr(self, '_members'):
             return super().__repr__()
 
@@ -120,7 +120,7 @@ class SeriesMeta(type):
             dct['__slots__'] = self.__slots__
         return type(f'{name}{self.__name__}', (self,), dct)
 
-    def __repr__(self):  # noqa: N804
+    def __repr__(self) -> str:  # noqa: N804
         if not hasattr(self, 'BitSet'):
             return type.__repr__(self)
 

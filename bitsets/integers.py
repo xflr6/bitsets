@@ -1,11 +1,12 @@
 """Integer bit manipulation for set rank and unrank."""
 
+from collections.abc import Iterator
 import string
 
 __all__ = ['indexes', 'n', 'reinverted', 'rank', 'unrank', 'compress', 'bit_mask']
 
 
-def indexes(n):
+def indexes(n) -> Iterator[int]:
     """Yield index sets unranking n in colexicographical order.
 
     >>> [tuple(indexes(i)) for i in range(8)]
@@ -19,7 +20,7 @@ def indexes(n):
         n >>= 1
 
 
-def indexes_optimized(n):
+def indexes_optimized(n) -> Iterator[int]:
     """Yield index sets unranking n in colexicographical order. Faster version
     of ``indexes``.
 
@@ -31,7 +32,7 @@ def indexes_optimized(n):
             yield i
 
 
-def n(indexes):
+def n(indexes) -> int:
     """Return n ranking index sets in colexicographical order.
 
     >>> [n(ind) for ind in ((), (0,), (1,), (0, 1), (2,))]
@@ -40,7 +41,7 @@ def n(indexes):
     return sum(1 << i for i in indexes)
 
 
-def reinverted(n, r):
+def reinverted(n, r) -> int:
     """Integer with reversed and inverted bits of n assuming bit length r.
 
     >>> reinverted(1, 6)
@@ -61,7 +62,7 @@ def reinverted(n, r):
     return result
 
 
-def rank(items, sequence=string.ascii_lowercase):
+def rank(items, sequence=string.ascii_lowercase) -> int:
     """Rank items from sequence in colexicographical order.
 
     >>> [rank(i) for i in ('', 'a', 'b', 'ab', 'c')]
@@ -103,7 +104,7 @@ def compress(sequence, n):
             return
 
 
-def bit_mask(n):
+def bit_mask(n: int) -> int:
     """Return an integer of n bits length with all bits set.
 
     >>> bin(bit_mask(5))

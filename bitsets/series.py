@@ -34,19 +34,19 @@ class Series(metaclass=meta.SeriesMeta):
         """Return the series as list of set member tuples/frozensets."""
         return [b.members(as_set) for b in self]
 
-    def bools(self):
+    def bools(self) -> list[bool]:
         """Return the series as list of boolean set membership sequences."""
         return [b.bools() for b in self]
 
-    def bits(self):
+    def bits(self) -> list[str]:
         """Return the series as list of binary set membership strings."""
         return [b.bits() for b in self]
 
-    def ints(self):
+    def ints(self) -> list[int]:
         """Return the series as list of integers ranks."""
         return [b.int for b in self]
 
-    def __repr__(self):
+    def __repr__(self) -> str:
         items = ', '.join(f'{b.bits()!r}' for b in self)
         return f'{self.__class__.__name__}({items})'
 
@@ -83,7 +83,7 @@ class List(Series, list):
 
     __new__ = list.__new__
 
-    def __init__(self, *bits):
+    def __init__(self, *bits) -> None:
         list.__init__(self, map(self.BitSet.frombits, bits))
 
 

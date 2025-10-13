@@ -1,5 +1,7 @@
 """Create hasse diagrams."""
 
+from collections.abc import Sequence
+
 import graphviz
 
 __all__ = ['bitset']
@@ -15,6 +17,7 @@ LABEL_GETTERS = {None: lambda b: '',
                  True: lambda b: '{{{}}}'.format(','.join(map(str, b.members()))),
                  'iching': lambda b: chr(HEXAGRAMS[b])}
 
+HEXAGRAMS: Sequence[int]
 HEXAGRAMS = [0x4dc1, 0x4dd6, 0x4dc7, 0x4dd3, 0x4dcf, 0x4de2, 0x4dec, 0x4dcb,
              0x4dce, 0x4df3, 0x4de6, 0x4df4, 0x4dfd, 0x4df7, 0x4dde, 0x4de0,
              0x4dc6, 0x4dc3, 0x4ddc, 0x4dfa, 0x4de7, 0x4dff, 0x4dee, 0x4dc5,

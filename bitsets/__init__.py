@@ -15,15 +15,16 @@ __license__ = 'MIT, see LICENSE.txt'
 __copyright__ = 'Copyright (c) 2013-2022 Sebastian Bank'
 
 
-def bitset(name, members, base=bases.BitSet, list=False, tuple=False):
+def bitset(name: str, members, base=bases.BitSet,
+           list: bool = False, tuple: bool = False):
     """Return a new bitset class with given name and members.
 
     Args:
         name: Name of the class to be created.
         members: Hashable sequence of allowed bitset members.
         base: Base class to derive the returned class from.
-        list (bool): Include a custom class for bitset lists.
-        tuple (bool): Include a custom class for bitset tuples.
+        list: Include a custom class for bitset lists.
+        tuple: Include a custom class for bitset tuples.
 
     Example:
         >>> Letters = bitset('Letters', 'abcdef', list=True, tuple=True)
@@ -47,7 +48,7 @@ def bitset(name, members, base=bases.BitSet, list=False, tuple=False):
     if not issubclass(base.__class__, meta.MemberBitsMeta):
         raise ValueError(f'base does not subclass bitset.bases: {base!r}')
 
-    list = {False: None, True: series.List}.get(list, list)
-    tuple = {False: None, True: series.Tuple}.get(tuple, tuple)
+    listcls = {False: None, True: series.List}.get(list, list)
+    tuplecls = {False: None, True: series.Tuple}.get(tuple, tuple)
 
-    return base._make_subclass(name, members, listcls=list, tuplecls=tuple)
+    return base._make_subclass(name, members, listcls=listcls, tuplecls=tuplecls)
