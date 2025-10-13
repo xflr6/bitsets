@@ -24,10 +24,10 @@ def shortlex(start, other, excludestart: bool = False):
     queue = collections.deque([(start, other)])
 
     while queue:
-        current, other = queue.popleft()
+        (current, other) = queue.popleft()
 
         while other:
-            first, other = other[0], other[1:]
+            (first, other) = other[0], other[1:]
             result = current | first
 
             yield result
@@ -56,10 +56,10 @@ def reverse_shortlex(end, other, excludeend: bool = False):
     queue = collections.deque([(end, other)])
 
     while queue:
-        current, other = queue.popleft()
+        (current, other) = queue.popleft()
 
         while other:
-            first, other = other[0], other[1:]
+            (first, other) = other[0], other[1:]
             result = current & first
 
             yield result

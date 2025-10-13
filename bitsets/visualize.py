@@ -43,11 +43,8 @@ def bitset(bs, member_label=None, filename=None, directory=None, format=None,
                            format=format, edge_attr={'dir': 'none'})
 
     node_name = NAME_GETTERS[0]
-
-    if callable(member_label):
-        node_label = member_label
-    else:
-        node_label = LABEL_GETTERS[member_label]
+    node_label = (member_label if callable(member_label) else
+                  LABEL_GETTERS[member_label])
 
     for i in range(bs.supremum + 1):
         b = bs.fromint(i)
