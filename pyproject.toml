@@ -43,44 +43,27 @@ version = { attr = "bitsets.__version__" }
 
 [dependency-groups]
 dev = [  # $ pip install -e .[visualization] --group dev
-  "build",
-  "tox",
-  "wheel",
-  "twine",
+  "build", "tox", "wheel", "twine",
   { include-group = "docs" },
   { include-group = "lint" },
   { include-group = "test" },
   { include-group = "typing" },
 ]
-docs = [
-  "sphinx",
-  "sphinx-autodoc-typehints",
-  "sphinx-rtd-theme"
-]
-lint = [
-  "flake8",
-  "Flake8-pyproject",
-  "pep8-naming",
-]
-test = [
-  "coverage",
-  "pytest>=7",
-  "pytest-cov",
-]
-typing = [
-  "mypy",
-]
+docs = ["sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme"]
+lint = ["flake8", "Flake8-pyproject", "pep8-naming"]
+test = ["coverage", "pytest>=8", "pytest-cov"]
+typing = ["mypy"]
 
 [tool.mypy]
 packages = ["bitsets"]
 
 [tool.flake8]
-exclude = ["docs", ".tox"]
-ignore = ["E126", "E128"]
+exclude = [".tox", "build", "docs"]
+ignore = ["E126", "E128", "W503"]
 max-line-length = 100
 
 [tool.pytest.ini_options]
-minversion = "6"
+minversion = "8"
 testpaths = ["README.rst", "docs", "bitsets", "tests"]
 addopts = [
   "--doctest-glob=*.rst",
