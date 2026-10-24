@@ -5,7 +5,7 @@ Changelog
 Version 0.9.2 (in development)
 ------------------------------
 
-
+Drop Python 3.10 support and Tag Python 3.15 support.
 
 
 Version 0.9.1
